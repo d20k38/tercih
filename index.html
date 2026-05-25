@@ -2,7 +2,7 @@
 <html lang="tr"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muhasebe Finansman Öğretmen Ders Tercih Formu v23 Supabase</title>
+<title>Muhasebe Finansman Öğretmen Ders Tercih Formu v24 Supabase</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 :root{
@@ -55,7 +55,7 @@ th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;posi
 </head>
 <body>
 <header>
-  <h1>Muhasebe Finansman Öğretmen Ders Tercih Formu v23 Supabase</h1>
+  <h1>Muhasebe Finansman Öğretmen Ders Tercih Formu v24 Supabase</h1>
   <p>v28 ders dağıtım sistemiyle uyumlu sade öğretmen ders tercih formu</p>
 </header>
 
@@ -87,7 +87,7 @@ th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;posi
     <h2 id="formTitle">Ders Tercihleri</h2>
     <div class="notice info">
       Dersler sade görünüm için <b>Alan Dersleri</b> ve <b>MESEM Dersleri</b> olarak gruplandı. 
-      Tercih gönderimi için zorunlu kural: <b>Alan derslerinde</b> 1 Çok isterim, 2 İsterim, 2 Olabilir, 1 Mecbur kalırsam; <b>MESEM derslerinde</b> 1 Çok isterim seçilmelidir.
+      Önceden gönderdiğiniz tercihler varsa Supabase’den otomatik getirilir ve değiştirilebilir. Tercih gönderimi için zorunlu kural: <b>Alan derslerinde</b> 1 Çok isterim, 2 İsterim, 2 Olabilir, 1 Mecbur kalırsam; <b>MESEM derslerinde</b> 1 Çok isterim seçilmelidir.
     </div>
 
     <div class="kpis">
@@ -200,8 +200,13 @@ th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;posi
   preference_value integer,
   preference_label text,
   submission_time text,
-  row_no integer
+  row_no integer,
+  submission_id text,
+  is_active boolean default true
 );
+
+alter table public.teacher_preferences add column if not exists submission_id text;
+alter table public.teacher_preferences add column if not exists is_active boolean default true;
 
 alter table public.teacher_preferences enable row level security;
 
@@ -217,7 +222,15 @@ create policy "public_select_teacher_preferences"
 on public.teacher_preferences
 for select
 to anon
-using (true);</div>
+using (true);
+
+drop policy if exists "public_update_teacher_preferences" on public.teacher_preferences;
+create policy "public_update_teacher_preferences"
+on public.teacher_preferences
+for update
+to anon
+using (true)
+with check (true);</div>
     <div class="btns no-print" style="margin-top:10px">
       <button onclick="copyGasCode()">SQL Kodunu Kopyala</button>
     </div>
@@ -559,7 +572,7 @@ function saveData(){
   if(typeof supabaseUrl !== 'undefined' && supabaseUrl) settings.supabaseUrl = supabaseUrl.value.trim().replace(/\/$/,'');
   if(typeof supabaseKey !== 'undefined' && supabaseKey) settings.supabaseKey = supabaseKey.value.trim();
   if(typeof supabaseTable !== 'undefined' && supabaseTable) settings.supabaseTable = supabaseTable.value.trim() || 'teacher_preferences';
-  localStorage.setItem('mf_online_pref_form_v7', JSON.stringify({teachers,courses,submissions,settings}));
+  localStorage.setItem('mf_online_pref_form_v7', JSON.stringify({teachers,courses,submissions:[],settings}));
 }
 function loadData(){
   const raw=localStorage.getItem('mf_online_pref_form_v7') || localStorage.getItem('mf_online_pref_form');
@@ -568,13 +581,70 @@ function loadData(){
       const d=JSON.parse(raw);
       teachers=d.teachers&&d.teachers.length?d.teachers:[...DEFAULT_TEACHERS];
       courses=d.courses&&d.courses.length?d.courses:[...DEFAULT_COURSES];
-      submissions=d.submissions||[];
+      submissions=[];
       settings=d.settings||{ adminPassword:'18309', scriptUrl:DEFAULT_SCRIPT_URL, supabaseUrl:'', supabaseKey:'', supabaseTable:'teacher_preferences' }; if(!settings.supabaseTable) settings.supabaseTable='teacher_preferences';
     }catch(e){}
   }
   prepareCourses();
 }
-function teacherLogin(){
+
+async function getSupabaseTeacherPreferences(teacherId){
+  if(!settings.supabaseUrl || !settings.supabaseKey) return null;
+  const table = settings.supabaseTable || 'teacher_preferences';
+  const url = settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) +
+    '?select=*&teacher_id=eq.' + encodeURIComponent(teacherId) +
+    '&is_active=eq.true&order=created_at.desc';
+
+  const res = await fetch(url, {
+    headers:{'apikey':settings.supabaseKey,'Authorization':'Bearer '+settings.supabaseKey}
+  });
+  if(!res.ok) throw new Error(await res.text());
+
+  const rows = await res.json();
+  if(!rows.length) return null;
+
+  const prefs = {};
+  rows.forEach(r=>{
+    const key = r.course_key || (String(r.course_name||'')+'|'+String(r.course_type||'')+'|'+String(r.grade||'')+'|'+String(r.hour||''));
+    if(prefs[key]===undefined) prefs[key]=Number(r.preference_value||0);
+  });
+
+  return {
+    timestamp: rows[0].submission_time || rows[0].created_at || new Date().toISOString(),
+    teacherId,
+    teacherName: rows[0].teacher_name || '',
+    preferences:prefs,
+    details:rows.map(r=>({
+      key:r.course_key,
+      course:r.course_name,
+      type:r.course_type,
+      grade:r.grade,
+      hour:r.hour,
+      value:Number(r.preference_value||0),
+      label:r.preference_label
+    }))
+  };
+}
+async function deactivateOldSupabasePreferences(teacherId){
+  if(!settings.supabaseUrl || !settings.supabaseKey || !teacherId) return;
+  const table = settings.supabaseTable || 'teacher_preferences';
+  const url = settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) +
+    '?teacher_id=eq.' + encodeURIComponent(teacherId) + '&is_active=eq.true';
+
+  const res = await fetch(url, {
+    method:'PATCH',
+    headers:{
+      'Content-Type':'application/json',
+      'apikey':settings.supabaseKey,
+      'Authorization':'Bearer '+settings.supabaseKey,
+      'Prefer':'return=minimal'
+    },
+    body:JSON.stringify({is_active:false})
+  });
+  if(!res.ok) throw new Error(await res.text());
+}
+
+async function teacherLogin(){
   const tid=loginTeacher.value;
   const pass=loginPass.value.trim();
 
@@ -598,6 +668,18 @@ function teacherLogin(){
   currentTeacherId=t.id;
   loginPass.value='';
   formTitle.textContent=t.name+' - Ders Tercihleri';
+
+  if(settings.supabaseUrl && settings.supabaseKey){
+    try{
+      const cloudSub = await getSupabaseTeacherPreferences(t.id);
+      submissions = submissions.filter(s=>s.teacherId!==t.id);
+      if(cloudSub) submissions.push(cloudSub);
+    }catch(e){
+      console.warn(e);
+      alert('Önceki tercihler Supabase’den alınamadı, boş form açılıyor: '+e.message);
+    }
+  }
+
   loginScreen.classList.add('hidden');
   formScreen.classList.remove('hidden');
   renderPrefForm();
@@ -720,6 +802,8 @@ async function submitToCloud(payload){
     throw new Error('Supabase URL veya key boş.');
   }
   const table = settings.supabaseTable || 'teacher_preferences';
+  await deactivateOldSupabasePreferences(payload.teacherId || '');
+  const submissionId = (payload.teacherId || payload.teacherName || 'teacher') + '_' + Date.now();
   const rows = (payload.details || []).map((d, idx)=>({
     teacher_id: payload.teacherId || '',
     teacher_name: payload.teacherName || '',
@@ -731,7 +815,9 @@ async function submitToCloud(payload){
     preference_value: Number(d.value || 0),
     preference_label: d.label || '',
     submission_time: payload.timestamp || new Date().toISOString(),
-    row_no: idx + 1
+    row_no: idx + 1,
+    submission_id: submissionId,
+    is_active: true
   }));
   if(!rows.length) throw new Error('Gönderilecek tercih yok.');
 
@@ -848,7 +934,7 @@ async function loadSupabasePreferences(){
   if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
   try{
     const table = settings.supabaseTable || 'teacher_preferences';
-    const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?select=*&order=created_at.desc', {
+    const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?select=*&is_active=eq.true&order=created_at.desc', {
       headers:{'apikey':settings.supabaseKey,'Authorization':'Bearer '+settings.supabaseKey}
     });
     if(!res.ok) throw new Error(await res.text());
@@ -868,7 +954,7 @@ async function exportSupabasePreferencesExcel(){
   if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
   try{
     const table = settings.supabaseTable || 'teacher_preferences';
-    const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?select=*&order=created_at.asc', {
+    const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?select=*&is_active=eq.true&order=created_at.asc', {
       headers:{'apikey':settings.supabaseKey,'Authorization':'Bearer '+settings.supabaseKey}
     });
     if(!res.ok) throw new Error(await res.text());
@@ -917,7 +1003,7 @@ function exportPreferencesExcel(){
   });
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(matrix),'Tercih_Matrisi');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(list),'Tercih_Listesi');
-  XLSX.writeFile(wb,'ogretmen_ders_tercihleri_v23_supabase.xlsx');
+  XLSX.writeFile(wb,'ogretmen_ders_tercihleri_v24_supabase_guncellenebilir.xlsx');
 }
 function downloadV28PreferenceExcel(){
   if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
@@ -1090,7 +1176,7 @@ function downloadSharedForm(){
   source = source.replace(/let settings = \{ adminPassword:'[^']*', scriptUrl:DEFAULT_SCRIPT_URL \};/, 'let settings = { adminPassword:' + JSON.stringify(settings.adminPassword || '18309') + ', scriptUrl:DEFAULT_SCRIPT_URL };');
   source = source.replace(/let settings = \{[\s\S]*?\};/, 'let settings = ' + JSON.stringify(settings) + ';');
   const blob = new Blob(['<!DOCTYPE html>\n' + source], {type:'text/html;charset=utf-8'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ogretmen_ders_tercih_formu_v23_supabase_paylasilacak.html'; a.click();
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ogretmen_ders_tercih_formu_v24_supabase_paylasilacak.html'; a.click();
 }
 function copyShareText(){
   const txt='Değerli öğretmenimiz, ders tercih formuna girerek adınızı seçiniz ve size verilen şifreyle tercihlerinizi gönderiniz.';
@@ -1109,8 +1195,13 @@ const GAS_CODE = `create table if not exists public.teacher_preferences (
   preference_value integer,
   preference_label text,
   submission_time text,
-  row_no integer
+  row_no integer,
+  submission_id text,
+  is_active boolean default true
 );
+
+alter table public.teacher_preferences add column if not exists submission_id text;
+alter table public.teacher_preferences add column if not exists is_active boolean default true;
 
 alter table public.teacher_preferences enable row level security;
 
@@ -1126,7 +1217,15 @@ create policy "public_select_teacher_preferences"
 on public.teacher_preferences
 for select
 to anon
-using (true);`;
+using (true);
+
+drop policy if exists "public_update_teacher_preferences" on public.teacher_preferences;
+create policy "public_update_teacher_preferences"
+on public.teacher_preferences
+for update
+to anon
+using (true)
+with check (true);`;
 function renderGas(){gasCode.textContent=GAS_CODE}
 function copyGasCode(){navigator.clipboard.writeText(GAS_CODE); alert('SQL kodu kopyalandı.')}
 loadData();
