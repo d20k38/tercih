@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhasebe Finansman Öğretmen Ders Tercih Formu v23 Supabase</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+:root{
+  --bg:#f3f6fb;--card:#fff;--ink:#111827;--muted:#667085;--line:#d7deea;
+  --brand:#1d4ed8;--ok:#15803d;--warn:#b45309;--danger:#dc2626;--soft:#eef4ff;
+  --shadow:0 10px 28px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Segoe UI,Arial,sans-serif;color:var(--ink)}
+header{background:linear-gradient(135deg,#172554,#1d4ed8,#0f766e);color:white;padding:22px 26px}
+header h1{margin:0;font-size:24px} header p{margin:7px 0 0;opacity:.92}
+.wrap{max-width:1250px;margin:auto;padding:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-5{grid-column:span 5}.col-6{grid-column:span 6}.col-7{grid-column:span 7}.col-8{grid-column:span 8}.col-12{grid-column:span 12}
+label{display:block;font-size:13px;font-weight:800;color:var(--muted);margin:8px 0 4px}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;background:white}
+button,.btn{border:1px solid var(--line);background:white;color:var(--ink);border-radius:12px;padding:10px 13px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+button.primary{background:var(--brand);border-color:var(--brand);color:white}
+button.ok{background:var(--ok);border-color:var(--ok);color:white}
+button.warn{background:var(--warn);border-color:var(--warn);color:white}
+button.danger{background:var(--danger);border-color:var(--danger);color:white}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.notice{background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;border-radius:13px;padding:11px;margin:10px 0}
+.info{background:#eef4ff;border-color:#bfdbfe;color:#1e3a8a}
+.okbox{background:#dcfce7;border-color:#bbf7d0;color:#166534}
+table{width:100%;border-collapse:collapse;background:white}
+th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:middle}
+th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;position:sticky;top:0}
+.tablebox{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:13px}
+.pref-section{border:1px solid var(--line);border-radius:16px;background:#fbfdff;padding:12px;margin:12px 0}
+.pref-section h3{margin:0 0 10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pref-row{display:grid;grid-template-columns:1fr 150px;gap:10px;align-items:center;border:1px solid #e5e7eb;border-radius:12px;background:white;padding:10px;margin:7px 0}
+.pref-row b{font-size:14px}
+.small{font-size:12px;color:var(--muted)}
+.badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:800;background:#e0f2fe;color:#075985}
+.hidden{display:none!important}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tab.active{background:var(--brand);border-color:var(--brand);color:white}
+.code{white-space:pre-wrap;background:#0f172a;color:#dbeafe;border-radius:12px;padding:12px;overflow:auto;font-family:Consolas,monospace;font-size:12px;max-height:360px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0}
+.kpis div{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:11px}
+.kpis b{font-size:24px;display:block}
+.type-muh{background:#eff6ff;color:#1d4ed8}
+.type-dt{background:#fef3c7;color:#92400e}
+.type-mesem{background:#dcfce7;color:#166534}
+@media(max-width:900px){.col-3,.col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 12}.pref-row{grid-template-columns:1fr}}
+@media print{header,.tabs,.no-print,button,.btn,input,select,textarea{display:none!important}body{background:white}.wrap{max-width:none}.card{box-shadow:none;border:0}.tablebox{max-height:none;overflow:visible;border:0}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Muhasebe Finansman Öğretmen Ders Tercih Formu v23 Supabase</h1>
+  <p>v28 ders dağıtım sistemiyle uyumlu sade öğretmen ders tercih formu</p>
+</header>
+
+<div class="wrap">
+  <div class="tabs no-print" id="mainTabs">
+    <button class="tab active" onclick="showScreen('login')">Giriş</button>
+    <button class="tab hidden" id="adminTab" onclick="showScreen('admin')">Yönetici</button>
+    <button class="tab hidden" id="setupTab" onclick="showScreen('setup')">Online Kurulum</button>
+  </div>
+
+  <section id="loginScreen" class="card">
+    <h2>Giriş</h2>
+    <div class="grid">
+      <div class="col-5">
+        <label>Ad Soyad</label>
+        <select id="loginTeacher"><option value="">Öğretmen seçiniz...</option><option value="2v30b8u">ABDURAHMAN NAFİZ GÜMÜŞ</option><option value="358pl92">ARZU DEMİREZEN</option><option value="y841y7z">DERYA BOZKURT</option><option value="yf491pf">FATİH ALTIPARMAK</option><option value="xvn30xe">FIRAT EKİNCİ</option><option value="hbqcg48">HÜLYA CAN</option><option value="9x1jnae">LEYLA GÜNAY ÖLMEZ</option><option value="atr3ek5">MUSTAFA YURDAKUL</option><option value="jefgzmm">NURCAN KÖMMECİ</option><option value="n07jm9b">ŞERİFE TOPALOĞLU</option><option value="4zfbaut">YASİN KELEBEK</option><option value="admin">admin</option></select>
+      </div>
+      <div class="col-4">
+        <label>Şifre</label>
+        <input id="loginPass" maxlength="8" inputmode="numeric" placeholder="Şifre">
+      </div>
+      <div class="col-3" style="align-self:end">
+        <button class="primary" onclick="teacherLogin()">Giriş</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="formScreen" class="card hidden">
+    <h2 id="formTitle">Ders Tercihleri</h2>
+    <div class="notice info">
+      Dersler sade görünüm için <b>Alan Dersleri</b> ve <b>MESEM Dersleri</b> olarak gruplandı. 
+      Tercih gönderimi için zorunlu kural: <b>Alan derslerinde</b> 1 Çok isterim, 2 İsterim, 2 Olabilir, 1 Mecbur kalırsam; <b>MESEM derslerinde</b> 1 Çok isterim seçilmelidir.
+    </div>
+
+    <div class="kpis">
+      <div><span class="small">Alan Çok isterim</span><b id="kA5">0/1</b></div>
+      <div><span class="small">Alan İsterim</span><b id="kA4">0/2</b></div>
+      <div><span class="small">Alan Olabilir</span><b id="kA3">0/2</b></div>
+      <div><span class="small">Alan Mecbur</span><b id="kA2">0/1</b></div>
+      <div><span class="small">MESEM Çok isterim</span><b id="kM5">0/1</b></div>
+      <div><span class="small">Durum</span><b id="kRule">Eksik</b></div>
+    </div>
+
+    <div class="btns no-print" style="margin-bottom:10px">
+      <button class="ok" onclick="submitPreferences()">Tercihlerimi Gönder</button>
+      <button onclick="backLogin()">Çıkış</button>
+    </div>
+    <div id="prefForm"></div>
+  </section>
+
+  <section id="adminScreen" class="hidden" class="hidden">
+    <div class="grid">
+      <div class="card col-5">
+        <h2>Yönetici Paneli</h2>
+        <div id="adminArea" class="hidden">
+          <div class="btns" style="margin-bottom:10px">
+            <button class="danger" onclick="logoutAdmin()">Yönetici Çıkış</button>
+          </div>
+
+          <div class="notice info">
+            Öğretmenleri ekleyin. Her öğretmene sistem otomatik 4 haneli şifre verir.
+            Başka tarayıcılarda da öğretmenlerin görünmesi için işlem bitince <b>Paylaşılacak Form HTML'yi İndir</b> düğmesine basıp çıkan dosyayı paylaşın/yükleyin.
+          </div>
+
+          <div class="card" style="box-shadow:none;margin:10px 0;padding:12px;background:#f8fafc">
+            <h3>Admin Şifre Yönetimi</h3>
+            <label>Mevcut Şifre</label>
+            <input id="oldAdminPassword" type="password" placeholder="Mevcut şifre">
+            <label>Yeni Şifre</label>
+            <input id="newAdminPassword" type="password" placeholder="Yeni şifre">
+            <label>Yeni Şifre Tekrar</label>
+            <input id="newAdminPassword2" type="password" placeholder="Yeni şifre tekrar">
+            <button class="ok" onclick="changeAdminPassword()">Şifreyi Değiştir</button>
+          </div>
+
+          <label>Yeni Öğretmen Adı</label>
+          <input id="newTeacherName" placeholder="Ad Soyad">
+          <button class="ok" onclick="addTeacher()">Öğretmen Ekle ve Şifre Ata</button>
+          <hr>
+          <label>Supabase Project URL</label>
+          <input id="supabaseUrl" placeholder="https://xxxx.supabase.co" onchange="saveData()">
+          <label>Supabase anon/public key</label>
+          <input id="supabaseKey" placeholder="sb_publishable_... veya anon key" onchange="saveData()">
+          <label>Tablo Adı</label>
+          <input id="supabaseTable" placeholder="teacher_preferences" onchange="saveData()">
+          <div class="btns" style="margin-top:6px">
+            <button onclick="testSupabaseConnection()">Supabase Bağlantısını Test Et</button>
+            <button onclick="loadSupabasePreferences()">Supabase Tercihleri Al</button>
+            <button onclick="exportSupabasePreferencesExcel()">Supabase Excel</button>
+          </div>
+          <div class="small">Supabase ayarları girilirse tercihler doğrudan buluta kaydedilir. Google Apps Script gerekmez.</div>
+          <hr>
+          <div class="btns">
+            <label class="btn">Öğretmenleri Excel'den Al<input type="file" accept=".xlsx,.xls" onchange="importTeachersExcel(event)" hidden=""></label>
+            <label class="btn">Ders Havuzunu Excel'den Al<input type="file" accept=".xlsx,.xls" onchange="importCoursesExcel(event)" hidden=""></label>
+            <button onclick="exportTeacherPasswords()">Şifre Listesi Excel</button>
+            <button onclick="exportPreferencesExcel()">Tercihler Excel</button>
+            <button onclick="downloadV28PreferenceExcel()">v28 Uyumlu Tercih Dosyası</button>
+            <button class="ok" onclick="downloadSharedForm()">Paylaşılacak Form HTML'yi İndir</button>
+            <button class="warn" onclick="copyShareText()">Öğretmenlere Mesajı Kopyala</button>
+            <button class="danger" onclick="resetAll()">Tüm Verileri Sıfırla</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card col-7">
+        <h2>Öğretmen Şifreleri</h2>
+        <div class="tablebox"><table id="teacherTable"><tbody><tr><th>Öğretmen</th><th>4 Haneli Şifre</th><th>Durum</th><th>İşlem</th></tr><tr><td><b>ABDURAHMAN NAFİZ GÜMÜŞ</b></td><td><span class="badge">5226</span></td><td><span class="small">Bekleniyor</span></td><td><button onclick="renewPass('2v30b8u')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('2v30b8u')">Sil</button></td></tr><tr><td><b>ARZU DEMİREZEN</b></td><td><span class="badge">3090</span></td><td><span class="small">Bekleniyor</span></td><td><button onclick="renewPass('358pl92')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('358pl92')">Sil</button></td></tr><tr><td><b>DERYA BOZKURT</b></td><td><span class="badge">2071</span></td><td><span class="small">Bekleniyor</span></td><td><button onclick="renewPass('y841y7z')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('y841y7z')">Sil</button></td></tr><tr><td><b>FATİH ALTIPARMAK</b></td><td><span class="badge">6431</span></td><td><span class="small">Bekleniyor</span></td><td><button onclick="renewPass('yf491pf')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('yf491pf')">Sil</button></td></tr><tr><td><b>FIRAT EKİNCİ</b></td><td><span class="badge">1305</span></td><td><span class="small">Bekleniyor</span></td><td><button onclick="renewPass('xvn30xe')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('xvn30xe')">Sil</button></td></tr><tr><td><b>HÜLYA CAN</b></td><td><span class="badge">5431</span></td><td><span class="small">Bekleniyor</span></td><td><button onclick="renewPass('hbqcg48')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('hbqcg48')">Sil</button></td></tr><tr><td><b>LEYLA GÜNAY ÖLMEZ</b></td><td><span class="badge">2376</span></td><td><span class="small">Bekleniyor</span></td><td><button onclick="renewPass('9x1jnae')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('9x1jnae')">Sil</button></td></tr><tr><td><b>MUSTAFA YURDAKUL</b></td><td><span class="badge">5183</span></td><td><span class="small">Bekleniyor</span></td><td><button onclick="renewPass('atr3ek5')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('atr3ek5')">Sil</button></td></tr><tr><td><b>NURCAN KÖMMECİ</b></td><td><span class="badge">2571</span></td><td><span class="small">Bekleniyor</span></td><td><button onclick="renewPass('jefgzmm')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('jefgzmm')">Sil</button></td></tr><tr><td><b>ŞERİFE TOPALOĞLU</b></td><td><span class="badge">6069</span></td><td><span class="small">Bekleniyor</span></td><td><button onclick="renewPass('n07jm9b')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('n07jm9b')">Sil</button></td></tr><tr><td><b>YASİN KELEBEK</b></td><td><span class="badge">3971</span></td><td><span class="small">Bekleniyor</span></td><td><button onclick="renewPass('4zfbaut')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('4zfbaut')">Sil</button></td></tr></tbody></table></div>
+      </div>
+
+      <div class="card col-12">
+        <h2>Gelen Tercihler</h2>
+        <div class="tablebox"><table id="resultTable"><tbody><tr><th>Tarih</th><th>Öğretmen</th><th>Tür</th><th>Ders</th><th>Tercih</th><th>Puan</th></tr><tr><td colspan="6">Henüz tercih gönderilmedi.</td></tr></tbody></table></div>
+      </div>
+
+      <div class="card col-12">
+        <h2>Ders Havuzu</h2>
+        <div class="btns no-print" style="margin-bottom:8px">
+          <button onclick="addCourse()">Ders Ekle</button>
+        </div>
+        <div class="tablebox"><table id="courseTable"><tbody><tr><th>Ders</th><th>Tür</th><th>Sınıf</th><th>Saat</th><th></th></tr><tr><td>TEMEL MUHASEBE (*)</td><td><span class="badge type-muh">Muhasebe</span></td><td>9</td><td>5</td><td><button class="danger" onclick="deleteCourse('TEMEL MUHASEBE (*)','Muhasebe')">Sil</button></td></tr><tr><td>TEMEL MUHASEBE MESEM 10</td><td><span class="badge type-mesem">MESEM</span></td><td>10</td><td>2</td><td><button class="danger" onclick="deleteCourse('TEMEL MUHASEBE MESEM 10','MESEM')">Sil</button></td></tr><tr><td>MESLEKİ MATEMATİK</td><td><span class="badge type-muh">Muhasebe</span></td><td>9</td><td>2</td><td><button class="danger" onclick="deleteCourse('MESLEKİ MATEMATİK','Muhasebe')">Sil</button></td></tr><tr><td>MESLEKİ MATEMATİK MESEM 10</td><td><span class="badge type-mesem">MESEM</span></td><td>10</td><td>1</td><td><button class="danger" onclick="deleteCourse('MESLEKİ MATEMATİK MESEM 10','MESEM')">Sil</button></td></tr><tr><td>OFİS UYGULAMALARI 1</td><td><span class="badge type-muh">Muhasebe</span></td><td>9</td><td>2</td><td><button class="danger" onclick="deleteCourse('OFİS UYGULAMALARI 1','Muhasebe')">Sil</button></td></tr><tr><td>OFİS UYGULAMALARI MESEM 11</td><td><span class="badge type-mesem">MESEM</span></td><td>11</td><td>1</td><td><button class="danger" onclick="deleteCourse('OFİS UYGULAMALARI MESEM 11','MESEM')">Sil</button></td></tr><tr><td>GENEL MUHASEBE (*)</td><td><span class="badge type-muh">Muhasebe</span></td><td>10</td><td>7</td><td><button class="danger" onclick="deleteCourse('GENEL MUHASEBE (*)','Muhasebe')">Sil</button></td></tr><tr><td>GENEL MUHASEBE MESEM 11</td><td><span class="badge type-mesem">MESEM</span></td><td>11</td><td>2</td><td><button class="danger" onclick="deleteCourse('GENEL MUHASEBE MESEM 11','MESEM')">Sil</button></td></tr><tr><td>EKONOMİ</td><td><span class="badge type-muh">Muhasebe</span></td><td>10</td><td>2</td><td><button class="danger" onclick="deleteCourse('EKONOMİ','Muhasebe')">Sil</button></td></tr><tr><td>EKONOMİ DIŞ TİCARET</td><td><span class="badge type-dt">Dış Ticaret</span></td><td>10</td><td>2</td><td><button class="danger" onclick="deleteCourse('EKONOMİ DIŞ TİCARET','Dış Ticaret')">Sil</button></td></tr><tr><td>EKONOMİ MESEM 10</td><td><span class="badge type-mesem">MESEM</span></td><td>10</td><td>1</td><td><button class="danger" onclick="deleteCourse('EKONOMİ MESEM 10','MESEM')">Sil</button></td></tr><tr><td>TEMEL HUKUK</td><td><span class="badge type-muh">Muhasebe</span></td><td>10</td><td>2</td><td><button class="danger" onclick="deleteCourse('TEMEL HUKUK','Muhasebe')">Sil</button></td></tr><tr><td>TEMEL HUKUK DIŞ TİCARET</td><td><span class="badge type-dt">Dış Ticaret</span></td><td>10</td><td>2</td><td><button class="danger" onclick="deleteCourse('TEMEL HUKUK DIŞ TİCARET','Dış Ticaret')">Sil</button></td></tr><tr><td>TEMEL HUKUK MESEM 11</td><td><span class="badge type-mesem">MESEM</span></td><td>11</td><td>1</td><td><button class="danger" onclick="deleteCourse('TEMEL HUKUK MESEM 11','MESEM')">Sil</button></td></tr><tr><td>DIŞ TİCARETE GİRİŞ (*) DIŞ TİCARET</td><td><span class="badge type-dt">Dış Ticaret</span></td><td>10</td><td>2</td><td><button class="danger" onclick="deleteCourse('DIŞ TİCARETE GİRİŞ (*) DIŞ TİCARET','Dış Ticaret')">Sil</button></td></tr><tr><td>TEK DÜZEN MUHASEBE SİSTEMİ DIŞ TİCARET</td><td><span class="badge type-dt">Dış Ticaret</span></td><td>10</td><td>4</td><td><button class="danger" onclick="deleteCourse('TEK DÜZEN MUHASEBE SİSTEMİ DIŞ TİCARET','Dış Ticaret')">Sil</button></td></tr><tr><td>E-TİCARET UYGULAMALARI DIŞ TİCARET</td><td><span class="badge type-dt">Dış Ticaret</span></td><td>10</td><td>3</td><td><button class="danger" onclick="deleteCourse('E-TİCARET UYGULAMALARI DIŞ TİCARET','Dış Ticaret')">Sil</button></td></tr><tr><td>KLAVYE TEKNİKLERİ 1</td><td><span class="badge type-muh">Muhasebe</span></td><td>10</td><td>2</td><td><button class="danger" onclick="deleteCourse('KLAVYE TEKNİKLERİ 1','Muhasebe')">Sil</button></td></tr><tr><td>KLAVYE TEKNİKLERİ MESEM 11</td><td><span class="badge type-mesem">MESEM</span></td><td>11</td><td>2</td><td><button class="danger" onclick="deleteCourse('KLAVYE TEKNİKLERİ MESEM 11','MESEM')">Sil</button></td></tr><tr><td>BİLGİSAYARLI MUHASEBE (*) 1</td><td><span class="badge type-muh">Muhasebe</span></td><td>11</td><td>7</td><td><button class="danger" onclick="deleteCourse('BİLGİSAYARLI MUHASEBE (*) 1','Muhasebe')">Sil</button></td></tr><tr><td>BİLGİSAYARLI MUHASEBE MESEM 12</td><td><span class="badge type-mesem">MESEM</span></td><td>12</td><td>4</td><td><button class="danger" onclick="deleteCourse('BİLGİSAYARLI MUHASEBE MESEM 12','MESEM')">Sil</button></td></tr><tr><td>GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ</td><td><span class="badge type-muh">Muhasebe</span></td><td>11</td><td>2</td><td><button class="danger" onclick="deleteCourse('GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ','Muhasebe')">Sil</button></td></tr><tr><td>GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ MESEM 12</td><td><span class="badge type-mesem">MESEM</span></td><td>12</td><td>1</td><td><button class="danger" onclick="deleteCourse('GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ MESEM 12','MESEM')">Sil</button></td></tr><tr><td>VERGİ VE BEYANNAMELER</td><td><span class="badge type-muh">Muhasebe</span></td><td>11</td><td>2</td><td><button class="danger" onclick="deleteCourse('VERGİ VE BEYANNAMELER','Muhasebe')">Sil</button></td></tr><tr><td>VERGİ VE BEYANNAMELER MESEM 11</td><td><span class="badge type-mesem">MESEM</span></td><td>11</td><td>1</td><td><button class="danger" onclick="deleteCourse('VERGİ VE BEYANNAMELER MESEM 11','MESEM')">Sil</button></td></tr><tr><td>ŞİRKETLER MUHASEBESİ</td><td><span class="badge type-muh">Muhasebe</span></td><td>11</td><td>2</td><td><button class="danger" onclick="deleteCourse('ŞİRKETLER MUHASEBESİ','Muhasebe')">Sil</button></td></tr><tr><td>ŞİRKETLER MUHASEBESİ MESEM 12</td><td><span class="badge type-mesem">MESEM</span></td><td>12</td><td>1</td><td><button class="danger" onclick="deleteCourse('ŞİRKETLER MUHASEBESİ MESEM 12','MESEM')">Sil</button></td></tr><tr><td>MALİYET MUHASEBESİ</td><td><span class="badge type-muh">Muhasebe</span></td><td>11</td><td>2</td><td><button class="danger" onclick="deleteCourse('MALİYET MUHASEBESİ','Muhasebe')">Sil</button></td></tr><tr><td>MALİYET MUHASEBESİ MESEM 12</td><td><span class="badge type-mesem">MESEM</span></td><td>12</td><td>1</td><td><button class="danger" onclick="deleteCourse('MALİYET MUHASEBESİ MESEM 12','MESEM')">Sil</button></td></tr><tr><td>İŞ VE SOSYAL GÜVENLİK HUKUKU</td><td><span class="badge type-muh">Muhasebe</span></td><td>11</td><td>2</td><td><button class="danger" onclick="deleteCourse('İŞ VE SOSYAL GÜVENLİK HUKUKU','Muhasebe')">Sil</button></td></tr><tr><td>SEÇMELİ KOPERATİFÇİLİK</td><td><span class="badge type-muh">Muhasebe</span></td><td>11</td><td>2</td><td><button class="danger" onclick="deleteCourse('SEÇMELİ KOPERATİFÇİLİK','Muhasebe')">Sil</button></td></tr><tr><td>SEÇMELİ DİJİTAL OFİS UYGULAMALARI 1</td><td><span class="badge type-muh">Muhasebe</span></td><td>11</td><td>2</td><td><button class="danger" onclick="deleteCourse('SEÇMELİ DİJİTAL OFİS UYGULAMALARI 1','Muhasebe')">Sil</button></td></tr><tr><td>SEÇMELİ FİNANSAL OKURYAZARLIK</td><td><span class="badge type-muh">Muhasebe</span></td><td>12</td><td>4</td><td><button class="danger" onclick="deleteCourse('SEÇMELİ FİNANSAL OKURYAZARLIK','Muhasebe')">Sil</button></td></tr><tr><td>SEÇMELİ DIŞTİC İŞLEMLERİ</td><td><span class="badge type-muh">Muhasebe</span></td><td>12</td><td>3</td><td><button class="danger" onclick="deleteCourse('SEÇMELİ DIŞTİC İŞLEMLERİ','Muhasebe')">Sil</button></td></tr></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="setupScreen" class="card hidden" class="card hidden">
+    <h2>Supabase Kurulumu</h2>
+    <div class="notice info">
+      Supabase panelinde aşağıdaki SQL kodunu çalıştırın. Sonra Project URL ve anon/public key bilgisini Yönetici paneline girin.
+    </div>
+    <h3>SQL Tablo ve Yetki Kodu</h3>
+    <div class="code" id="gasCode">create table if not exists public.teacher_preferences (
+  id bigint generated by default as identity primary key,
+  created_at timestamptz default now(),
+  teacher_id text,
+  teacher_name text,
+  course_key text,
+  course_name text,
+  course_type text,
+  grade text,
+  hour numeric,
+  preference_value integer,
+  preference_label text,
+  submission_time text,
+  row_no integer
+);
+
+alter table public.teacher_preferences enable row level security;
+
+drop policy if exists "public_insert_teacher_preferences" on public.teacher_preferences;
+create policy "public_insert_teacher_preferences"
+on public.teacher_preferences
+for insert
+to anon
+with check (true);
+
+drop policy if exists "public_select_teacher_preferences" on public.teacher_preferences;
+create policy "public_select_teacher_preferences"
+on public.teacher_preferences
+for select
+to anon
+using (true);</div>
+    <div class="btns no-print" style="margin-top:10px">
+      <button onclick="copyGasCode()">SQL Kodunu Kopyala</button>
+    </div>
+    <div class="notice">
+      Supabase → SQL Editor → New query → kodu yapıştır → Run. 
+      Daha sonra Project Settings → API bölümünden Project URL ve anon/public key bilgilerini alın.
+    </div>
+  </section>
+</div>
+
+<script>
+const DEFAULT_TEACHERS = [
+  {
+    "id": "2v30b8u",
+    "name": "ABDURAHMAN NAFİZ GÜMÜŞ",
+    "pass": "5226"
+  },
+  {
+    "id": "358pl92",
+    "name": "ARZU DEMİREZEN",
+    "pass": "3090"
+  },
+  {
+    "id": "y841y7z",
+    "name": "DERYA BOZKURT",
+    "pass": "2071"
+  },
+  {
+    "id": "yf491pf",
+    "name": "FATİH ALTIPARMAK",
+    "pass": "6431"
+  },
+  {
+    "id": "xvn30xe",
+    "name": "FIRAT EKİNCİ",
+    "pass": "1305"
+  },
+  {
+    "id": "hbqcg48",
+    "name": "HÜLYA CAN",
+    "pass": "5431"
+  },
+  {
+    "id": "9x1jnae",
+    "name": "LEYLA GÜNAY ÖLMEZ",
+    "pass": "2376"
+  },
+  {
+    "id": "atr3ek5",
+    "name": "MUSTAFA YURDAKUL",
+    "pass": "5183"
+  },
+  {
+    "id": "jefgzmm",
+    "name": "NURCAN KÖMMECİ",
+    "pass": "2571"
+  },
+  {
+    "id": "n07jm9b",
+    "name": "ŞERİFE TOPALOĞLU",
+    "pass": "6069"
+  },
+  {
+    "id": "4zfbaut",
+    "name": "YASİN KELEBEK",
+    "pass": "3971"
+  }
+];
+const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzCXNwqao7CrZ0A_XMAF2nTq6maIG8tLqLoU23l2n0LnANATwvK-wo0fsMumG-WOOAx/exec";
+const DEFAULT_COURSES = [
+  {
+    "name": "TEMEL MUHASEBE (*)",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 5
+  },
+  {
+    "name": "TEMEL MUHASEBE MESEM 10",
+    "type": "MESEM",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "MESLEKİ MATEMATİK",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 2
+  },
+  {
+    "name": "MESLEKİ MATEMATİK MESEM 10",
+    "type": "MESEM",
+    "grade": "10",
+    "hour": 1
+  },
+  {
+    "name": "OFİS UYGULAMALARI 1",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 2
+  },
+  {
+    "name": "OFİS UYGULAMALARI MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "GENEL MUHASEBE (*)",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 7
+  },
+  {
+    "name": "GENEL MUHASEBE MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "EKONOMİ",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "EKONOMİ DIŞ TİCARET",
+    "type": "Dış Ticaret",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "EKONOMİ MESEM 10",
+    "type": "MESEM",
+    "grade": "10",
+    "hour": 1
+  },
+  {
+    "name": "TEMEL HUKUK",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "TEMEL HUKUK DIŞ TİCARET",
+    "type": "Dış Ticaret",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "TEMEL HUKUK MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "DIŞ TİCARETE GİRİŞ (*) DIŞ TİCARET",
+    "type": "Dış Ticaret",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "TEK DÜZEN MUHASEBE SİSTEMİ DIŞ TİCARET",
+    "type": "Dış Ticaret",
+    "grade": "10",
+    "hour": 4
+  },
+  {
+    "name": "E-TİCARET UYGULAMALARI DIŞ TİCARET",
+    "type": "Dış Ticaret",
+    "grade": "10",
+    "hour": 3
+  },
+  {
+    "name": "KLAVYE TEKNİKLERİ 1",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "KLAVYE TEKNİKLERİ MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "BİLGİSAYARLI MUHASEBE (*) 1",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 7
+  },
+  {
+    "name": "BİLGİSAYARLI MUHASEBE MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 4
+  },
+  {
+    "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 1
+  },
+  {
+    "name": "VERGİ VE BEYANNAMELER",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "VERGİ VE BEYANNAMELER MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "ŞİRKETLER MUHASEBESİ",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "ŞİRKETLER MUHASEBESİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 1
+  },
+  {
+    "name": "MALİYET MUHASEBESİ",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "MALİYET MUHASEBESİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 1
+  },
+  {
+    "name": "İŞ VE SOSYAL GÜVENLİK HUKUKU",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "SEÇMELİ KOPERATİFÇİLİK",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "SEÇMELİ DİJİTAL OFİS UYGULAMALARI 1",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "SEÇMELİ FİNANSAL OKURYAZARLIK",
+    "type": "Muhasebe",
+    "grade": "12",
+    "hour": 4
+  },
+  {
+    "name": "SEÇMELİ DIŞTİC İŞLEMLERİ",
+    "type": "Muhasebe",
+    "grade": "12",
+    "hour": 3
+  }
+];
+let teachers = [...DEFAULT_TEACHERS];
+let courses = [...DEFAULT_COURSES];
+let submissions = [];
+let currentTeacherId = '';
+let adminUnlocked = false;
+let settings = {"adminPassword":"18309","scriptUrl":"https://script.google.com/macros/s/AKfycbzCXNwqao7CrZ0A_XMAF2nTq6maIG8tLqLoU23l2n0LnANATwvK-wo0fsMumG-WOOAx/exec","supabaseTable":"teacher_preferences","supabaseUrl":"https://bzhbbjjtwotahoovnxua.supabase.co","supabaseKey":"sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l"};
+
+function uid(){return Math.random().toString(36).slice(2,9)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function norm(s){return String(s??'').trim().toLocaleLowerCase('tr-TR')}
+function typeClass(t){return t==='Dış Ticaret'?'type-dt':(t==='MESEM'?'type-mesem':'type-muh')}
+function prefLabel(v){v=Number(v); if(v===0)return'İstemem'; if(v===2)return'Mecbur kalırsam'; if(v===4)return'İsterim'; if(v===5)return'Çok isterim'; return'Olabilir'}
+function genPass(){let p; do { p = String(Math.floor(1000+Math.random()*9000)); } while(teachers.some(t=>t.pass===p)); return p;}
+function cleanCourse(c){
+  if(typeof c==='string') return {name:c,type:inferType(c),grade:'',hour:0};
+  return {name:String(c.name||'').trim(),type:c.type||inferType(c.name),grade:String(c.grade||''),hour:Number(c.hour||0)};
+}
+function inferType(name){
+  const n=String(name||'').toLocaleUpperCase('tr-TR');
+  if(n.includes('MESEM')) return 'MESEM';
+  if(n.includes('DIŞ TİCARET') || n.includes('DIS TICARET')) return 'Dış Ticaret';
+  return 'Muhasebe';
+}
+function courseKey(c){
+  return String(c.name||'') + '|' + String(c.type||'') + '|' + String(c.grade||'') + '|' + String(c.hour||'');
+}
+function prepareCourses(){
+  courses = courses.map(cleanCourse).filter(c=>c.name);
+  const seen = new Set();
+  courses = courses.filter(c=>{const k=c.name+'|'+c.type; if(seen.has(k)) return false; seen.add(k); return true;});
+}
+function showScreen(name){
+  loginScreen.classList.toggle('hidden', name!=='login');
+  formScreen.classList.add('hidden');
+  adminScreen.classList.toggle('hidden', name!=='admin');
+  setupScreen.classList.toggle('hidden', name!=='setup');
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  if(name==='login') document.querySelector('#mainTabs .tab:nth-child(1)').classList.add('active');
+  else if(name==='admin' && adminUnlocked) adminTab.classList.add('active');
+  else if(name==='setup' && adminUnlocked) setupTab.classList.add('active');
+  render();
+}
+function lockAdminView(){
+  adminUnlocked = false;
+  if(adminTab) adminTab.classList.add('hidden');
+  if(setupTab) setupTab.classList.add('hidden');
+  if(adminArea) adminArea.classList.add('hidden');
+  if(adminScreen) adminScreen.classList.add('hidden');
+  if(setupScreen) setupScreen.classList.add('hidden');
+  if(formScreen) formScreen.classList.add('hidden');
+  if(loginScreen) loginScreen.classList.remove('hidden');
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  const firstTab=document.querySelector('#mainTabs .tab:nth-child(1)');
+  if(firstTab) firstTab.classList.add('active');
+}
+function cleanWebAppUrl(url){
+  return String(url||'').trim().split('?')[0];
+}
+function saveData(){
+  if(typeof scriptUrl !== 'undefined' && scriptUrl) {
+    settings.scriptUrl = cleanWebAppUrl(scriptUrl.value);
+    scriptUrl.value = settings.scriptUrl;
+  }
+  if(typeof supabaseUrl !== 'undefined' && supabaseUrl) settings.supabaseUrl = supabaseUrl.value.trim().replace(/\/$/,'');
+  if(typeof supabaseKey !== 'undefined' && supabaseKey) settings.supabaseKey = supabaseKey.value.trim();
+  if(typeof supabaseTable !== 'undefined' && supabaseTable) settings.supabaseTable = supabaseTable.value.trim() || 'teacher_preferences';
+  localStorage.setItem('mf_online_pref_form_v7', JSON.stringify({teachers,courses,submissions,settings}));
+}
+function loadData(){
+  const raw=localStorage.getItem('mf_online_pref_form_v7') || localStorage.getItem('mf_online_pref_form');
+  if(raw){
+    try{
+      const d=JSON.parse(raw);
+      teachers=d.teachers&&d.teachers.length?d.teachers:[...DEFAULT_TEACHERS];
+      courses=d.courses&&d.courses.length?d.courses:[...DEFAULT_COURSES];
+      submissions=d.submissions||[];
+      settings=d.settings||{ adminPassword:'18309', scriptUrl:DEFAULT_SCRIPT_URL, supabaseUrl:'', supabaseKey:'', supabaseTable:'teacher_preferences' }; if(!settings.supabaseTable) settings.supabaseTable='teacher_preferences';
+    }catch(e){}
+  }
+  prepareCourses();
+}
+function teacherLogin(){
+  const tid=loginTeacher.value;
+  const pass=loginPass.value.trim();
+
+  if(!tid) return alert('Lütfen adınızı seçiniz.');
+
+  if(tid==='admin'){
+    if(pass===settings.adminPassword || (settings.adminPassword==='18309' && pass==='18309')){
+      adminUnlocked=true;
+      adminTab.classList.remove('hidden');
+      setupTab.classList.remove('hidden');
+      adminArea.classList.remove('hidden');
+      loginPass.value='';
+      showScreen('admin');
+      return;
+    }
+    return alert('Şifre hatalı.');
+  }
+
+  const t=teachers.find(x=>x.id===tid && x.pass===pass);
+  if(!t) return alert('Ad veya şifre hatalı.');
+  currentTeacherId=t.id;
+  loginPass.value='';
+  formTitle.textContent=t.name+' - Ders Tercihleri';
+  loginScreen.classList.add('hidden');
+  formScreen.classList.remove('hidden');
+  renderPrefForm();
+}
+function backLogin(){currentTeacherId=''; formScreen.classList.add('hidden'); loginScreen.classList.remove('hidden');}
+function logoutAdmin(){lockAdminView(); render();}
+function changeAdminPassword(){
+  const oldP=(oldAdminPassword.value||'').trim();
+  const newP=(newAdminPassword.value||'').trim();
+  const newP2=(newAdminPassword2.value||'').trim();
+  if(oldP!==settings.adminPassword && oldP!=='18309') return alert('Mevcut şifre hatalı.');
+  if(!newP || newP.length<4) return alert('Yeni şifre en az 4 karakter olmalıdır.');
+  if(newP!==newP2) return alert('Yeni şifreler aynı değil.');
+  settings.adminPassword=newP;
+  oldAdminPassword.value=''; newAdminPassword.value=''; newAdminPassword2.value='';
+  saveData();
+  alert('Admin şifresi değiştirildi. Tekrar giriş yapmanız gerekiyor.');
+  logoutAdmin();
+}
+function addTeacher(){
+  const name=newTeacherName.value.trim();
+  if(!name) return alert('Öğretmen adı giriniz.');
+  if(teachers.some(t=>norm(t.name)===norm(name))) return alert('Bu öğretmen zaten var.');
+  teachers.push({id:uid(),name,pass:genPass()});
+  newTeacherName.value='';
+  saveData(); render();
+}
+function deleteTeacher(id){
+  if(!confirm('Öğretmen silinsin mi?'))return;
+  teachers=teachers.filter(t=>t.id!==id);
+  submissions=submissions.filter(s=>s.teacherId!==id);
+  saveData(); render();
+}
+function renewPass(id){const t=teachers.find(x=>x.id===id); if(!t)return; t.pass=genPass(); saveData(); render();}
+function addCourse(){
+  const name=prompt('Ders adı:'); if(!name) return;
+  const type=prompt('Tür yazınız: Muhasebe / Dış Ticaret / MESEM','Muhasebe') || 'Muhasebe';
+  courses.push({name:name.trim(), type: ['Muhasebe','Dış Ticaret','MESEM'].includes(type)?type:'Muhasebe', grade:'', hour:0});
+  prepareCourses(); saveData(); render();
+}
+function deleteCourse(name,type){
+  if(!confirm('Ders silinsin mi?'))return;
+  courses=courses.filter(c=>!(c.name===name && c.type===type));
+  saveData(); render();
+}
+function getLastSubmission(tid){return [...submissions].reverse().find(s=>s.teacherId===tid);}
+function renderPrefForm(){
+  const sub=getLastSubmission(currentTeacherId);
+  const prefs=sub?sub.preferences:{};
+
+  const groups = [
+    {title:'Alan Dersleri', types:['Muhasebe','Dış Ticaret']},
+    {title:'MESEM Dersleri', types:['MESEM']}
+  ];
+
+  prefForm.innerHTML = groups.map(group=>{
+    const list=courses.filter(c=>group.types.includes(c.type));
+    if(!list.length) return '';
+    return `<div class="pref-section">
+      <h3><span>${group.title}</span><span class="badge">${list.length} ders</span></h3>
+      ${list.map(c=>{
+        const key=courseKey(c);
+        const v=prefs[key]===undefined?0:prefs[key];
+        return `<div class="pref-row">
+          <div><b>${esc(c.name)}</b><br><span class="small">${c.grade?('| '+c.grade+'. sınıf'):''} ${c.hour?('| '+c.hour+' saat'):''}</span></div>
+          <select data-course-key="${esc(key)}" data-course="${esc(c.name)}" data-type="${esc(c.type)}" data-grade="${esc(c.grade||'')}" data-hour="${esc(c.hour||'')}" onchange="updateLiveStats()">
+            <option value="0" ${v==0?'selected':''}>İstemem</option>
+            <option value="2" ${v==2?'selected':''}>Mecbur kalırsam</option>
+            <option value="3" ${v==3?'selected':''}>Olabilir</option>
+            <option value="4" ${v==4?'selected':''}>İsterim</option>
+            <option value="5" ${v==5?'selected':''}>Çok isterim</option>
+          </select>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('');
+  updateLiveStats();
+}
+function preferenceCounts(){
+  const sels=[...document.querySelectorAll('#prefForm select[data-course]')];
+  const alan=sels.filter(s=>s.dataset.type==='Muhasebe' || s.dataset.type==='Dış Ticaret');
+  const mesem=sels.filter(s=>s.dataset.type==='MESEM');
+  const count=(arr,val)=>arr.filter(s=>Number(s.value)===val).length;
+  return {
+    total:sels.length,
+    alan5:count(alan,5),
+    alan4:count(alan,4),
+    alan3:count(alan,3),
+    alan2:count(alan,2),
+    alan0:count(alan,0),
+    mesem5:count(mesem,5),
+    mesem4:count(mesem,4),
+    mesem3:count(mesem,3),
+    mesem2:count(mesem,2),
+    mesem0:count(mesem,0)
+  };
+}
+function ruleStatus(){
+  const c=preferenceCounts();
+  return c.alan5===1 && c.alan4===2 && c.alan3===2 && c.alan2===1 && c.mesem5===1;
+}
+function updateLiveStats(){
+  const c=preferenceCounts();
+  kA5.textContent=c.alan5+'/1';
+  kA4.textContent=c.alan4+'/2';
+  kA3.textContent=c.alan3+'/2';
+  kA2.textContent=c.alan2+'/1';
+  kM5.textContent=c.mesem5+'/1';
+  kRule.textContent=ruleStatus()?'Tamam':'Eksik';
+  kRule.style.color=ruleStatus()?'#15803d':'#dc2626';
+}
+function quickFill(v){
+  document.querySelectorAll('#prefForm select[data-course]').forEach(s=>s.value=String(v));
+  updateLiveStats();
+}
+
+
+async function submitToCloud(payload){
+  if(!settings.supabaseUrl || !settings.supabaseKey){
+    throw new Error('Supabase URL veya key boş.');
+  }
+  const table = settings.supabaseTable || 'teacher_preferences';
+  const rows = (payload.details || []).map((d, idx)=>({
+    teacher_id: payload.teacherId || '',
+    teacher_name: payload.teacherName || '',
+    course_key: d.key || '',
+    course_name: d.course || '',
+    course_type: d.type || '',
+    grade: d.grade || '',
+    hour: Number(d.hour || 0),
+    preference_value: Number(d.value || 0),
+    preference_label: d.label || '',
+    submission_time: payload.timestamp || new Date().toISOString(),
+    row_no: idx + 1
+  }));
+  if(!rows.length) throw new Error('Gönderilecek tercih yok.');
+
+  const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table), {
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'apikey':settings.supabaseKey,
+      'Authorization':'Bearer ' + settings.supabaseKey,
+      'Prefer':'return=minimal'
+    },
+    body:JSON.stringify(rows)
+  });
+
+  if(!res.ok){
+    const txt = await res.text();
+    throw new Error('Supabase kayıt hatası: ' + res.status + ' - ' + txt);
+  }
+  return rows.length;
+}
+
+async function submitPreferences(){
+  const t=teachers.find(x=>x.id===currentTeacherId);
+  if(!t)return alert('Giriş bulunamadı.');
+  if(!ruleStatus()){
+    const c=preferenceCounts();
+    return alert('Tercih sayıları tamamlanmadı.\n\nZorunlu seçim:\nALAN DERSLERİ:\n- Çok isterim: 1 ders\n- İsterim: 2 ders\n- Olabilir: 2 ders\n- Mecbur kalırsam: 1 ders\n\nMESEM:\n- Çok isterim: 1 ders\n\nŞu an:\nAlan Çok isterim: '+c.alan5+'\nAlan İsterim: '+c.alan4+'\nAlan Olabilir: '+c.alan3+'\nAlan Mecbur: '+c.alan2+'\nMESEM Çok isterim: '+c.mesem5);
+  }
+  const preferences={};
+  const details=[];
+  document.querySelectorAll('#prefForm select[data-course-key]').forEach(sel=>{
+    const val=Number(sel.value);
+    const key=sel.dataset.courseKey;
+    preferences[key]=val;
+
+    // E-tabloya sadece öğretmenin aktif seçtiği tercihler gönderilir.
+    // İstemem kalan dersler gönderilmez.
+    if(val>0){
+      details.push({
+        key,
+        course:sel.dataset.course,
+        type:sel.dataset.type,
+        grade:sel.dataset.grade || '',
+        hour:sel.dataset.hour || '',
+        value:val,
+        label:prefLabel(val)
+      });
+    }
+  });
+  const payload={timestamp:new Date().toISOString(), teacherId:t.id, teacherName:t.name, preferences, details};
+  submissions.push(payload);
+  saveData();
+
+  if(settings.supabaseUrl && settings.supabaseKey){
+    try{
+      const count = await submitToCloud(payload);
+      alert('Tercihleriniz Supabase bulut sistemine kaydedildi: '+count+' tercih.');
+    }catch(e){
+      console.error(e);
+      alert('Tercihler bu tarayıcıya kaydedildi; Supabase gönderiminde hata oluştu: '+e.message);
+    }
+  }else alert('Tercihleriniz bu cihazda kaydedildi. Online gönderim için Supabase URL ve key girilmelidir.');
+  backLogin();
+}
+function render(){
+  loginTeacher.innerHTML = '<option value="">Öğretmen seçiniz...</option>' + 
+    (teachers.length ? teachers.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join('') : '') +
+    '<option value="admin">admin</option>';
+  if(typeof scriptUrl !== 'undefined' && scriptUrl) scriptUrl.value=settings.scriptUrl||'';
+  if(typeof supabaseUrl !== 'undefined' && supabaseUrl) supabaseUrl.value=settings.supabaseUrl||'';
+  if(typeof supabaseKey !== 'undefined' && supabaseKey) supabaseKey.value=settings.supabaseKey||'';
+  if(typeof supabaseTable !== 'undefined' && supabaseTable) supabaseTable.value=settings.supabaseTable||'teacher_preferences';
+  renderTeachers(); renderResults(); renderCourses(); renderGas();
+}
+function renderTeachers(){
+  teacherTable.innerHTML='<tr><th>Öğretmen</th><th>4 Haneli Şifre</th><th>Durum</th><th>İşlem</th></tr>'+
+  (teachers.map(t=>{
+    const sent=getLastSubmission(t.id);
+    return `<tr><td><b>${esc(t.name)}</b></td><td><span class="badge">${t.pass}</span></td><td>${sent?'<span class="badge">Gönderdi</span>':'<span class="small">Bekleniyor</span>'}</td><td><button onclick="renewPass('${t.id}')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('${t.id}')">Sil</button></td></tr>`;
+  }).join('') || '<tr><td colspan="4">Öğretmen eklenmedi.</td></tr>');
+}
+function renderResults(){
+  const allRows=[];
+  submissions.forEach(s=>{
+    const detail=s.details || Object.entries(s.preferences||{}).map(([key,val])=>{
+      const c=courses.find(x=>courseKey(x)===key) || courses.find(x=>x.name===key);
+      return {course:c?c.name:key,type:c?c.type:'',grade:c?c.grade:'',hour:c?c.hour:'',value:val,label:prefLabel(val)};
+    }).filter(d=>Number(d.value)>0);
+    detail.forEach(d=>allRows.push({date:new Date(s.timestamp).toLocaleString('tr-TR'), teacher:s.teacherName, course:d.course, type:d.type, pref:d.label||prefLabel(d.value), value:d.value}));
+  });
+  resultTable.innerHTML='<tr><th>Tarih</th><th>Öğretmen</th><th>Tür</th><th>Ders</th><th>Tercih</th><th>Puan</th></tr>'+
+  (allRows.map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.teacher)}</td><td>${esc(r.type)}</td><td>${esc(r.course)}</td><td>${esc(r.pref)}</td><td>${r.value}</td></tr>`).join('') || '<tr><td colspan="6">Henüz tercih gönderilmedi.</td></tr>');
+}
+function renderCourses(){
+  renderCoursesRows = courses.map(c=>`<tr><td>${esc(c.name)}</td><td><span class="badge ${typeClass(c.type)}">${esc(c.type)}</span></td><td>${esc(c.grade||'')}</td><td>${c.hour||''}</td><td><button class="danger" onclick="deleteCourse('${esc(c.name).replace(/'/g,'&#39;')}','${esc(c.type)}')">Sil</button></td></tr>`).join('');
+  courseTable.innerHTML='<tr><th>Ders</th><th>Tür</th><th>Sınıf</th><th>Saat</th><th></th></tr>'+renderCoursesRows;
+}
+async function testSupabaseConnection(){
+  saveData();
+  if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
+  try{
+    const table = settings.supabaseTable || 'teacher_preferences';
+    const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?select=id&limit=1', {
+      headers:{'apikey':settings.supabaseKey,'Authorization':'Bearer '+settings.supabaseKey}
+    });
+    if(!res.ok) throw new Error(await res.text());
+    alert('Supabase bağlantısı başarılı.');
+  }catch(e){
+    alert('Supabase bağlantı hatası: '+e.message);
+  }
+}
+async function loadSupabasePreferences(){
+  saveData();
+  if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
+  try{
+    const table = settings.supabaseTable || 'teacher_preferences';
+    const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?select=*&order=created_at.desc', {
+      headers:{'apikey':settings.supabaseKey,'Authorization':'Bearer '+settings.supabaseKey}
+    });
+    if(!res.ok) throw new Error(await res.text());
+    const rows = await res.json();
+    renderSupabaseRows(rows);
+  }catch(e){
+    alert('Supabase tercihleri alınamadı: '+e.message);
+  }
+}
+function renderSupabaseRows(rows){
+  resultTable.innerHTML='<tr><th>Tarih</th><th>Öğretmen</th><th>Tür</th><th>Sınıf</th><th>Saat</th><th>Ders</th><th>Tercih</th><th>Puan</th></tr>'+
+  (rows.map(r=>`<tr><td>${esc(r.created_at||r.submission_time||'')}</td><td>${esc(r.teacher_name||'')}</td><td>${esc(r.course_type||'')}</td><td>${esc(r.grade||'')}</td><td>${esc(r.hour||'')}</td><td>${esc(r.course_name||'')}</td><td>${esc(r.preference_label||'')}</td><td>${esc(r.preference_value||'')}</td></tr>`).join('') || '<tr><td colspan="8">Supabase kaydı yok.</td></tr>');
+}
+async function exportSupabasePreferencesExcel(){
+  if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
+  saveData();
+  if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
+  try{
+    const table = settings.supabaseTable || 'teacher_preferences';
+    const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?select=*&order=created_at.asc', {
+      headers:{'apikey':settings.supabaseKey,'Authorization':'Bearer '+settings.supabaseKey}
+    });
+    if(!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    const rows = data.map(r=>({
+      'Tarih':r.created_at||r.submission_time||'',
+      'Öğretmen Ad Soyad':r.teacher_name||'',
+      'Ders Adı':r.course_name||'',
+      'Tür':r.course_type||'',
+      'Sınıf':r.grade||'',
+      'Saat':r.hour||'',
+      'Tercih Puanı / Seçim':r.preference_value||'',
+      'Tercih':r.preference_label||''
+    }));
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),'Supabase_Tercihler');
+    XLSX.writeFile(wb,'supabase_ogretmen_ders_tercihleri.xlsx');
+  }catch(e){
+    alert('Supabase Excel alınamadı: '+e.message);
+  }
+}
+
+function exportTeacherPasswords(){
+  if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
+  const wb=XLSX.utils.book_new();
+  const rows=teachers.map(t=>({'Öğretmen':t.name,'4 Haneli Şifre':t.pass,'Durum':getLastSubmission(t.id)?'Gönderdi':'Bekleniyor'}));
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),'Ogretmen_Sifreleri');
+  XLSX.writeFile(wb,'ogretmen_tercih_sifreleri.xlsx');
+}
+function exportPreferencesExcel(){
+  if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
+  const wb=XLSX.utils.book_new();
+  const matrix=teachers.map(t=>{
+    const sub=getLastSubmission(t.id);
+    const row={'Öğretmen':t.name,'Şifre':t.pass,'Gönderim Durumu':sub?'Gönderdi':'Bekleniyor','Tarih':sub?new Date(sub.timestamp).toLocaleString('tr-TR'):''};
+    courses.forEach(c=>row[c.name]=sub?prefLabel(sub.preferences[c.name]):'');
+    return row;
+  });
+  const list=[];
+  submissions.forEach(s=>{
+    const detail=s.details || Object.entries(s.preferences||{}).map(([key,val])=>{
+      const c=courses.find(x=>courseKey(x)===key) || courses.find(x=>x.name===key);
+      return {course:c?c.name:key,type:c?c.type:'',grade:c?c.grade:'',hour:c?c.hour:'',value:val,label:prefLabel(val)};
+    }).filter(d=>Number(d.value)>0);
+    detail.forEach(d=>list.push({'Tarih':new Date(s.timestamp).toLocaleString('tr-TR'),'Öğretmen':s.teacherName,'Tür':d.type,'Ders':d.course,'Tercih':d.label||prefLabel(d.value),'Puan':d.value}));
+  });
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(matrix),'Tercih_Matrisi');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(list),'Tercih_Listesi');
+  XLSX.writeFile(wb,'ogretmen_ders_tercihleri_v23_supabase.xlsx');
+}
+function downloadV28PreferenceExcel(){
+  if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
+  const wb=XLSX.utils.book_new();
+  const rows=[];
+  teachers.forEach(t=>{
+    const sub=getLastSubmission(t.id);
+    courses.forEach(c=>{
+      const key=courseKey(c);
+      const val=sub && sub.preferences[key]!==undefined ? sub.preferences[key] : 0;
+      rows.push({'Öğretmen Ad Soyad':t.name,'Ders Adı':c.name,'Tür':c.type,'Sınıf':c.grade||'','Saat':c.hour||'','Tercih Puanı / Seçim':val,'Tercih':prefLabel(val)});
+    });
+  });
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),'Tercihler_Liste');
+  XLSX.writeFile(wb,'v28_uyumlu_ogretmen_ders_tercihleri.xlsx');
+}
+function importTeachersExcel(e){
+  if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
+  const f=e.target.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    const wb=XLSX.read(ev.target.result,{type:'array'});
+    const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});
+    rows.forEach(row=>{
+      const name=String(row['Öğretmen']||row['Ogretmen']||row['Ad Soyad']||row['Adı Soyadı']||row[Object.keys(row)[0]]||'').trim();
+      if(name && !teachers.some(t=>norm(t.name)===norm(name))) teachers.push({id:uid(),name,pass:genPass()});
+    });
+    saveData(); render(); alert('Öğretmenler alındı.');
+  };
+  r.readAsArrayBuffer(f); e.target.value='';
+}
+function pickValue(row, keys){
+  for(const k of keys){
+    if(row[k]!==undefined && row[k]!==null && String(row[k]).trim()!=='') return row[k];
+  }
+  const allKeys=Object.keys(row);
+  for(const key of allKeys){
+    const nk=norm(key);
+    if(keys.some(k=>nk.includes(norm(k)))) return row[key];
+  }
+  return '';
+}
+function normalizeCourseTypeForImport(name, type){
+  const raw = String((type||'') + ' ' + (name||'')).toLocaleUpperCase('tr-TR');
+  if(raw.includes('MESEM')) return 'MESEM';
+  if(raw.includes('DIŞ TİCARET') || raw.includes('DIS TICARET') || raw.includes('GÜMRÜK') || raw.includes('GUMRUK') || raw.includes('İHRACAT') || raw.includes('IHRACAT') || raw.includes('İTHALAT') || raw.includes('ITHALAT')) return 'Dış Ticaret';
+  return 'Muhasebe';
+}
+function importCoursesExcel(e){
+  if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
+  const f=e.target.files[0]; 
+  if(!f) return;
+
+  const r=new FileReader();
+  r.onload=ev=>{
+    try{
+      const wb=XLSX.read(ev.target.result,{type:'array'});
+      const sh=wb.Sheets[wb.SheetNames[0]];
+
+      // 1) Önce normal başlıklı tablo okumayı dene
+      let rows=XLSX.utils.sheet_to_json(sh,{defval:''});
+      let imported=[];
+
+      rows.forEach(row=>{
+        const name=String(pickValue(row,['Ders','Ders Adı','Ders Adi','Dersin Adı','Dersin Adi','name']) || '').trim();
+        if(!name || norm(name).includes('toplam')) return;
+
+        const explicitType=pickValue(row,['Tür','Tur','Alan','Program','Şube Türü','Sube Turu','type']);
+        const type=normalizeCourseTypeForImport(name, explicitType);
+
+        const gradeVal=pickValue(row,['Sınıf','Sinif','Sınıf Seviyesi','Sinif Seviyesi','grade']);
+        const hourVal=pickValue(row,['Saat','Haftalık Saat','Haftalik Saat','Ders Saati','hour']);
+
+        // Satır formatı: Ders | Sınıf | Saat | Tür
+        if(gradeVal && hourVal){
+          imported.push({name,type,grade:String(gradeVal).replace(/\D/g,'') || String(gradeVal),hour:Number(String(hourVal).replace(',','.'))||0});
+          return;
+        }
+
+        // Matris formatı: Ders | 9 | 10 | 11 | 12
+        ['9','10','11','12'].forEach(g=>{
+          const hv = row[g] ?? row[g+'. Sınıf'] ?? row[g+'. Sinif'] ?? row[g+' Sınıf'] ?? row[g+' Sinif'];
+          if(hv!==undefined && hv!==null && String(hv).trim()!==''){
+            const hour=Number(String(hv).replace(',','.'))||0;
+            if(hour>0) imported.push({name,type,grade:g,hour});
+          }
+        });
+      });
+
+      // 2) Eğer başlıklar bozuksa ham satır/matris yöntemi
+      if(!imported.length){
+        const aoa=XLSX.utils.sheet_to_json(sh,{header:1,defval:''});
+        let headerIndex=aoa.findIndex(row=>row.some(x=>['9','10','11','12'].includes(String(x).trim())));
+        if(headerIndex<0) headerIndex=0;
+        const header=aoa[headerIndex]||[];
+        let courseCol=header.findIndex(h=>norm(h).includes('ders'));
+        if(courseCol<0) courseCol=0;
+
+        const gradeCols={};
+        header.forEach((h,i)=>{
+          const s=String(h).trim();
+          if(/^9/.test(s)) gradeCols['9']=i;
+          if(/^10/.test(s)) gradeCols['10']=i;
+          if(/^11/.test(s)) gradeCols['11']=i;
+          if(/^12/.test(s)) gradeCols['12']=i;
+        });
+        if(!Object.keys(gradeCols).length){
+          gradeCols['9']=1; gradeCols['10']=2; gradeCols['11']=3; gradeCols['12']=4;
+        }
+
+        for(let i=headerIndex+1;i<aoa.length;i++){
+          const row=aoa[i]||[];
+          const name=String(row[courseCol]||'').trim();
+          if(!name || norm(name).includes('toplam')) continue;
+          const type=normalizeCourseTypeForImport(name,'');
+          Object.entries(gradeCols).forEach(([g,col])=>{
+            const hour=Number(String(row[col]||'').replace(',','.'))||0;
+            if(hour>0) imported.push({name,type,grade:g,hour});
+          });
+        }
+      }
+
+      if(!imported.length){
+        return alert('Dersler alınamadı. Excel’de ders adı, sınıf ve saat bilgileri bulunamadı.');
+      }
+
+      // Tekilleştir
+      const seen=new Set();
+      courses=[];
+      imported.forEach(c=>{
+        if(!c.name || !c.grade || !c.hour) return;
+        const key=c.name+'|'+c.type+'|'+c.grade+'|'+c.hour;
+        if(seen.has(key)) return;
+        seen.add(key);
+        courses.push(c);
+      });
+
+      prepareCourses();
+      saveData();
+      render();
+      alert('Ders havuzu alındı: '+courses.length+' ders/sınıf satırı.');
+    }catch(err){
+      alert('Ders havuzu okunamadı: '+err.message);
+    }finally{
+      e.target.value='';
+    }
+  };
+  r.readAsArrayBuffer(f);
+}
+
+function resetAll(){
+  if(!confirm('Tüm öğretmen, şifre ve tercih verileri silinsin mi?'))return;
+  localStorage.removeItem('mf_online_pref_form_v7');
+  teachers=[...DEFAULT_TEACHERS]; submissions=[]; courses=[...DEFAULT_COURSES]; settings={adminPassword:'18309',scriptUrl:DEFAULT_SCRIPT_URL,supabaseUrl:'',supabaseKey:'',supabaseTable:'teacher_preferences'};
+  prepareCourses(); render();
+}
+function downloadSharedForm(){
+  saveData(); lockAdminView();
+  let source = document.documentElement.outerHTML;
+  source = source.replace(/let adminUnlocked = false;/g, 'let adminUnlocked = false;');
+  source = source.replace(/<button class="tab hidden" id="adminTab"/g, '<button class="tab hidden" id="adminTab"');
+  source = source.replace(/<button class="tab hidden" id="setupTab"/g, '<button class="tab hidden" id="setupTab"');
+  source = source.replace(/<section id="adminScreen" class="hidden"/g, '<section id="adminScreen" class="hidden" class="hidden"');
+  source = source.replace(/<section id="setupScreen" class="card hidden"/g, '<section id="setupScreen" class="card hidden" class="card hidden"');
+  source = source.replace(/<section id="formScreen" class="card hidden">/g, '<section id="formScreen" class="card hidden">');
+  source = source.replace(/<div id="adminArea" class="hidden">/g, '<div id="adminArea" class="hidden">');
+  source = source.replace(/const DEFAULT_TEACHERS = [\s\S]*?;\nconst DEFAULT_SCRIPT_URL =/, 'const DEFAULT_TEACHERS = ' + JSON.stringify(teachers, null, 2) + ';\nconst DEFAULT_SCRIPT_URL =');
+  source = source.replace(/const DEFAULT_SCRIPT_URL = [\s\S]*?;\nconst DEFAULT_COURSES =/, 'const DEFAULT_SCRIPT_URL = ' + JSON.stringify(settings.scriptUrl || '') + ';\nconst DEFAULT_COURSES =');
+  source = source.replace(/const DEFAULT_COURSES = [\s\S]*?;\nlet teachers =/, 'const DEFAULT_COURSES = ' + JSON.stringify(courses, null, 2) + ';\nlet teachers =');
+  source = source.replace(/let settings = \{ adminPassword:'[^']*', scriptUrl:DEFAULT_SCRIPT_URL \};/, 'let settings = { adminPassword:' + JSON.stringify(settings.adminPassword || '18309') + ', scriptUrl:DEFAULT_SCRIPT_URL };');
+  source = source.replace(/let settings = \{[\s\S]*?\};/, 'let settings = ' + JSON.stringify(settings) + ';');
+  const blob = new Blob(['<!DOCTYPE html>\n' + source], {type:'text/html;charset=utf-8'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ogretmen_ders_tercih_formu_v23_supabase_paylasilacak.html'; a.click();
+}
+function copyShareText(){
+  const txt='Değerli öğretmenimiz, ders tercih formuna girerek adınızı seçiniz ve size verilen şifreyle tercihlerinizi gönderiniz.';
+  navigator.clipboard.writeText(txt); alert('Mesaj kopyalandı.');
+}
+const GAS_CODE = `create table if not exists public.teacher_preferences (
+  id bigint generated by default as identity primary key,
+  created_at timestamptz default now(),
+  teacher_id text,
+  teacher_name text,
+  course_key text,
+  course_name text,
+  course_type text,
+  grade text,
+  hour numeric,
+  preference_value integer,
+  preference_label text,
+  submission_time text,
+  row_no integer
+);
+
+alter table public.teacher_preferences enable row level security;
+
+drop policy if exists "public_insert_teacher_preferences" on public.teacher_preferences;
+create policy "public_insert_teacher_preferences"
+on public.teacher_preferences
+for insert
+to anon
+with check (true);
+
+drop policy if exists "public_select_teacher_preferences" on public.teacher_preferences;
+create policy "public_select_teacher_preferences"
+on public.teacher_preferences
+for select
+to anon
+using (true);`;
+function renderGas(){gasCode.textContent=GAS_CODE}
+function copyGasCode(){navigator.clipboard.writeText(GAS_CODE); alert('SQL kodu kopyalandı.')}
+loadData();
+lockAdminView();
+render();
+</script>
+
+</body></html>
