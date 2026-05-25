@@ -57,7 +57,7 @@ th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;posi
 <body>
 <header>
   <h1>Muhasebe Finansman Öğretmen Ders Tercih Formu </h1>
-  <p>Muhasebe, Dış Ticaret, Mesem Muhasebe</p>
+  <p>v28 ders dağıtım sistemiyle uyumlu sade öğretmen ders tercih formu</p>
 </header>
 
 <div class="wrap">
@@ -117,8 +117,8 @@ th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;posi
           </div>
 
           <div class="notice info">
-            Öğretmenleri ekleyin. Her öğretmene sistem otomatik 4 haneli şifre verir.
-            Başka tarayıcılarda da öğretmenlerin görünmesi için işlem bitince <b>Paylaşılacak Form HTML'yi İndir</b> düğmesine basıp çıkan dosyayı paylaşın/yükleyin.
+            Öğretmenleri ekleyin. Her öğretmene sistem otomatik 4 haneli şifre verir. 
+            Bu Supabase sürümünde tek HTML dosyası yeterlidir; tercihler ve güncellemeler buluta kaydedilir.
           </div>
 
           <div class="card" style="box-shadow:none;margin:10px 0;padding:12px;background:#f8fafc">
@@ -156,7 +156,6 @@ th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;posi
             <button onclick="exportTeacherPasswords()">Şifre Listesi Excel</button>
             <button onclick="exportPreferencesExcel()">Tercihler Excel</button>
             <button onclick="downloadV28PreferenceExcel()">v28 Uyumlu Tercih Dosyası</button>
-            <button class="ok" onclick="downloadSharedForm()">Paylaşılacak Form HTML'yi İndir</button>
             <button class="warn" onclick="copyShareText()">Öğretmenlere Mesajı Kopyala</button>
             <button class="danger" onclick="resetAll()">Tüm Verileri Sıfırla</button>
           </div>
@@ -959,7 +958,7 @@ function exportPreferencesExcel(){
   });
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(matrix),'Tercih_Matrisi');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(list),'Tercih_Listesi');
-  XLSX.writeFile(wb,'ogretmen_ders_tercihleri_v25_supabase_temizleme.xlsx');
+  XLSX.writeFile(wb,'ogretmen_ders_tercihleri_v26_tek_dosya.xlsx');
 }
 function downloadV28PreferenceExcel(){
   if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
@@ -1132,7 +1131,7 @@ function downloadSharedForm(){
   source = source.replace(/let settings = \{ adminPassword:'[^']*', scriptUrl:DEFAULT_SCRIPT_URL \};/, 'let settings = { adminPassword:' + JSON.stringify(settings.adminPassword || '18309') + ', scriptUrl:DEFAULT_SCRIPT_URL };');
   source = source.replace(/let settings = \{[\s\S]*?\};/, 'let settings = ' + JSON.stringify(settings) + ';');
   const blob = new Blob(['<!DOCTYPE html>\n' + source], {type:'text/html;charset=utf-8'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ogretmen_ders_tercih_formu_v25_supabase_paylasilacak.html'; a.click();
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ogretmen_ders_tercih_formu_v26_supabase_tek_dosya.html'; a.click();
 }
 function copyShareText(){
   const txt='Değerli öğretmenimiz, ders tercih formuna girerek adınızı seçiniz ve size verilen şifreyle tercihlerinizi gönderiniz.';
