@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muhasebe Finansman Öğretmen Ders Tercih Formu v27 Supabase</title>
+<title>Muhasebe Finansman Öğretmen Ders Tercih Formu v28 Supabase</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 :root{
@@ -56,7 +56,7 @@ th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;posi
 </head>
 <body>
 <header>
-  <h1>Muhasebe Finansman Öğretmen Ders Tercih Formu v27 Supabase</h1>
+  <h1>Muhasebe Finansman Öğretmen Ders Tercih Formu v28 Supabase</h1>
   <p>v28 ders dağıtım sistemiyle uyumlu sade öğretmen ders tercih formu</p>
 </header>
 
@@ -140,11 +140,17 @@ th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;posi
           <input id="supabaseUrl" placeholder="https://xxxx.supabase.co" onchange="saveData()">
           <label>Supabase anon/public key</label>
           <input id="supabaseKey" placeholder="sb_publishable_... veya anon key" onchange="saveData()">
-          <label>Tablo Adı</label>
+          <label>Tercih Tablosu</label>
           <input id="supabaseTable" placeholder="teacher_preferences" onchange="saveData()">
+          <label>Öğretmen Tablosu</label>
+          <input id="teacherTableName" placeholder="teacher_accounts" onchange="saveData()">
+          <label>Ders Havuzu Tablosu</label>
+          <input id="courseTableName" placeholder="course_pool" onchange="saveData()">
           <div class="btns" style="margin-top:6px">
             <button onclick="testSupabaseConnection()">Supabase Bağlantısını Test Et</button>
             <button onclick="resetSupabaseSettings()">Supabase Ayarlarını Varsayılana Al</button>
+            <button onclick="loadSupabaseBaseData()">Öğretmen/Dersleri Buluttan Al</button>
+            <button onclick="syncAllBaseDataToSupabase()">Öğretmen/Dersleri Buluta Kaydet</button>
             <button onclick="loadSupabasePreferences()">Supabase Tercihleri Al</button>
             <button onclick="exportSupabasePreferencesExcel()">Supabase Excel</button>
             <button class="danger" onclick="clearSupabasePreferences()">Supabase Tercihlerini Temizle</button>
@@ -438,7 +444,7 @@ let courses = [...DEFAULT_COURSES];
 let submissions = [];
 let currentTeacherId = '';
 let adminUnlocked = false;
-let settings = { adminPassword:'18309', scriptUrl:DEFAULT_SCRIPT_URL, supabaseUrl:'https://bzhbbjjtwotahoovnxua.supabase.co', supabaseKey:'sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l', supabaseTable:'teacher_preferences' };
+let settings = { adminPassword:'18309', scriptUrl:DEFAULT_SCRIPT_URL, supabaseUrl:'https://bzhbbjjtwotahoovnxua.supabase.co', supabaseKey:'sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l', supabaseTable:'teacher_preferences', teacherTable:'teacher_accounts', courseTable:'course_pool' };
 
 function uid(){return Math.random().toString(36).slice(2,9)}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -491,86 +497,45 @@ function lockAdminView(){
 function cleanWebAppUrl(url){
   return String(url||'').trim().split('?')[0];
 }
+function applyDefaultSupabaseSettings(){
+  settings = settings || {};
+  if(!settings.adminPassword) settings.adminPassword='18309';
+  if(!settings.scriptUrl) settings.scriptUrl=DEFAULT_SCRIPT_URL;
+  if(!settings.supabaseUrl) settings.supabaseUrl='https://bzhbbjjtwotahoovnxua.supabase.co';
+  if(!settings.supabaseKey) settings.supabaseKey='sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l';
+  if(!settings.supabaseTable) settings.supabaseTable='teacher_preferences';
+  if(!settings.teacherTable) settings.teacherTable='teacher_accounts';
+  if(!settings.courseTable) settings.courseTable='course_pool';
+}
 function saveData(){
+  applyDefaultSupabaseSettings();
   if(typeof scriptUrl !== 'undefined' && scriptUrl) {
     settings.scriptUrl = cleanWebAppUrl(scriptUrl.value);
     scriptUrl.value = settings.scriptUrl;
   }
-  if(typeof supabaseUrl !== 'undefined' && supabaseUrl) settings.supabaseUrl = supabaseUrl.value.trim().replace(/\/$/,'');
-  if(typeof supabaseKey !== 'undefined' && supabaseKey) settings.supabaseKey = supabaseKey.value.trim();
+  if(typeof supabaseUrl !== 'undefined' && supabaseUrl) settings.supabaseUrl = supabaseUrl.value.trim().replace(/\/$/,'') || 'https://bzhbbjjtwotahoovnxua.supabase.co';
+  if(typeof supabaseKey !== 'undefined' && supabaseKey) settings.supabaseKey = supabaseKey.value.trim() || 'sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l';
   if(typeof supabaseTable !== 'undefined' && supabaseTable) settings.supabaseTable = supabaseTable.value.trim() || 'teacher_preferences';
-  localStorage.setItem('mf_online_pref_form_v7', JSON.stringify({teachers,courses,submissions:[],settings}));
+  if(typeof teacherTableName !== 'undefined' && teacherTableName) settings.teacherTable = teacherTableName.value.trim() || 'teacher_accounts';
+  if(typeof courseTableName !== 'undefined' && courseTableName) settings.courseTable = courseTableName.value.trim() || 'course_pool';
+
+  // Tercihler localStorage'a yazılmaz. Öğretmen/dersler Supabase'den gelir.
+  localStorage.setItem('mf_online_pref_form_v7', JSON.stringify({settings}));
 }
 function loadData(){
-  const raw=localStorage.getItem('mf_online_pref_form_v7') || localStorage.getItem('mf_online_pref_form');
+  const raw=localStorage.getItem('mf_online_pref_form_v7');
   if(raw){
     try{
       const d=JSON.parse(raw);
-      teachers=d.teachers&&d.teachers.length?d.teachers:[...DEFAULT_TEACHERS];
-      courses=d.courses&&d.courses.length?d.courses:[...DEFAULT_COURSES];
-      submissions=[];
-      settings=d.settings||{ adminPassword:'18309', scriptUrl:DEFAULT_SCRIPT_URL, supabaseUrl:'https://bzhbbjjtwotahoovnxua.supabase.co', supabaseKey:'sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l', supabaseTable:'teacher_preferences' }; if(!settings.supabaseTable) settings.supabaseTable='teacher_preferences';
+      settings=d.settings||{ adminPassword:'18309', scriptUrl:DEFAULT_SCRIPT_URL, supabaseUrl:'https://bzhbbjjtwotahoovnxua.supabase.co', supabaseKey:'sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l', supabaseTable:'teacher_preferences', teacherTable:'teacher_accounts', courseTable:'course_pool' };
     }catch(e){}
   }
+  applyDefaultSupabaseSettings();
+  teachers=[...DEFAULT_TEACHERS];
+  courses=[...DEFAULT_COURSES];
+  submissions=[];
   prepareCourses();
 }
-
-async function getSupabaseTeacherPreferences(teacherId){
-  if(!settings.supabaseUrl || !settings.supabaseKey) return null;
-  const table = settings.supabaseTable || 'teacher_preferences';
-  const url = settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) +
-    '?select=*&teacher_id=eq.' + encodeURIComponent(teacherId) +
-    '&is_active=eq.true&order=created_at.desc';
-
-  const res = await fetch(url, {
-    headers:{'apikey':settings.supabaseKey,'Authorization':'Bearer '+settings.supabaseKey}
-  });
-  if(!res.ok) throw new Error(await res.text());
-
-  const rows = await res.json();
-  if(!rows.length) return null;
-
-  const prefs = {};
-  rows.forEach(r=>{
-    const key = r.course_key || (String(r.course_name||'')+'|'+String(r.course_type||'')+'|'+String(r.grade||'')+'|'+String(r.hour||''));
-    if(prefs[key]===undefined) prefs[key]=Number(r.preference_value||0);
-  });
-
-  return {
-    timestamp: rows[0].submission_time || rows[0].created_at || new Date().toISOString(),
-    teacherId,
-    teacherName: rows[0].teacher_name || '',
-    preferences:prefs,
-    details:rows.map(r=>({
-      key:r.course_key,
-      course:r.course_name,
-      type:r.course_type,
-      grade:r.grade,
-      hour:r.hour,
-      value:Number(r.preference_value||0),
-      label:r.preference_label
-    }))
-  };
-}
-async function deactivateOldSupabasePreferences(teacherId){
-  if(!settings.supabaseUrl || !settings.supabaseKey || !teacherId) return;
-  const table = settings.supabaseTable || 'teacher_preferences';
-  const url = settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) +
-    '?teacher_id=eq.' + encodeURIComponent(teacherId) + '&is_active=eq.true';
-
-  const res = await fetch(url, {
-    method:'PATCH',
-    headers:{
-      'Content-Type':'application/json',
-      'apikey':settings.supabaseKey,
-      'Authorization':'Bearer '+settings.supabaseKey,
-      'Prefer':'return=minimal'
-    },
-    body:JSON.stringify({is_active:false})
-  });
-  if(!res.ok) throw new Error(await res.text());
-}
-
 async function teacherLogin(){
   const tid=loginTeacher.value;
   const pass=loginPass.value.trim();
@@ -626,30 +591,44 @@ function changeAdminPassword(){
   alert('Admin şifresi değiştirildi. Tekrar giriş yapmanız gerekiyor.');
   logoutAdmin();
 }
-function addTeacher(){
+async function addTeacher(){
   const name=newTeacherName.value.trim();
   if(!name) return alert('Öğretmen adı giriniz.');
   if(teachers.some(t=>norm(t.name)===norm(name))) return alert('Bu öğretmen zaten var.');
-  teachers.push({id:uid(),name,pass:genPass()});
+  const t={id:uid(),name,pass:genPass()};
+  teachers.push(t);
   newTeacherName.value='';
+  try{ await saveTeacherToCloud(t); }catch(e){ alert('Öğretmen yerelde eklendi ama Supabase’e kaydedilemedi: '+e.message); }
   saveData(); render();
 }
-function deleteTeacher(id){
+async function deleteTeacher(id){
   if(!confirm('Öğretmen silinsin mi?'))return;
   teachers=teachers.filter(t=>t.id!==id);
   submissions=submissions.filter(s=>s.teacherId!==id);
+  try{ await supabasePatch(settings.teacherTable||'teacher_accounts','teacher_id=eq.'+encodeURIComponent(id),{is_active:false}); }catch(e){ console.warn(e); }
   saveData(); render();
 }
-function renewPass(id){const t=teachers.find(x=>x.id===id); if(!t)return; t.pass=genPass(); saveData(); render();}
-function addCourse(){
+async function renewPass(id){
+  const t=teachers.find(x=>x.id===id); if(!t)return;
+  t.pass=genPass();
+  try{ await supabasePatch(settings.teacherTable||'teacher_accounts','teacher_id=eq.'+encodeURIComponent(id),{pass:t.pass}); }catch(e){ console.warn(e); }
+  saveData(); render();
+}
+async function addCourse(){
   const name=prompt('Ders adı:'); if(!name) return;
   const type=prompt('Tür yazınız: Muhasebe / Dış Ticaret / MESEM','Muhasebe') || 'Muhasebe';
-  courses.push({name:name.trim(), type: ['Muhasebe','Dış Ticaret','MESEM'].includes(type)?type:'Muhasebe', grade:'', hour:0});
-  prepareCourses(); saveData(); render();
+  const c={name:name.trim(), type: ['Muhasebe','Dış Ticaret','MESEM'].includes(type)?type:'Muhasebe', grade:'', hour:0};
+  courses.push(c);
+  prepareCourses();
+  try{ await saveCourseToCloud(c); }catch(e){ alert('Ders yerelde eklendi ama Supabase’e kaydedilemedi: '+e.message); }
+  saveData(); render();
 }
-function deleteCourse(name,type){
+async function deleteCourse(name,type){
   if(!confirm('Ders silinsin mi?'))return;
   courses=courses.filter(c=>!(c.name===name && c.type===type));
+  try{
+    await supabasePatch(settings.courseTable||'course_pool','name=eq.'+encodeURIComponent(name)+'&type=eq.'+encodeURIComponent(type),{is_active:false});
+  }catch(e){ console.warn(e); }
   saveData(); render();
 }
 function getLastSubmission(tid){return [...submissions].reverse().find(s=>s.teacherId===tid);}
@@ -817,6 +796,8 @@ function render(){
   if(typeof supabaseUrl !== 'undefined' && supabaseUrl) supabaseUrl.value=settings.supabaseUrl||'';
   if(typeof supabaseKey !== 'undefined' && supabaseKey) supabaseKey.value=settings.supabaseKey||'';
   if(typeof supabaseTable !== 'undefined' && supabaseTable) supabaseTable.value=settings.supabaseTable||'teacher_preferences';
+  if(typeof teacherTableName !== 'undefined' && teacherTableName) teacherTableName.value=settings.teacherTable||'teacher_accounts';
+  if(typeof courseTableName !== 'undefined' && courseTableName) courseTableName.value=settings.courseTable||'course_pool';
   renderTeachers(); renderResults(); renderCourses(); renderGas();
 }
 function renderTeachers(){
@@ -846,11 +827,107 @@ function resetSupabaseSettings(){
   settings.supabaseUrl='https://bzhbbjjtwotahoovnxua.supabase.co';
   settings.supabaseKey='sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l';
   settings.supabaseTable='teacher_preferences';
+  settings.teacherTable='teacher_accounts';
+  settings.courseTable='course_pool';
   if(typeof supabaseUrl !== 'undefined' && supabaseUrl) supabaseUrl.value=settings.supabaseUrl;
   if(typeof supabaseKey !== 'undefined' && supabaseKey) supabaseKey.value=settings.supabaseKey;
   if(typeof supabaseTable !== 'undefined' && supabaseTable) supabaseTable.value=settings.supabaseTable;
+  if(typeof teacherTableName !== 'undefined' && teacherTableName) teacherTableName.value=settings.teacherTable;
+  if(typeof courseTableName !== 'undefined' && courseTableName) courseTableName.value=settings.courseTable;
   saveData();
   alert('Supabase ayarları varsayılana alındı.');
+}
+
+
+function cloudHeaders(extra={}){
+  return Object.assign({
+    'apikey':settings.supabaseKey,
+    'Authorization':'Bearer '+settings.supabaseKey
+  }, extra);
+}
+async function supabaseSelect(table, query='select=*'){
+  applyDefaultSupabaseSettings();
+  const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?' + query, {
+    headers:cloudHeaders()
+  });
+  if(!res.ok) throw new Error(await res.text());
+  return await res.json();
+}
+async function supabaseInsert(table, rows){
+  const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table), {
+    method:'POST',
+    headers:cloudHeaders({'Content-Type':'application/json','Prefer':'return=representation'}),
+    body:JSON.stringify(rows)
+  });
+  if(!res.ok) throw new Error(await res.text());
+  return await res.json();
+}
+async function supabasePatch(table, query, data){
+  const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?' + query, {
+    method:'PATCH',
+    headers:cloudHeaders({'Content-Type':'application/json','Prefer':'return=minimal'}),
+    body:JSON.stringify(data)
+  });
+  if(!res.ok) throw new Error(await res.text());
+}
+async function supabaseDelete(table, query){
+  const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?' + query, {
+    method:'DELETE',
+    headers:cloudHeaders({'Prefer':'return=minimal'})
+  });
+  if(!res.ok) throw new Error(await res.text());
+}
+async function saveTeacherToCloud(t){
+  if(!settings.supabaseUrl || !settings.supabaseKey) return;
+  await supabaseInsert(settings.teacherTable || 'teacher_accounts', [{
+    teacher_id:t.id,
+    name:t.name,
+    pass:t.pass,
+    is_active:true
+  }]);
+}
+async function saveCourseToCloud(c){
+  if(!settings.supabaseUrl || !settings.supabaseKey) return;
+  await supabaseInsert(settings.courseTable || 'course_pool', [{
+    course_key:courseKey(c),
+    name:c.name,
+    type:c.type,
+    grade:c.grade || '',
+    hour:Number(c.hour || 0),
+    is_active:true
+  }]);
+}
+async function loadSupabaseBaseData(){
+  saveData();
+  if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
+  try{
+    const tRows = await supabaseSelect(settings.teacherTable || 'teacher_accounts', 'select=*&is_active=eq.true&order=name.asc');
+    const cRows = await supabaseSelect(settings.courseTable || 'course_pool', 'select=*&is_active=eq.true&order=type.asc,name.asc,grade.asc');
+
+    if(tRows.length){
+      teachers = tRows.map(r=>({id:r.teacher_id || String(r.id), name:r.name || '', pass:r.pass || genPass()})).filter(t=>t.name);
+    }
+    if(cRows.length){
+      courses = cRows.map(r=>({name:r.name || '', type:r.type || inferType(r.name), grade:String(r.grade||''), hour:Number(r.hour||0)})).filter(c=>c.name);
+      prepareCourses();
+    }
+    render();
+    alert('Öğretmen ve ders havuzu Supabase’den alındı.');
+  }catch(e){
+    alert('Öğretmen/ders havuzu alınamadı: '+e.message);
+  }
+}
+async function syncAllBaseDataToSupabase(){
+  saveData();
+  if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
+  if(!confirm('Mevcut öğretmen ve ders havuzu Supabase’e aktarılsın mı?')) return;
+  try{
+    for(const t of teachers){ await saveTeacherToCloud(t); }
+    for(const c of courses){ await saveCourseToCloud(c); }
+    alert('Öğretmen ve ders havuzu Supabase’e aktarıldı.');
+  }catch(e){
+    alert('Aktarım hatası: '+e.message);
+  }
 }
 
 async function testSupabaseConnection(){
@@ -970,7 +1047,7 @@ function exportPreferencesExcel(){
   });
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(matrix),'Tercih_Matrisi');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(list),'Tercih_Listesi');
-  XLSX.writeFile(wb,'ogretmen_ders_tercihleri_v27_supabase_ayarli.xlsx');
+  XLSX.writeFile(wb,'ogretmen_ders_tercihleri_v28_tam_bulut.xlsx');
 }
 function downloadV28PreferenceExcel(){
   if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
@@ -991,14 +1068,14 @@ function importTeachersExcel(e){
   if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
   const f=e.target.files[0]; if(!f)return;
   const r=new FileReader();
-  r.onload=ev=>{
+  r.onload=async ev=>{
     const wb=XLSX.read(ev.target.result,{type:'array'});
     const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});
     rows.forEach(row=>{
       const name=String(row['Öğretmen']||row['Ogretmen']||row['Ad Soyad']||row['Adı Soyadı']||row[Object.keys(row)[0]]||'').trim();
       if(name && !teachers.some(t=>norm(t.name)===norm(name))) teachers.push({id:uid(),name,pass:genPass()});
     });
-    saveData(); render(); alert('Öğretmenler alındı.');
+    saveData(); render(); try{ for(const t of teachers){ await saveTeacherToCloud(t); } }catch(e){ console.warn(e); } alert('Öğretmenler alındı ve Supabase’e kaydedildi.');
   };
   r.readAsArrayBuffer(f); e.target.value='';
 }
@@ -1025,7 +1102,7 @@ function importCoursesExcel(e){
   if(!f) return;
 
   const r=new FileReader();
-  r.onload=ev=>{
+  r.onload=async ev=>{
     try{
       const wb=XLSX.read(ev.target.result,{type:'array'});
       const sh=wb.Sheets[wb.SheetNames[0]];
@@ -1143,7 +1220,7 @@ function downloadSharedForm(){
   source = source.replace(/let settings = \{ adminPassword:'[^']*', scriptUrl:DEFAULT_SCRIPT_URL \};/, 'let settings = { adminPassword:' + JSON.stringify(settings.adminPassword || '18309') + ', scriptUrl:DEFAULT_SCRIPT_URL };');
   source = source.replace(/let settings = \{[\s\S]*?\};/, 'let settings = ' + JSON.stringify(settings) + ';');
   const blob = new Blob(['<!DOCTYPE html>\n' + source], {type:'text/html;charset=utf-8'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ogretmen_ders_tercih_formu_v27_supabase_ayarli.html'; a.click();
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ogretmen_ders_tercih_formu_v28_supabase_tam_bulut.html'; a.click();
 }
 function copyShareText(){
   const txt='Değerli öğretmenimiz, ders tercih formuna girerek adınızı seçiniz ve size verilen şifreyle tercihlerinizi gönderiniz.';
@@ -1167,44 +1244,50 @@ const GAS_CODE = `create table if not exists public.teacher_preferences (
   is_active boolean default true
 );
 
+create table if not exists public.teacher_accounts (
+  id bigint generated by default as identity primary key,
+  created_at timestamptz default now(),
+  teacher_id text unique,
+  name text,
+  pass text,
+  is_active boolean default true
+);
+
+create table if not exists public.course_pool (
+  id bigint generated by default as identity primary key,
+  created_at timestamptz default now(),
+  course_key text,
+  name text,
+  type text,
+  grade text,
+  hour numeric,
+  is_active boolean default true
+);
+
 alter table public.teacher_preferences add column if not exists submission_id text;
 alter table public.teacher_preferences add column if not exists is_active boolean default true;
 
 alter table public.teacher_preferences enable row level security;
+alter table public.teacher_accounts enable row level security;
+alter table public.course_pool enable row level security;
 
-drop policy if exists "public_insert_teacher_preferences" on public.teacher_preferences;
-create policy "public_insert_teacher_preferences"
-on public.teacher_preferences
-for insert
-to anon
-with check (true);
+drop policy if exists "public_all_teacher_preferences" on public.teacher_preferences;
+create policy "public_all_teacher_preferences" on public.teacher_preferences
+for all to anon using (true) with check (true);
 
-drop policy if exists "public_select_teacher_preferences" on public.teacher_preferences;
-create policy "public_select_teacher_preferences"
-on public.teacher_preferences
-for select
-to anon
-using (true);
+drop policy if exists "public_all_teacher_accounts" on public.teacher_accounts;
+create policy "public_all_teacher_accounts" on public.teacher_accounts
+for all to anon using (true) with check (true);
 
-drop policy if exists "public_update_teacher_preferences" on public.teacher_preferences;
-create policy "public_update_teacher_preferences"
-on public.teacher_preferences
-for update
-to anon
-using (true)
-with check (true);
-
-drop policy if exists "public_delete_teacher_preferences" on public.teacher_preferences;
-create policy "public_delete_teacher_preferences"
-on public.teacher_preferences
-for delete
-to anon
-using (true);`;
+drop policy if exists "public_all_course_pool" on public.course_pool;
+create policy "public_all_course_pool" on public.course_pool
+for all to anon using (true) with check (true);`;
 function renderGas(){gasCode.textContent=GAS_CODE}
 function copyGasCode(){navigator.clipboard.writeText(GAS_CODE); alert('SQL kodu kopyalandı.')}
 loadData();
 lockAdminView();
 render();
+setTimeout(()=>{ if(settings.supabaseUrl && settings.supabaseKey) loadSupabaseBaseData().catch?.(()=>{}); }, 300);
 </script>
 </body>
 </html>
