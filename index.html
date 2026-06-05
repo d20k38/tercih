@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muhasebe Finansman Öğretmen Ders Tercih Formu v26 Supabase</title>
+<title>Muhasebe Finansman Öğretmen Ders Tercih Formu v27 Supabase</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 :root{
@@ -56,7 +56,7 @@ th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;posi
 </head>
 <body>
 <header>
-  <h1>Muhasebe Finansman Öğretmen Ders Tercih Formu v26 Supabase</h1>
+  <h1>Muhasebe Finansman Öğretmen Ders Tercih Formu v27 Supabase</h1>
   <p>v28 ders dağıtım sistemiyle uyumlu sade öğretmen ders tercih formu</p>
 </header>
 
@@ -144,6 +144,7 @@ th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;posi
           <input id="supabaseTable" placeholder="teacher_preferences" onchange="saveData()">
           <div class="btns" style="margin-top:6px">
             <button onclick="testSupabaseConnection()">Supabase Bağlantısını Test Et</button>
+            <button onclick="resetSupabaseSettings()">Supabase Ayarlarını Varsayılana Al</button>
             <button onclick="loadSupabasePreferences()">Supabase Tercihleri Al</button>
             <button onclick="exportSupabasePreferencesExcel()">Supabase Excel</button>
             <button class="danger" onclick="clearSupabasePreferences()">Supabase Tercihlerini Temizle</button>
@@ -437,7 +438,7 @@ let courses = [...DEFAULT_COURSES];
 let submissions = [];
 let currentTeacherId = '';
 let adminUnlocked = false;
-let settings = { adminPassword:'18309', scriptUrl:DEFAULT_SCRIPT_URL, supabaseUrl:'', supabaseKey:'', supabaseTable:'teacher_preferences' };
+let settings = { adminPassword:'18309', scriptUrl:DEFAULT_SCRIPT_URL, supabaseUrl:'https://bzhbbjjtwotahoovnxua.supabase.co', supabaseKey:'sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l', supabaseTable:'teacher_preferences' };
 
 function uid(){return Math.random().toString(36).slice(2,9)}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -508,7 +509,7 @@ function loadData(){
       teachers=d.teachers&&d.teachers.length?d.teachers:[...DEFAULT_TEACHERS];
       courses=d.courses&&d.courses.length?d.courses:[...DEFAULT_COURSES];
       submissions=[];
-      settings=d.settings||{ adminPassword:'18309', scriptUrl:DEFAULT_SCRIPT_URL, supabaseUrl:'', supabaseKey:'', supabaseTable:'teacher_preferences' }; if(!settings.supabaseTable) settings.supabaseTable='teacher_preferences';
+      settings=d.settings||{ adminPassword:'18309', scriptUrl:DEFAULT_SCRIPT_URL, supabaseUrl:'https://bzhbbjjtwotahoovnxua.supabase.co', supabaseKey:'sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l', supabaseTable:'teacher_preferences' }; if(!settings.supabaseTable) settings.supabaseTable='teacher_preferences';
     }catch(e){}
   }
   prepareCourses();
@@ -841,6 +842,17 @@ function renderCourses(){
   renderCoursesRows = courses.map(c=>`<tr><td>${esc(c.name)}</td><td><span class="badge ${typeClass(c.type)}">${esc(c.type)}</span></td><td>${esc(c.grade||'')}</td><td>${c.hour||''}</td><td><button class="danger" onclick="deleteCourse('${esc(c.name).replace(/'/g,'&#39;')}','${esc(c.type)}')">Sil</button></td></tr>`).join('');
   courseTable.innerHTML='<tr><th>Ders</th><th>Tür</th><th>Sınıf</th><th>Saat</th><th></th></tr>'+renderCoursesRows;
 }
+function resetSupabaseSettings(){
+  settings.supabaseUrl='https://bzhbbjjtwotahoovnxua.supabase.co';
+  settings.supabaseKey='sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l';
+  settings.supabaseTable='teacher_preferences';
+  if(typeof supabaseUrl !== 'undefined' && supabaseUrl) supabaseUrl.value=settings.supabaseUrl;
+  if(typeof supabaseKey !== 'undefined' && supabaseKey) supabaseKey.value=settings.supabaseKey;
+  if(typeof supabaseTable !== 'undefined' && supabaseTable) supabaseTable.value=settings.supabaseTable;
+  saveData();
+  alert('Supabase ayarları varsayılana alındı.');
+}
+
 async function testSupabaseConnection(){
   saveData();
   if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
@@ -958,7 +970,7 @@ function exportPreferencesExcel(){
   });
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(matrix),'Tercih_Matrisi');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(list),'Tercih_Listesi');
-  XLSX.writeFile(wb,'ogretmen_ders_tercihleri_v26_tek_dosya.xlsx');
+  XLSX.writeFile(wb,'ogretmen_ders_tercihleri_v27_supabase_ayarli.xlsx');
 }
 function downloadV28PreferenceExcel(){
   if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
@@ -1112,7 +1124,7 @@ function importCoursesExcel(e){
 function resetAll(){
   if(!confirm('Tüm öğretmen, şifre ve tercih verileri silinsin mi?'))return;
   localStorage.removeItem('mf_online_pref_form_v7');
-  teachers=[...DEFAULT_TEACHERS]; submissions=[]; courses=[...DEFAULT_COURSES]; settings={adminPassword:'18309',scriptUrl:DEFAULT_SCRIPT_URL,supabaseUrl:'',supabaseKey:'',supabaseTable:'teacher_preferences'};
+  teachers=[...DEFAULT_TEACHERS]; submissions=[]; courses=[...DEFAULT_COURSES]; settings={adminPassword:'18309',scriptUrl:DEFAULT_SCRIPT_URL,supabaseUrl:'https://bzhbbjjtwotahoovnxua.supabase.co',supabaseKey:'sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l',supabaseTable:'teacher_preferences'};
   prepareCourses(); render();
 }
 function downloadSharedForm(){
@@ -1131,7 +1143,7 @@ function downloadSharedForm(){
   source = source.replace(/let settings = \{ adminPassword:'[^']*', scriptUrl:DEFAULT_SCRIPT_URL \};/, 'let settings = { adminPassword:' + JSON.stringify(settings.adminPassword || '18309') + ', scriptUrl:DEFAULT_SCRIPT_URL };');
   source = source.replace(/let settings = \{[\s\S]*?\};/, 'let settings = ' + JSON.stringify(settings) + ';');
   const blob = new Blob(['<!DOCTYPE html>\n' + source], {type:'text/html;charset=utf-8'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ogretmen_ders_tercih_formu_v26_supabase_tek_dosya.html'; a.click();
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ogretmen_ders_tercih_formu_v27_supabase_ayarli.html'; a.click();
 }
 function copyShareText(){
   const txt='Değerli öğretmenimiz, ders tercih formuna girerek adınızı seçiniz ve size verilen şifreyle tercihlerinizi gönderiniz.';
