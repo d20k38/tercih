@@ -5,87 +5,34 @@
 <title>Muhasebe Finansman Öğretmen Ders Tercih Formu</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
-:root{
-  --bg:#f3f6fb;--card:#fff;--ink:#111827;--muted:#667085;--line:#d7deea;
-  --brand:#1d4ed8;--ok:#15803d;--warn:#b45309;--danger:#dc2626;--soft:#eef4ff;
-  --shadow:0 10px 28px rgba(15,23,42,.08);
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);font-family:Segoe UI,Arial,sans-serif;color:var(--ink)}
-header{background:linear-gradient(135deg,#172554,#1d4ed8,#0f766e);color:white;padding:22px 26px}
-header h1{margin:0;font-size:24px} header p{margin:7px 0 0;opacity:.92}
-.wrap{max-width:1250px;margin:auto;padding:18px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-5{grid-column:span 5}.col-6{grid-column:span 6}.col-7{grid-column:span 7}.col-8{grid-column:span 8}.col-12{grid-column:span 12}
-label{display:block;font-size:13px;font-weight:800;color:var(--muted);margin:8px 0 4px}
-input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;background:white}
-button,.btn{border:1px solid var(--line);background:white;color:var(--ink);border-radius:12px;padding:10px 13px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
-button.primary{background:var(--brand);border-color:var(--brand);color:white}
-button.ok{background:var(--ok);border-color:var(--ok);color:white}
-button.warn{background:var(--warn);border-color:var(--warn);color:white}
-button.danger{background:var(--danger);border-color:var(--danger);color:white}
-.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.notice{background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;border-radius:13px;padding:11px;margin:10px 0}
-.info{background:#eef4ff;border-color:#bfdbfe;color:#1e3a8a}
-.okbox{background:#dcfce7;border-color:#bbf7d0;color:#166534}
-table{width:100%;border-collapse:collapse;background:white}
-th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:middle}
-th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;position:sticky;top:0}
-.tablebox{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:13px}
-.pref-section{border:1px solid var(--line);border-radius:16px;background:#fbfdff;padding:12px;margin:12px 0}
-.pref-section h3{margin:0 0 10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.pref-row{display:grid;grid-template-columns:1fr 150px;gap:10px;align-items:center;border:1px solid #e5e7eb;border-radius:12px;background:white;padding:10px;margin:7px 0}
-.pref-row b{font-size:14px}
-.small{font-size:12px;color:var(--muted)}
-.badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:800;background:#e0f2fe;color:#075985}
-.hidden{display:none!important}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.tab.active{background:var(--brand);border-color:var(--brand);color:white}
-.code{white-space:pre-wrap;background:#0f172a;color:#dbeafe;border-radius:12px;padding:12px;overflow:auto;font-family:Consolas,monospace;font-size:12px;max-height:360px}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0}
-.kpis div{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:11px}
-.kpis b{font-size:24px;display:block}
-.type-muh{background:#eff6ff;color:#1d4ed8}
-.type-dt{background:#fef3c7;color:#92400e}
-.type-mesem{background:#dcfce7;color:#166534}
-@media(max-width:900px){.col-3,.col-4,.col-5,.col-6,.col-7,.col-8{grid-column:span 12}.pref-row{grid-template-columns:1fr}}
-@media print{header,.tabs,.no-print,button,.btn,input,select,textarea{display:none!important}body{background:white}.wrap{max-width:none}.card{box-shadow:none;border:0}.tablebox{max-height:none;overflow:visible;border:0}}
+:root{--bg:#f3f6fb;--card:#fff;--ink:#111827;--muted:#667085;--line:#d7deea;--brand:#1d4ed8;--ok:#15803d;--warn:#b45309;--danger:#dc2626;--shadow:0 10px 28px rgba(15,23,42,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Segoe UI,Arial,sans-serif;color:var(--ink)}header{background:linear-gradient(135deg,#172554,#1d4ed8,#0f766e);color:white;padding:22px 26px}header h1{margin:0;font-size:24px}header p{margin:6px 0 0;opacity:.92}.wrap{max-width:1250px;margin:auto;padding:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px;margin-bottom:14px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-5{grid-column:span 5}.col-6{grid-column:span 6}.col-7{grid-column:span 7}.col-12{grid-column:span 12}label{display:block;font-size:13px;font-weight:800;color:var(--muted);margin:8px 0 4px}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;background:white}button,.btn{border:1px solid var(--line);background:white;color:var(--ink);border-radius:12px;padding:10px 13px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}button.primary{background:var(--brand);border-color:var(--brand);color:white}button.ok{background:var(--ok);border-color:var(--ok);color:white}button.warn{background:var(--warn);border-color:var(--warn);color:white}button.danger{background:var(--danger);border-color:var(--danger);color:white}.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.notice{background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;border-radius:13px;padding:11px;margin:10px 0}.info{background:#eef4ff;border-color:#bfdbfe;color:#1e3a8a}table{width:100%;border-collapse:collapse;background:white}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:middle}th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase}.tablebox{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:13px}.pref-section{border:1px solid var(--line);border-radius:16px;background:#fbfdff;padding:12px;margin:12px 0}.pref-section h3{margin:0 0 10px;display:flex;justify-content:space-between;align-items:center;gap:8px}.pref-row{display:grid;grid-template-columns:1fr 170px;gap:10px;align-items:center;border:1px solid #e5e7eb;border-radius:12px;background:white;padding:10px;margin:7px 0}.small{font-size:12px;color:var(--muted)}.badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:800;background:#e0f2fe;color:#075985}.hidden{display:none!important}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tab.active{background:var(--brand);border-color:var(--brand);color:white}.code{white-space:pre-wrap;background:#0f172a;color:#dbeafe;border-radius:12px;padding:12px;overflow:auto;font-family:Consolas,monospace;font-size:12px;max-height:360px}.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0}.kpis div{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:11px}.kpis b{font-size:22px;display:block}@media(max-width:900px){.col-3,.col-4,.col-5,.col-6,.col-7{grid-column:span 12}.pref-row{grid-template-columns:1fr}}@media print{header,.tabs,.no-print,button,.btn,input,select,textarea{display:none!important}body{background:white}.wrap{max-width:none}.card{box-shadow:none;border:0}.tablebox{max-height:none;overflow:visible;border:0}}
 </style>
 </head>
 <body>
 <header>
   <h1>Muhasebe Finansman Öğretmen Ders Tercih Formu</h1>
-  <p>Öğretmen ders tercih giriş ekranı</p>
+  <p>Temiz Supabase sürümü: admin yönetimi + paylaşılacak öğretmen formu</p>
 </header>
-
 <div class="wrap">
-  <div class="tabs no-print" id="mainTabs"><button class="tab active" onclick="showScreen('login')">Giriş</button></div>
+  <div class="tabs no-print" id="mainTabs">
+    <button class="tab" onclick="showScreen('login')">Giriş</button>
+    <button class="tab active" id="adminTab" onclick="showScreen('admin')">Yönetici</button>
+    <button class="tab" id="setupTab" onclick="showScreen('setup')">Online Kurulum</button>
+  </div>
 
   <section id="loginScreen" class="card hidden">
     <h2>Giriş</h2>
     <div class="grid">
-      <div class="col-5">
-        <label>Ad Soyad</label>
-        <select id="loginTeacher"><option value="">Öğretmen seçiniz...</option><option value="zwprjzx">ABDURAHMAN NAFİZ GÜMÜŞ</option><option value="clpvnhg">ARZU DEMİREZEN</option><option value="i7c766w">DERYA BOZKURT</option><option value="u5iylek">FATİH ALTIPARMAK</option><option value="cg5i28m">FIRAT EKİNCİ</option><option value="u0r3bm2">HÜLYA CAN</option><option value="33ki20i">LEYLA GÜNAY ÖLMEZ</option><option value="e0bmb5b">MUSTAFA YURDAKUL</option><option value="t0pbdr8">NURCAN KÖMMECİ</option><option value="0g27uzv">ŞERİFE TOPALOĞLU</option><option value="47oqfyx">YASİN KELEBEK</option><option value="v45dbkv">YÜKSEL KAHRAMAN</option><option value="admin">admin</option></select>
-      </div>
-      <div class="col-4">
-        <label>Şifre</label>
-        <input id="loginPass" maxlength="8" inputmode="numeric" placeholder="Şifre">
-      </div>
-      <div class="col-3" style="align-self:end">
-        <button class="primary" onclick="teacherLogin()">Giriş</button>
-      </div>
+      <div class="col-5"><label>Ad Soyad</label><select id="loginTeacher"><option value="">Öğretmen seçiniz...</option><option value="vvd6rus">ABDURAHMAN NAFİZ GÜMÜŞ</option><option value="1gvmak0">ARZU DEMİREZEN</option><option value="whgmegz">DERYA BOZKURT</option><option value="qakovxz">FATİH ALTIPARMAK</option><option value="ixuusah">FIRAT EKİNCİ</option><option value="onp5p3k">HÜLYA CAN</option><option value="cvnomqi">LEYLA GÜNAY ÖLMEZ</option><option value="wfzznm6">MUSTAFA YURDAKUL</option><option value="7466kif">NURCAN KÖMMECİ</option><option value="kpa8qiy">ŞERİFE TOPALOĞLU</option><option value="azz0n6x">YASİN KELEBEK</option><option value="79op5x1">YÜKSEL KAHRAMAN</option><option value="admin">admin</option></select></div>
+      <div class="col-4"><label>Şifre</label><input id="loginPass" maxlength="8" inputmode="numeric" placeholder="Şifre"></div>
+      <div class="col-3" style="align-self:end"><button class="primary" onclick="teacherLogin()">Giriş</button></div>
     </div>
   </section>
 
   <section id="formScreen" class="card hidden">
     <h2 id="formTitle">Ders Tercihleri</h2>
-    <div class="notice info">
-      Dersler sade görünüm için <b>Alan Dersleri</b> ve <b>MESEM Dersleri</b> olarak gruplandı. 
-      Önceden gönderdiğiniz tercihler varsa Supabase’den otomatik getirilir ve değiştirilebilir. Tercih gönderimi için zorunlu kural: <b>Alan derslerinde</b> 1 Çok isterim, 2 İsterim, 2 Olabilir, 1 Mecbur kalırsam; <b>MESEM derslerinde</b> 1 Çok isterim seçilmelidir.
-    </div>
-
+    <div class="notice info">Önceden gönderdiğiniz tercihler varsa Supabase’den getirilir ve değiştirilebilir. Kural: <b>Alan derslerinde</b> 1 Çok isterim, 2 İsterim, 2 Olabilir, 1 Mecbur kalırsam; <b>MESEM</b> derslerinde 1 Çok isterim.</div>
     <div class="kpis">
       <div><span class="small">Alan Çok isterim</span><b id="kA5">0/1</b></div>
       <div><span class="small">Alan İsterim</span><b id="kA4">0/2</b></div>
@@ -94,9 +41,8 @@ th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;posi
       <div><span class="small">MESEM Çok isterim</span><b id="kM5">0/1</b></div>
       <div><span class="small">Durum</span><b id="kRule">Eksik</b></div>
     </div>
-
     <div class="btns no-print" style="margin-bottom:10px">
-      <button class="ok" onclick="submitPreferences()">Tercihlerimi Gönder</button>
+      <button class="ok" onclick="submitPreferences()">Tercihlerimi Gönder / Güncelle</button>
       <button onclick="backLogin()">Çıkış</button>
     </div>
     <div id="prefForm"></div>
@@ -108,85 +54,114 @@ th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase;posi
 <script>
 const DEFAULT_TEACHERS = [
   {
-    "id": "zwprjzx",
+    "id": "vvd6rus",
     "name": "ABDURAHMAN NAFİZ GÜMÜŞ",
-    "pass": "4872"
+    "pass": "9348"
   },
   {
-    "id": "clpvnhg",
+    "id": "1gvmak0",
     "name": "ARZU DEMİREZEN",
-    "pass": "7331"
+    "pass": "5962"
   },
   {
-    "id": "i7c766w",
+    "id": "whgmegz",
     "name": "DERYA BOZKURT",
-    "pass": "6367"
+    "pass": "1398"
   },
   {
-    "id": "u5iylek",
+    "id": "qakovxz",
     "name": "FATİH ALTIPARMAK",
-    "pass": "2064"
+    "pass": "7725"
   },
   {
-    "id": "cg5i28m",
+    "id": "ixuusah",
     "name": "FIRAT EKİNCİ",
-    "pass": "9104"
+    "pass": "1876"
   },
   {
-    "id": "u0r3bm2",
+    "id": "onp5p3k",
     "name": "HÜLYA CAN",
-    "pass": "3557"
+    "pass": "6209"
   },
   {
-    "id": "33ki20i",
+    "id": "cvnomqi",
     "name": "LEYLA GÜNAY ÖLMEZ",
-    "pass": "1717"
+    "pass": "7329"
   },
   {
-    "id": "e0bmb5b",
+    "id": "wfzznm6",
     "name": "MUSTAFA YURDAKUL",
-    "pass": "6256"
+    "pass": "5714"
   },
   {
-    "id": "t0pbdr8",
+    "id": "7466kif",
     "name": "NURCAN KÖMMECİ",
-    "pass": "8466"
+    "pass": "6429"
   },
   {
-    "id": "0g27uzv",
+    "id": "kpa8qiy",
     "name": "ŞERİFE TOPALOĞLU",
-    "pass": "3520"
+    "pass": "7052"
   },
   {
-    "id": "47oqfyx",
+    "id": "azz0n6x",
     "name": "YASİN KELEBEK",
-    "pass": "2335"
+    "pass": "3334"
   },
   {
-    "id": "v45dbkv",
+    "id": "79op5x1",
     "name": "YÜKSEL KAHRAMAN",
-    "pass": "3826"
+    "pass": "5413"
   }
 ];
-const DEFAULT_SCRIPT_URL = '';
 const DEFAULT_COURSES = [
   {
-    "name": "DIŞ TİCARETE GİRİŞ (*)",
-    "type": "Dış Ticaret",
+    "name": "TEMEL MUHASEBE (*)",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 5
+  },
+  {
+    "name": "TEMEL MUHASEBE MESEM 10",
+    "type": "MESEM",
     "grade": "10",
     "hour": 2
   },
   {
-    "name": "BİLGİSAYARLI MUHASEBE MESEM 12",
-    "type": "MESEM",
-    "grade": "12",
-    "hour": 4
+    "name": "MESLEKİ MATEMATİK",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 2
   },
   {
-    "name": "EKONOMİ MESEM 10",
+    "name": "MESLEKİ MATEMATİK MESEM 10",
     "type": "MESEM",
     "grade": "10",
     "hour": 1
+  },
+  {
+    "name": "OFİS UYGULAMALARI 1",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 2
+  },
+  {
+    "name": "OFİS UYGULAMALARI 2",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 2
+  },
+  {
+    "name": "OFİS UYGULAMALARI MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "GENEL MUHASEBE (*)",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 7
   },
   {
     "name": "GENEL MUHASEBE MESEM 11",
@@ -195,27 +170,33 @@ const DEFAULT_COURSES = [
     "hour": 2
   },
   {
-    "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ MESEM 12",
-    "type": "MESEM",
-    "grade": "12",
-    "hour": 1
-  },
-  {
-    "name": "KLAVYE TEKNİKLERİ MESEM 11",
-    "type": "MESEM",
-    "grade": "11",
+    "name": "EKONOMİ",
+    "type": "Muhasebe",
+    "grade": "10",
     "hour": 2
   },
   {
-    "name": "MESLEKİ MATEMATİK MESEM10",
+    "name": "EKONOMİ DIŞ TİCARET",
+    "type": "Dış Ticaret",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "EKONOMİ MESEM 10",
     "type": "MESEM",
     "grade": "10",
     "hour": 1
   },
   {
-    "name": "MUHASEBEYE GİRİŞ MESEM9",
-    "type": "MESEM",
-    "grade": "9",
+    "name": "TEMEL HUKUK",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "TEMEL HUKUK DIŞ TİCARET",
+    "type": "Dış Ticaret",
+    "grade": "10",
     "hour": 2
   },
   {
@@ -225,9 +206,39 @@ const DEFAULT_COURSES = [
     "hour": 1
   },
   {
-    "name": "TEMEL MUHASEBE MESEM 10",
-    "type": "MESEM",
+    "name": "DIŞ TİCARETE GİRİŞ (*) DIŞ TİCARET",
+    "type": "Dış Ticaret",
     "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "TEK DÜZEN MUHASEBE SİSTEMİ DIŞ TİCARET",
+    "type": "Dış Ticaret",
+    "grade": "10",
+    "hour": 4
+  },
+  {
+    "name": "E-TİCARET UYGULAMALARI DIŞ TİCARET",
+    "type": "Dış Ticaret",
+    "grade": "10",
+    "hour": 3
+  },
+  {
+    "name": "KLAVYE TEKNİKLERİ 1",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "KLAVYE TEKNİKLERİ 2",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "KLAVYE TEKNİKLERİ MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
     "hour": 2
   },
   {
@@ -243,22 +254,10 @@ const DEFAULT_COURSES = [
     "hour": 7
   },
   {
-    "name": "E-TİCARET UYGULAMALARI",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 3
-  },
-  {
-    "name": "EKONOMİ",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "GENEL MUHASEBE (*)",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 7
+    "name": "BİLGİSAYARLI MUHASEBE MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 4
   },
   {
     "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ",
@@ -267,916 +266,101 @@ const DEFAULT_COURSES = [
     "hour": 2
   },
   {
-    "name": "KLAVYE TEKNİKLERİ 1",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "KLAVYE TEKNİKLERİ 2",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "MESLEKİ GELİŞİM ATÖLYESİ",
-    "type": "Muhasebe",
-    "grade": "9",
-    "hour": 2
-  },
-  {
-    "name": "MESLEKİ MATEMATİK",
-    "type": "Muhasebe",
-    "grade": "9",
-    "hour": 2
-  },
-  {
-    "name": "OFİS UYGULAMALARI",
-    "type": "Muhasebe",
-    "grade": "11",
+    "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
     "hour": 1
-  },
-  {
-    "name": "OFİS UYGULAMALARI 1",
-    "type": "Muhasebe",
-    "grade": "9",
-    "hour": 1
-  },
-  {
-    "name": "OFİS UYGULAMALARI 2",
-    "type": "Muhasebe",
-    "grade": "9",
-    "hour": 2
-  },
-  {
-    "name": "TEK DÜZEN MUHASEBE SİSTEMİ",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 4
-  },
-  {
-    "name": "TEMEL HUKUK",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "TEMEL MUHASEBE (*)",
-    "type": "Muhasebe",
-    "grade": "9",
-    "hour": 5
   },
   {
     "name": "VERGİ VE BEYANNAMELER",
     "type": "Muhasebe",
     "grade": "11",
     "hour": 2
+  },
+  {
+    "name": "VERGİ VE BEYANNAMELER MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "ŞİRKETLER MUHASEBESİ",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "ŞİRKETLER MUHASEBESİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 1
+  },
+  {
+    "name": "MALİYET MUHASEBESİ",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "MALİYET MUHASEBESİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 1
+  },
+  {
+    "name": "İŞ VE SOSYAL GÜVENLİK HUKUKU",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "SEÇMELİ KOPERATİFÇİLİK",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "SEÇMELİ DİJİTAL OFİS UYGULAMALARI 1",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "SEÇMELİ DİJİTAL OFİS UYGULAMALARI 2",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "SEÇMELİ FİNANSAL OKURYAZARLIK",
+    "type": "Muhasebe",
+    "grade": "12",
+    "hour": 4
+  },
+  {
+    "name": "SEÇMELİ DTCRT İŞLEMLERİ",
+    "type": "Muhasebe",
+    "grade": "12",
+    "hour": 3
   }
 ];
-let teachers = [...DEFAULT_TEACHERS];
-let courses = [...DEFAULT_COURSES];
-let submissions = [];
-let currentTeacherId = '';
-let adminUnlocked = false;
-let settings = {
+const DEFAULT_SETTINGS = {
   "adminPassword": "18309",
-  "scriptUrl": "https://script.google.com/macros/s/AKfycbzCXNwqao7CrZ0A_XMAF2nTq6maIG8tLqLoU23l2n0LnANATwvK-wo0fsMumG-WOOAx/exec",
-  "supabaseTable": "teacher_preferences",
   "supabaseUrl": "https://bzhbbjjtwotahoovnxua.supabase.co",
   "supabaseKey": "sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l",
+  "prefTable": "teacher_preferences",
   "teacherTable": "teacher_accounts",
   "courseTable": "course_pool"
 };
 
-function uid(){return Math.random().toString(36).slice(2,9)}
-function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function norm(s){return String(s??'').trim().toLocaleLowerCase('tr-TR')}
-function typeClass(t){return t==='Dış Ticaret'?'type-dt':(t==='MESEM'?'type-mesem':'type-muh')}
-function prefLabel(v){v=Number(v); if(v===0)return'İstemem'; if(v===2)return'Mecbur kalırsam'; if(v===4)return'İsterim'; if(v===5)return'Çok isterim'; return'Olabilir'}
-function genPass(){let p; do { p = String(Math.floor(1000+Math.random()*9000)); } while(teachers.some(t=>t.pass===p)); return p;}
-function cleanCourse(c){
-  if(typeof c==='string') return {name:c,type:inferType(c),grade:'',hour:0};
-  return {name:String(c.name||'').trim(),type:c.type||inferType(c.name),grade:String(c.grade||''),hour:Number(c.hour||0)};
-}
-function inferType(name){
-  const n=String(name||'').toLocaleUpperCase('tr-TR');
-  if(n.includes('MESEM')) return 'MESEM';
-  if(n.includes('DIŞ TİCARET') || n.includes('DIS TICARET')) return 'Dış Ticaret';
-  return 'Muhasebe';
-}
-function courseKey(c){
-  return String(c.name||'') + '|' + String(c.type||'') + '|' + String(c.grade||'') + '|' + String(c.hour||'');
-}
-function prepareCourses(){
-  courses = courses.map(cleanCourse).filter(c=>c.name);
-  const seen = new Set();
-  courses = courses.filter(c=>{const k=c.name+'|'+c.type; if(seen.has(k)) return false; seen.add(k); return true;});
-}
-function showScreen(name){
-  loginScreen.classList.toggle('hidden', name!=='login');
-  formScreen.classList.add('hidden');
-  adminScreen.classList.toggle('hidden', name!=='admin');
-  setupScreen.classList.toggle('hidden', name!=='setup');
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  if(name==='login') document.querySelector('#mainTabs .tab:nth-child(1)').classList.add('active');
-  else if(name==='admin' && adminUnlocked) adminTab.classList.add('active');
-  else if(name==='setup' && adminUnlocked) setupTab.classList.add('active');
-  render();
-}
-function lockAdminView(){
-  adminUnlocked = false;
-  if(adminTab) adminTab.classList.add('hidden');
-  if(setupTab) setupTab.classList.add('hidden');
-  if(adminArea) adminArea.classList.add('hidden');
-  if(adminScreen) adminScreen.classList.add('hidden');
-  if(setupScreen) setupScreen.classList.add('hidden');
-  if(formScreen) formScreen.classList.add('hidden');
-  if(loginScreen) loginScreen.classList.remove('hidden');
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  const firstTab=document.querySelector('#mainTabs .tab:nth-child(1)');
-  if(firstTab) firstTab.classList.add('active');
-}
-function cleanWebAppUrl(url){
-  return String(url||'').trim().split('?')[0];
-}
-function applyDefaultSupabaseSettings(){
-  settings = settings || {};
-  if(!settings.adminPassword) settings.adminPassword='18309';
-  if(!settings.scriptUrl) settings.scriptUrl=DEFAULT_SCRIPT_URL;
-  if(!settings.supabaseUrl) settings.supabaseUrl='https://bzhbbjjtwotahoovnxua.supabase.co';
-  if(!settings.supabaseKey) settings.supabaseKey='sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l';
-  if(!settings.supabaseTable) settings.supabaseTable='teacher_preferences';
-  if(!settings.teacherTable) settings.teacherTable='teacher_accounts';
-  if(!settings.courseTable) settings.courseTable='course_pool';
-}
-function saveData(){
-  applyDefaultSupabaseSettings();
-  if(typeof scriptUrl !== 'undefined' && scriptUrl) {
-    settings.scriptUrl = cleanWebAppUrl(scriptUrl.value);
-    scriptUrl.value = settings.scriptUrl;
-  }
-  if(typeof supabaseUrl !== 'undefined' && supabaseUrl) settings.supabaseUrl = supabaseUrl.value.trim().replace(/\/$/,'') || 'https://bzhbbjjtwotahoovnxua.supabase.co';
-  if(typeof supabaseKey !== 'undefined' && supabaseKey) settings.supabaseKey = supabaseKey.value.trim() || 'sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l';
-  if(typeof supabaseTable !== 'undefined' && supabaseTable) settings.supabaseTable = supabaseTable.value.trim() || 'teacher_preferences';
-  if(typeof teacherTableName !== 'undefined' && teacherTableName) settings.teacherTable = teacherTableName.value.trim() || 'teacher_accounts';
-  if(typeof courseTableName !== 'undefined' && courseTableName) settings.courseTable = courseTableName.value.trim() || 'course_pool';
+let teachers = [...DEFAULT_TEACHERS];
+let courses = [...DEFAULT_COURSES];
+let submissions = [];
+let settings = {...DEFAULT_SETTINGS};
+let currentTeacherId = '';
+let adminUnlocked = false;
 
-  // Tercihler localStorage'a yazılmaz. Öğretmen/dersler Supabase'den gelir.
-  localStorage.setItem('mf_online_pref_form_v7', JSON.stringify({settings}));
-}
-function loadData(){
-  const raw=localStorage.getItem('mf_online_pref_form_v7');
-  if(raw){
-    try{
-      const d=JSON.parse(raw);
-      settings=d.settings||{ adminPassword:'18309', scriptUrl:DEFAULT_SCRIPT_URL, supabaseUrl:'https://bzhbbjjtwotahoovnxua.supabase.co', supabaseKey:'sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l', supabaseTable:'teacher_preferences', teacherTable:'teacher_accounts', courseTable:'course_pool' };
-    }catch(e){}
-  }
-  applyDefaultSupabaseSettings();
-  teachers=[...DEFAULT_TEACHERS];
-  courses=[...DEFAULT_COURSES];
-  submissions=[];
-  prepareCourses();
-}
-async function teacherLogin(){
-  const tid=loginTeacher.value;
-  const pass=loginPass.value.trim();
-
-  if(!tid) return alert('Lütfen adınızı seçiniz.');
-
-  const t=teachers.find(x=>x.id===tid && x.pass===pass);
-  if(!t) return alert('Ad veya şifre hatalı.');
-  currentTeacherId=t.id;
-  loginPass.value='';
-  formTitle.textContent=t.name+' - Ders Tercihleri';
-
-  if(settings.supabaseUrl && settings.supabaseKey){
-    try{
-      const cloudSub = await getSupabaseTeacherPreferences(t.id);
-      submissions = submissions.filter(s=>s.teacherId!==t.id);
-      if(cloudSub) submissions.push(cloudSub);
-    }catch(e){
-      console.warn(e);
-      alert('Önceki tercihler Supabase’den alınamadı, boş form açılıyor: '+e.message);
-    }
-  }
-
-  loginScreen.classList.add('hidden');
-  formScreen.classList.remove('hidden');
-  renderPrefForm();
-}
-function backLogin(){currentTeacherId=''; formScreen.classList.add('hidden'); loginScreen.classList.remove('hidden');}
-function logoutAdmin(){lockAdminView(); render();}
-function changeAdminPassword(){
-  const oldP=(oldAdminPassword.value||'').trim();
-  const newP=(newAdminPassword.value||'').trim();
-  const newP2=(newAdminPassword2.value||'').trim();
-  if(oldP!==settings.adminPassword && oldP!=='18309') return alert('Mevcut şifre hatalı.');
-  if(!newP || newP.length<4) return alert('Yeni şifre en az 4 karakter olmalıdır.');
-  if(newP!==newP2) return alert('Yeni şifreler aynı değil.');
-  settings.adminPassword=newP;
-  oldAdminPassword.value=''; newAdminPassword.value=''; newAdminPassword2.value='';
-  saveData();
-  alert('Admin şifresi değiştirildi. Tekrar giriş yapmanız gerekiyor.');
-  logoutAdmin();
-}
-async function addTeacher(){
-  const name=newTeacherName.value.trim();
-  if(!name) return alert('Öğretmen adı giriniz.');
-  if(teachers.some(t=>norm(t.name)===norm(name))) return alert('Bu öğretmen zaten var.');
-  const t={id:uid(),name,pass:genPass()};
-  teachers.push(t);
-  newTeacherName.value='';
-  try{ await saveTeacherToCloud(t); }catch(e){ alert('Öğretmen yerelde eklendi ama Supabase’e kaydedilemedi: '+e.message); }
-  saveData(); render();
-}
-async function deleteTeacher(id){
-  if(!confirm('Öğretmen silinsin mi?'))return;
-  teachers=teachers.filter(t=>t.id!==id);
-  submissions=submissions.filter(s=>s.teacherId!==id);
-  try{ await supabasePatch(settings.teacherTable||'teacher_accounts','teacher_id=eq.'+encodeURIComponent(id),{is_active:false}); }catch(e){ console.warn(e); }
-  saveData(); render();
-}
-async function renewPass(id){
-  const t=teachers.find(x=>x.id===id); if(!t)return;
-  t.pass=genPass();
-  try{ await supabasePatch(settings.teacherTable||'teacher_accounts','teacher_id=eq.'+encodeURIComponent(id),{pass:t.pass}); }catch(e){ console.warn(e); }
-  saveData(); render();
-}
-async function addCourse(){
-  const name=prompt('Ders adı:'); if(!name) return;
-  const type=prompt('Tür yazınız: Muhasebe / Dış Ticaret / MESEM','Muhasebe') || 'Muhasebe';
-  const c={name:name.trim(), type: ['Muhasebe','Dış Ticaret','MESEM'].includes(type)?type:'Muhasebe', grade:'', hour:0};
-  courses.push(c);
-  prepareCourses();
-  try{ await saveCourseToCloud(c); }catch(e){ alert('Ders yerelde eklendi ama Supabase’e kaydedilemedi: '+e.message); }
-  saveData(); render();
-}
-async function deleteCourse(name,type){
-  if(!confirm('Ders silinsin mi?'))return;
-  courses=courses.filter(c=>!(c.name===name && c.type===type));
-  try{
-    await supabasePatch(settings.courseTable||'course_pool','name=eq.'+encodeURIComponent(name)+'&type=eq.'+encodeURIComponent(type),{is_active:false});
-  }catch(e){ console.warn(e); }
-  saveData(); render();
-}
-function getLastSubmission(tid){return [...submissions].reverse().find(s=>s.teacherId===tid);}
-function renderPrefForm(){
-  const sub=getLastSubmission(currentTeacherId);
-  const prefs=sub?sub.preferences:{};
-
-  const groups = [
-    {title:'Alan Dersleri', types:['Muhasebe','Dış Ticaret']},
-    {title:'MESEM Dersleri', types:['MESEM']}
-  ];
-
-  prefForm.innerHTML = groups.map(group=>{
-    const list=courses.filter(c=>group.types.includes(c.type));
-    if(!list.length) return '';
-    return `<div class="pref-section">
-      <h3><span>${group.title}</span><span class="badge">${list.length} ders</span></h3>
-      ${list.map(c=>{
-        const key=courseKey(c);
-        const v=prefs[key]===undefined?0:prefs[key];
-        return `<div class="pref-row">
-          <div><b>${esc(c.name)}</b><br><span class="small">${c.grade?('| '+c.grade+'. sınıf'):''} ${c.hour?('| '+c.hour+' saat'):''}</span></div>
-          <select data-course-key="${esc(key)}" data-course="${esc(c.name)}" data-type="${esc(c.type)}" data-grade="${esc(c.grade||'')}" data-hour="${esc(c.hour||'')}" onchange="updateLiveStats()">
-            <option value="0" ${v==0?'selected':''}>İstemem</option>
-            <option value="2" ${v==2?'selected':''}>Mecbur kalırsam</option>
-            <option value="3" ${v==3?'selected':''}>Olabilir</option>
-            <option value="4" ${v==4?'selected':''}>İsterim</option>
-            <option value="5" ${v==5?'selected':''}>Çok isterim</option>
-          </select>
-        </div>`;
-      }).join('')}
-    </div>`;
-  }).join('');
-  updateLiveStats();
-}
-function preferenceCounts(){
-  const sels=[...document.querySelectorAll('#prefForm select[data-course]')];
-  const alan=sels.filter(s=>s.dataset.type==='Muhasebe' || s.dataset.type==='Dış Ticaret');
-  const mesem=sels.filter(s=>s.dataset.type==='MESEM');
-  const count=(arr,val)=>arr.filter(s=>Number(s.value)===val).length;
-  return {
-    total:sels.length,
-    alan5:count(alan,5),
-    alan4:count(alan,4),
-    alan3:count(alan,3),
-    alan2:count(alan,2),
-    alan0:count(alan,0),
-    mesem5:count(mesem,5),
-    mesem4:count(mesem,4),
-    mesem3:count(mesem,3),
-    mesem2:count(mesem,2),
-    mesem0:count(mesem,0)
-  };
-}
-function ruleStatus(){
-  const c=preferenceCounts();
-  return c.alan5===1 && c.alan4===2 && c.alan3===2 && c.alan2===1 && c.mesem5===1;
-}
-function updateLiveStats(){
-  const c=preferenceCounts();
-  kA5.textContent=c.alan5+'/1';
-  kA4.textContent=c.alan4+'/2';
-  kA3.textContent=c.alan3+'/2';
-  kA2.textContent=c.alan2+'/1';
-  kM5.textContent=c.mesem5+'/1';
-  kRule.textContent=ruleStatus()?'Tamam':'Eksik';
-  kRule.style.color=ruleStatus()?'#15803d':'#dc2626';
-}
-function quickFill(v){
-  document.querySelectorAll('#prefForm select[data-course]').forEach(s=>s.value=String(v));
-  updateLiveStats();
-}
-
-
-async function submitToCloud(payload){
-  if(!settings.supabaseUrl || !settings.supabaseKey){
-    throw new Error('Supabase URL veya key boş.');
-  }
-  const table = settings.supabaseTable || 'teacher_preferences';
-  await deactivateOldSupabasePreferences(payload.teacherId || '');
-  const submissionId = (payload.teacherId || payload.teacherName || 'teacher') + '_' + Date.now();
-  const rows = (payload.details || []).map((d, idx)=>({
-    teacher_id: payload.teacherId || '',
-    teacher_name: payload.teacherName || '',
-    course_key: d.key || '',
-    course_name: d.course || '',
-    course_type: d.type || '',
-    grade: d.grade || '',
-    hour: Number(d.hour || 0),
-    preference_value: Number(d.value || 0),
-    preference_label: d.label || '',
-    submission_time: payload.timestamp || new Date().toISOString(),
-    row_no: idx + 1,
-    submission_id: submissionId,
-    is_active: true
-  }));
-  if(!rows.length) throw new Error('Gönderilecek tercih yok.');
-
-  const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table), {
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      'apikey':settings.supabaseKey,
-      'Authorization':'Bearer ' + settings.supabaseKey,
-      'Prefer':'return=minimal'
-    },
-    body:JSON.stringify(rows)
-  });
-
-  if(!res.ok){
-    const txt = await res.text();
-    throw new Error('Supabase kayıt hatası: ' + res.status + ' - ' + txt);
-  }
-  return rows.length;
-}
-
-async function submitPreferences(){
-  const t=teachers.find(x=>x.id===currentTeacherId);
-  if(!t)return alert('Giriş bulunamadı.');
-  if(!ruleStatus()){
-    const c=preferenceCounts();
-    return alert('Tercih sayıları tamamlanmadı.\n\nZorunlu seçim:\nALAN DERSLERİ:\n- Çok isterim: 1 ders\n- İsterim: 2 ders\n- Olabilir: 2 ders\n- Mecbur kalırsam: 1 ders\n\nMESEM:\n- Çok isterim: 1 ders\n\nŞu an:\nAlan Çok isterim: '+c.alan5+'\nAlan İsterim: '+c.alan4+'\nAlan Olabilir: '+c.alan3+'\nAlan Mecbur: '+c.alan2+'\nMESEM Çok isterim: '+c.mesem5);
-  }
-  const preferences={};
-  const details=[];
-  document.querySelectorAll('#prefForm select[data-course-key]').forEach(sel=>{
-    const val=Number(sel.value);
-    const key=sel.dataset.courseKey;
-    preferences[key]=val;
-
-    // E-tabloya sadece öğretmenin aktif seçtiği tercihler gönderilir.
-    // İstemem kalan dersler gönderilmez.
-    if(val>0){
-      details.push({
-        key,
-        course:sel.dataset.course,
-        type:sel.dataset.type,
-        grade:sel.dataset.grade || '',
-        hour:sel.dataset.hour || '',
-        value:val,
-        label:prefLabel(val)
-      });
-    }
-  });
-  const payload={timestamp:new Date().toISOString(), teacherId:t.id, teacherName:t.name, preferences, details};
-  submissions.push(payload);
-  saveData();
-
-  if(settings.supabaseUrl && settings.supabaseKey){
-    try{
-      const count = await submitToCloud(payload);
-      alert('Tercihleriniz Supabase bulut sistemine kaydedildi: '+count+' tercih.');
-    }catch(e){
-      console.error(e);
-      alert('Tercihler bu tarayıcıya kaydedildi; Supabase gönderiminde hata oluştu: '+e.message);
-    }
-  }else alert('Tercihleriniz bu cihazda kaydedildi. Online gönderim için Supabase URL ve key girilmelidir.');
-  backLogin();
-}
-function render(){
-  loginTeacher.innerHTML = '<option value="">Öğretmen seçiniz...</option>' + (teachers.length ? teachers.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join('') : '');
-  if(typeof scriptUrl !== 'undefined' && scriptUrl) scriptUrl.value=settings.scriptUrl||'';
-  if(typeof supabaseUrl !== 'undefined' && supabaseUrl) supabaseUrl.value=settings.supabaseUrl||'';
-  if(typeof supabaseKey !== 'undefined' && supabaseKey) supabaseKey.value=settings.supabaseKey||'';
-  if(typeof supabaseTable !== 'undefined' && supabaseTable) supabaseTable.value=settings.supabaseTable||'teacher_preferences';
-  if(typeof teacherTableName !== 'undefined' && teacherTableName) teacherTableName.value=settings.teacherTable||'teacher_accounts';
-  if(typeof courseTableName !== 'undefined' && courseTableName) courseTableName.value=settings.courseTable||'course_pool';
-  renderTeachers(); renderResults(); renderCourses(); renderGas();
-}
-function renderTeachers(){
-  teacherTable.innerHTML='<tr><th>Öğretmen</th><th>4 Haneli Şifre</th><th>Durum</th><th>İşlem</th></tr>'+
-  (teachers.map(t=>{
-    const sent=getLastSubmission(t.id);
-    return `<tr><td><b>${esc(t.name)}</b></td><td><span class="badge">${t.pass}</span></td><td>${sent?'<span class="badge">Gönderdi</span>':'<span class="small">Bekleniyor</span>'}</td><td><button onclick="renewPass('${t.id}')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('${t.id}')">Sil</button></td></tr>`;
-  }).join('') || '<tr><td colspan="4">Öğretmen eklenmedi.</td></tr>');
-}
-function renderResults(){
-  const allRows=[];
-  submissions.forEach(s=>{
-    const detail=s.details || Object.entries(s.preferences||{}).map(([key,val])=>{
-      const c=courses.find(x=>courseKey(x)===key) || courses.find(x=>x.name===key);
-      return {course:c?c.name:key,type:c?c.type:'',grade:c?c.grade:'',hour:c?c.hour:'',value:val,label:prefLabel(val)};
-    }).filter(d=>Number(d.value)>0);
-    detail.forEach(d=>allRows.push({date:new Date(s.timestamp).toLocaleString('tr-TR'), teacher:s.teacherName, course:d.course, type:d.type, pref:d.label||prefLabel(d.value), value:d.value}));
-  });
-  resultTable.innerHTML='<tr><th>Tarih</th><th>Öğretmen</th><th>Tür</th><th>Ders</th><th>Tercih</th><th>Puan</th></tr>'+
-  (allRows.map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.teacher)}</td><td>${esc(r.type)}</td><td>${esc(r.course)}</td><td>${esc(r.pref)}</td><td>${r.value}</td></tr>`).join('') || '<tr><td colspan="6">Henüz tercih gönderilmedi.</td></tr>');
-}
-function renderCourses(){
-  renderCoursesRows = courses.map(c=>`<tr><td>${esc(c.name)}</td><td><span class="badge ${typeClass(c.type)}">${esc(c.type)}</span></td><td>${esc(c.grade||'')}</td><td>${c.hour||''}</td><td><button class="danger" onclick="deleteCourse('${esc(c.name).replace(/'/g,'&#39;')}','${esc(c.type)}')">Sil</button></td></tr>`).join('');
-  courseTable.innerHTML='<tr><th>Ders</th><th>Tür</th><th>Sınıf</th><th>Saat</th><th></th></tr>'+renderCoursesRows;
-}
-function resetSupabaseSettings(){
-  settings.supabaseUrl='https://bzhbbjjtwotahoovnxua.supabase.co';
-  settings.supabaseKey='sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l';
-  settings.supabaseTable='teacher_preferences';
-  settings.teacherTable='teacher_accounts';
-  settings.courseTable='course_pool';
-  if(typeof supabaseUrl !== 'undefined' && supabaseUrl) supabaseUrl.value=settings.supabaseUrl;
-  if(typeof supabaseKey !== 'undefined' && supabaseKey) supabaseKey.value=settings.supabaseKey;
-  if(typeof supabaseTable !== 'undefined' && supabaseTable) supabaseTable.value=settings.supabaseTable;
-  if(typeof teacherTableName !== 'undefined' && teacherTableName) teacherTableName.value=settings.teacherTable;
-  if(typeof courseTableName !== 'undefined' && courseTableName) courseTableName.value=settings.courseTable;
-  saveData();
-  alert('Supabase ayarları varsayılana alındı.');
-}
-
-
-function cloudHeaders(extra={}){
-  return Object.assign({
-    'apikey':settings.supabaseKey,
-    'Authorization':'Bearer '+settings.supabaseKey
-  }, extra);
-}
-async function supabaseSelect(table, query='select=*'){
-  applyDefaultSupabaseSettings();
-  const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?' + query, {
-    headers:cloudHeaders()
-  });
-  if(!res.ok) throw new Error(await res.text());
-  return await res.json();
-}
-async function supabaseInsert(table, rows){
-  const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table), {
-    method:'POST',
-    headers:cloudHeaders({'Content-Type':'application/json','Prefer':'return=representation'}),
-    body:JSON.stringify(rows)
-  });
-  if(!res.ok) throw new Error(await res.text());
-  return await res.json();
-}
-async function supabasePatch(table, query, data){
-  const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?' + query, {
-    method:'PATCH',
-    headers:cloudHeaders({'Content-Type':'application/json','Prefer':'return=minimal'}),
-    body:JSON.stringify(data)
-  });
-  if(!res.ok) throw new Error(await res.text());
-}
-async function supabaseDelete(table, query){
-  const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?' + query, {
-    method:'DELETE',
-    headers:cloudHeaders({'Prefer':'return=minimal'})
-  });
-  if(!res.ok) throw new Error(await res.text());
-}
-async function saveTeacherToCloud(t){
-  if(!settings.supabaseUrl || !settings.supabaseKey) return;
-  await supabaseInsert(settings.teacherTable || 'teacher_accounts', [{
-    teacher_id:t.id,
-    name:t.name,
-    pass:t.pass,
-    is_active:true
-  }]);
-}
-async function saveCourseToCloud(c){
-  if(!settings.supabaseUrl || !settings.supabaseKey) return;
-  await supabaseInsert(settings.courseTable || 'course_pool', [{
-    course_key:courseKey(c),
-    name:c.name,
-    type:c.type,
-    grade:c.grade || '',
-    hour:Number(c.hour || 0),
-    is_active:true
-  }]);
-}
-async function loadSupabaseBaseData(){
-  saveData();
-  if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
-  try{
-    const tRows = await supabaseSelect(settings.teacherTable || 'teacher_accounts', 'select=*&is_active=eq.true&order=name.asc');
-    const cRows = await supabaseSelect(settings.courseTable || 'course_pool', 'select=*&is_active=eq.true&order=type.asc,name.asc,grade.asc');
-
-    if(tRows.length){
-      teachers = tRows.map(r=>({id:r.teacher_id || String(r.id), name:r.name || '', pass:r.pass || genPass()})).filter(t=>t.name);
-    }
-    if(cRows.length){
-      courses = cRows.map(r=>({name:r.name || '', type:r.type || inferType(r.name), grade:String(r.grade||''), hour:Number(r.hour||0)})).filter(c=>c.name);
-      prepareCourses();
-    }
-    render();
-    alert('Öğretmen ve ders havuzu Supabase’den alındı.');
-  }catch(e){
-    alert('Öğretmen/ders havuzu alınamadı: '+e.message);
-  }
-}
-async function syncAllBaseDataToSupabase(){
-  saveData();
-  if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
-  if(!teachers.length && !courses.length) return alert('Aktarılacak öğretmen veya ders yok.');
-  if(!confirm(`Mevcut öğretmen ve ders havuzu Supabase’e yeniden kaydedilsin mi?
-
-Not: Sadece öğretmen/ders listesi yenilenir, tercihler silinmez.`)) return;
-
-  try{
-    const tt = settings.teacherTable || 'teacher_accounts';
-    const ct = settings.courseTable || 'course_pool';
-
-    try{ await supabaseDelete(tt, 'id=not.is.null'); }catch(e){ console.warn('teacher clear', e); }
-    try{ await supabaseDelete(ct, 'id=not.is.null'); }catch(e){ console.warn('course clear', e); }
-
-    const teacherRows = teachers.map(t=>({
-      teacher_id:t.id,
-      name:t.name,
-      pass:t.pass,
-      is_active:true
-    }));
-
-    const courseRows = courses.map(c=>({
-      course_key:courseKey(c),
-      name:c.name,
-      type:c.type,
-      grade:c.grade || '',
-      hour:Number(c.hour || 0),
-      is_active:true
-    }));
-
-    if(teacherRows.length) await supabaseUpsert(tt, teacherRows, '');
-    if(courseRows.length) await supabaseUpsert(ct, courseRows, '');
-
-    alert('Öğretmen ve ders havuzu Supabase’e kaydedildi. Başka tarayıcıda görünmelidir.');
-  }catch(e){
-    alert(`Aktarım hatası: ${e.message}
-
-Online Kurulum SQL kodunu Supabase SQL Editor’da tekrar çalıştırın.`);
-  }
-}
-
-async function showCloudCounts(){
-  saveData();
-  try{
-    const tRows = await supabaseSelect(settings.teacherTable || 'teacher_accounts', 'select=id&is_active=eq.true');
-    const cRows = await supabaseSelect(settings.courseTable || 'course_pool', 'select=id&is_active=eq.true');
-    const pRows = await supabaseSelect(settings.supabaseTable || 'teacher_preferences', 'select=id&is_active=eq.true');
-    alert('Bulut kayıtları:\nÖğretmen: '+tRows.length+'\nDers: '+cRows.length+'\nAktif tercih: '+pRows.length);
-  }catch(e){
-    alert('Bulut sayıları alınamadı: '+e.message);
-  }
-}
-async function loadSupabaseBaseData(){
-  saveData();
-  if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
-  try{
-    const tRows = await supabaseSelect(settings.teacherTable || 'teacher_accounts', 'select=*&is_active=eq.true&order=name.asc');
-    const cRows = await supabaseSelect(settings.courseTable || 'course_pool', 'select=*&is_active=eq.true&order=type.asc,name.asc,grade.asc');
-
-    if(tRows.length){
-      teachers = tRows.map(r=>({id:r.teacher_id || String(r.id), name:r.name || '', pass:r.pass || genPass()})).filter(t=>t.name);
-    }
-    if(cRows.length){
-      courses = cRows.map(r=>({name:r.name || '', type:r.type || inferType(r.name), grade:String(r.grade||''), hour:Number(r.hour||0)})).filter(c=>c.name);
-      prepareCourses();
-    }
-    render();
-
-    if(!tRows.length && !cRows.length){
-      alert('Supabase bağlantısı var ama öğretmen/ders tabloları boş. Admin ekranında öğretmen/ders ekleyip “Öğretmen/Dersleri Buluta Kaydet” düğmesine basın.');
-    }
-  }catch(e){
-    alert('Öğretmen/ders havuzu alınamadı: '+e.message);
-  }
-}
-
-async function testSupabaseConnection(){
-  saveData();
-  if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
-  try{
-    const table = settings.supabaseTable || 'teacher_preferences';
-    const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?select=id&limit=1', {
-      headers:{'apikey':settings.supabaseKey,'Authorization':'Bearer '+settings.supabaseKey}
-    });
-    if(!res.ok) throw new Error(await res.text());
-    alert('Supabase bağlantısı başarılı.');
-  }catch(e){
-    alert('Supabase bağlantı hatası: '+e.message);
-  }
-}
-async function loadSupabasePreferences(){
-  saveData();
-  if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
-  try{
-    const table = settings.supabaseTable || 'teacher_preferences';
-    const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?select=*&is_active=eq.true&order=created_at.desc', {
-      headers:{'apikey':settings.supabaseKey,'Authorization':'Bearer '+settings.supabaseKey}
-    });
-    if(!res.ok) throw new Error(await res.text());
-    const rows = await res.json();
-    renderSupabaseRows(rows);
-  }catch(e){
-    alert('Supabase tercihleri alınamadı: '+e.message);
-  }
-}
-function renderSupabaseRows(rows){
-  resultTable.innerHTML='<tr><th>Tarih</th><th>Öğretmen</th><th>Tür</th><th>Sınıf</th><th>Saat</th><th>Ders</th><th>Tercih</th><th>Puan</th></tr>'+
-  (rows.map(r=>`<tr><td>${esc(r.created_at||r.submission_time||'')}</td><td>${esc(r.teacher_name||'')}</td><td>${esc(r.course_type||'')}</td><td>${esc(r.grade||'')}</td><td>${esc(r.hour||'')}</td><td>${esc(r.course_name||'')}</td><td>${esc(r.preference_label||'')}</td><td>${esc(r.preference_value||'')}</td></tr>`).join('') || '<tr><td colspan="8">Supabase kaydı yok.</td></tr>');
-}
-async function clearSupabasePreferences(){
-  saveData();
-  if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
-  if(!confirm('Supabase üzerindeki tüm öğretmen tercih kayıtları temizlensin mi? Öğretmen ve ders listesi silinmez.')) return;
-
-  try{
-    const table = settings.supabaseTable || 'teacher_preferences';
-    const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?id=not.is.null', {
-      method:'DELETE',
-      headers:{
-        'apikey':settings.supabaseKey,
-        'Authorization':'Bearer '+settings.supabaseKey,
-        'Prefer':'return=minimal'
-      }
-    });
-
-    if(!res.ok){
-      const txt = await res.text();
-      throw new Error(txt);
-    }
-
-    submissions=[];
-    renderResults();
-    alert('Supabase tercih kayıtları temizlendi.');
-  }catch(e){
-    alert('Supabase temizleme hatası: '+e.message+'\\n\\nNot: Online Kurulum sekmesindeki güncel SQL kodunu Supabase SQL Editor’da tekrar çalıştırmanız gerekebilir.');
-  }
-}
-
-async function exportSupabasePreferencesExcel(){
-  if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
-  saveData();
-  if(!settings.supabaseUrl || !settings.supabaseKey) return alert('Supabase URL ve key giriniz.');
-  try{
-    const table = settings.supabaseTable || 'teacher_preferences';
-    const res = await fetch(settings.supabaseUrl + '/rest/v1/' + encodeURIComponent(table) + '?select=*&is_active=eq.true&order=created_at.asc', {
-      headers:{'apikey':settings.supabaseKey,'Authorization':'Bearer '+settings.supabaseKey}
-    });
-    if(!res.ok) throw new Error(await res.text());
-    const data = await res.json();
-    const rows = data.map(r=>({
-      'Tarih':r.created_at||r.submission_time||'',
-      'Öğretmen Ad Soyad':r.teacher_name||'',
-      'Ders Adı':r.course_name||'',
-      'Tür':r.course_type||'',
-      'Sınıf':r.grade||'',
-      'Saat':r.hour||'',
-      'Tercih Puanı / Seçim':r.preference_value||'',
-      'Tercih':r.preference_label||''
-    }));
-    const wb=XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),'Supabase_Tercihler');
-    XLSX.writeFile(wb,'supabase_ogretmen_ders_tercihleri.xlsx');
-  }catch(e){
-    alert('Supabase Excel alınamadı: '+e.message);
-  }
-}
-
-function exportTeacherPasswords(){
-  if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
-  const wb=XLSX.utils.book_new();
-  const rows=teachers.map(t=>({'Öğretmen':t.name,'4 Haneli Şifre':t.pass,'Durum':getLastSubmission(t.id)?'Gönderdi':'Bekleniyor'}));
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),'Ogretmen_Sifreleri');
-  XLSX.writeFile(wb,'ogretmen_tercih_sifreleri.xlsx');
-}
-function exportPreferencesExcel(){
-  if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
-  const wb=XLSX.utils.book_new();
-  const matrix=teachers.map(t=>{
-    const sub=getLastSubmission(t.id);
-    const row={'Öğretmen':t.name,'Şifre':t.pass,'Gönderim Durumu':sub?'Gönderdi':'Bekleniyor','Tarih':sub?new Date(sub.timestamp).toLocaleString('tr-TR'):''};
-    courses.forEach(c=>row[c.name]=sub?prefLabel(sub.preferences[c.name]):'');
-    return row;
-  });
-  const list=[];
-  submissions.forEach(s=>{
-    const detail=s.details || Object.entries(s.preferences||{}).map(([key,val])=>{
-      const c=courses.find(x=>courseKey(x)===key) || courses.find(x=>x.name===key);
-      return {course:c?c.name:key,type:c?c.type:'',grade:c?c.grade:'',hour:c?c.hour:'',value:val,label:prefLabel(val)};
-    }).filter(d=>Number(d.value)>0);
-    detail.forEach(d=>list.push({'Tarih':new Date(s.timestamp).toLocaleString('tr-TR'),'Öğretmen':s.teacherName,'Tür':d.type,'Ders':d.course,'Tercih':d.label||prefLabel(d.value),'Puan':d.value}));
-  });
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(matrix),'Tercih_Matrisi');
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(list),'Tercih_Listesi');
-  XLSX.writeFile(wb,'ogretmen_ders_tercihleri_v31_paylasimli.xlsx');
-}
-function downloadV28PreferenceExcel(){
-  if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
-  const wb=XLSX.utils.book_new();
-  const rows=[];
-  teachers.forEach(t=>{
-    const sub=getLastSubmission(t.id);
-    courses.forEach(c=>{
-      const key=courseKey(c);
-      const val=sub && sub.preferences[key]!==undefined ? sub.preferences[key] : 0;
-      rows.push({'Öğretmen Ad Soyad':t.name,'Ders Adı':c.name,'Tür':c.type,'Sınıf':c.grade||'','Saat':c.hour||'','Tercih Puanı / Seçim':val,'Tercih':prefLabel(val)});
-    });
-  });
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),'Tercihler_Liste');
-  XLSX.writeFile(wb,'v28_uyumlu_ogretmen_ders_tercihleri.xlsx');
-}
-function importTeachersExcel(e){
-  if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
-  const f=e.target.files[0]; if(!f)return;
-  const r=new FileReader();
-  r.onload=async ev=>{
-    const wb=XLSX.read(ev.target.result,{type:'array'});
-    const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});
-    rows.forEach(row=>{
-      const name=String(row['Öğretmen']||row['Ogretmen']||row['Ad Soyad']||row['Adı Soyadı']||row[Object.keys(row)[0]]||'').trim();
-      if(name && !teachers.some(t=>norm(t.name)===norm(name))) teachers.push({id:uid(),name,pass:genPass()});
-    });
-    saveData(); render(); try{ for(const t of teachers){ await saveTeacherToCloud(t); } }catch(e){ console.warn(e); } alert('Öğretmenler alındı ve Supabase’e kaydedildi.');
-  };
-  r.readAsArrayBuffer(f); e.target.value='';
-}
-function pickValue(row, keys){
-  for(const k of keys){
-    if(row[k]!==undefined && row[k]!==null && String(row[k]).trim()!=='') return row[k];
-  }
-  const allKeys=Object.keys(row);
-  for(const key of allKeys){
-    const nk=norm(key);
-    if(keys.some(k=>nk.includes(norm(k)))) return row[key];
-  }
-  return '';
-}
-function normalizeCourseTypeForImport(name, type){
-  const raw = String((type||'') + ' ' + (name||'')).toLocaleUpperCase('tr-TR');
-  if(raw.includes('MESEM')) return 'MESEM';
-  if(raw.includes('DIŞ TİCARET') || raw.includes('DIS TICARET') || raw.includes('GÜMRÜK') || raw.includes('GUMRUK') || raw.includes('İHRACAT') || raw.includes('IHRACAT') || raw.includes('İTHALAT') || raw.includes('ITHALAT')) return 'Dış Ticaret';
-  return 'Muhasebe';
-}
-function importCoursesExcel(e){
-  if(typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
-  const f=e.target.files[0]; 
-  if(!f) return;
-
-  const r=new FileReader();
-  r.onload=async ev=>{
-    try{
-      const wb=XLSX.read(ev.target.result,{type:'array'});
-      const sh=wb.Sheets[wb.SheetNames[0]];
-
-      // 1) Önce normal başlıklı tablo okumayı dene
-      let rows=XLSX.utils.sheet_to_json(sh,{defval:''});
-      let imported=[];
-
-      rows.forEach(row=>{
-        const name=String(pickValue(row,['Ders','Ders Adı','Ders Adi','Dersin Adı','Dersin Adi','name']) || '').trim();
-        if(!name || norm(name).includes('toplam')) return;
-
-        const explicitType=pickValue(row,['Tür','Tur','Alan','Program','Şube Türü','Sube Turu','type']);
-        const type=normalizeCourseTypeForImport(name, explicitType);
-
-        const gradeVal=pickValue(row,['Sınıf','Sinif','Sınıf Seviyesi','Sinif Seviyesi','grade']);
-        const hourVal=pickValue(row,['Saat','Haftalık Saat','Haftalik Saat','Ders Saati','hour']);
-
-        // Satır formatı: Ders | Sınıf | Saat | Tür
-        if(gradeVal && hourVal){
-          imported.push({name,type,grade:String(gradeVal).replace(/\D/g,'') || String(gradeVal),hour:Number(String(hourVal).replace(',','.'))||0});
-          return;
-        }
-
-        // Matris formatı: Ders | 9 | 10 | 11 | 12
-        ['9','10','11','12'].forEach(g=>{
-          const hv = row[g] ?? row[g+'. Sınıf'] ?? row[g+'. Sinif'] ?? row[g+' Sınıf'] ?? row[g+' Sinif'];
-          if(hv!==undefined && hv!==null && String(hv).trim()!==''){
-            const hour=Number(String(hv).replace(',','.'))||0;
-            if(hour>0) imported.push({name,type,grade:g,hour});
-          }
-        });
-      });
-
-      // 2) Eğer başlıklar bozuksa ham satır/matris yöntemi
-      if(!imported.length){
-        const aoa=XLSX.utils.sheet_to_json(sh,{header:1,defval:''});
-        let headerIndex=aoa.findIndex(row=>row.some(x=>['9','10','11','12'].includes(String(x).trim())));
-        if(headerIndex<0) headerIndex=0;
-        const header=aoa[headerIndex]||[];
-        let courseCol=header.findIndex(h=>norm(h).includes('ders'));
-        if(courseCol<0) courseCol=0;
-
-        const gradeCols={};
-        header.forEach((h,i)=>{
-          const s=String(h).trim();
-          if(/^9/.test(s)) gradeCols['9']=i;
-          if(/^10/.test(s)) gradeCols['10']=i;
-          if(/^11/.test(s)) gradeCols['11']=i;
-          if(/^12/.test(s)) gradeCols['12']=i;
-        });
-        if(!Object.keys(gradeCols).length){
-          gradeCols['9']=1; gradeCols['10']=2; gradeCols['11']=3; gradeCols['12']=4;
-        }
-
-        for(let i=headerIndex+1;i<aoa.length;i++){
-          const row=aoa[i]||[];
-          const name=String(row[courseCol]||'').trim();
-          if(!name || norm(name).includes('toplam')) continue;
-          const type=normalizeCourseTypeForImport(name,'');
-          Object.entries(gradeCols).forEach(([g,col])=>{
-            const hour=Number(String(row[col]||'').replace(',','.'))||0;
-            if(hour>0) imported.push({name,type,grade:g,hour});
-          });
-        }
-      }
-
-      if(!imported.length){
-        return alert('Dersler alınamadı. Excel’de ders adı, sınıf ve saat bilgileri bulunamadı.');
-      }
-
-      // Tekilleştir
-      const seen=new Set();
-      courses=[];
-      imported.forEach(c=>{
-        if(!c.name || !c.grade || !c.hour) return;
-        const key=c.name+'|'+c.type+'|'+c.grade+'|'+c.hour;
-        if(seen.has(key)) return;
-        seen.add(key);
-        courses.push(c);
-      });
-
-      prepareCourses();
-      saveData();
-      render();
-      alert('Ders havuzu alındı: '+courses.length+' ders/sınıf satırı.');
-    }catch(err){
-      alert('Ders havuzu okunamadı: '+err.message);
-    }finally{
-      e.target.value='';
-    }
-  };
-  r.readAsArrayBuffer(f);
-}
-
-function resetAll(){
-  if(!confirm('Tüm öğretmen, şifre ve tercih verileri silinsin mi?'))return;
-  localStorage.removeItem('mf_online_pref_form_v7');
-  teachers=[...DEFAULT_TEACHERS]; submissions=[]; courses=[...DEFAULT_COURSES]; settings={adminPassword:'18309',scriptUrl:DEFAULT_SCRIPT_URL,supabaseUrl:'https://bzhbbjjtwotahoovnxua.supabase.co',supabaseKey:'sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l',supabaseTable:'teacher_preferences'};
-  prepareCourses(); render();
-}
-function downloadSharedForm(){
-  saveData(); lockAdminView();
-  let source = document.documentElement.outerHTML;
-  source = source.replace(/let adminUnlocked = true;/g, 'let adminUnlocked = false;');
-  source = source.replace(/<button class="tab" id="adminTab"/g, '</div>`);
-
-  // Başlık paylaşım dosyası olarak güncellensin.
-  source = source.replace(/Muhasebe Finansman Öğretmen Ders Tercih Formu/g, 'Muhasebe Finansman Öğretmen Ders Tercih Formu');
-  source = source.replace(/<p>[\s\S]*?<\/p>/, '<p>Öğretmen ders tercih giriş ekranı</p>');
-
-  const blob = new Blob(['<!DOCTYPE html>\n' + source], {type:'text/html;charset=utf-8'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'ogretmen_ders_tercih_paylasilacak.html';
-  a.click();
-}
-
-function copyShareText(){
-  const txt='Değerli öğretmenimiz, ders tercih formuna girerek adınızı seçiniz ve size verilen şifreyle tercihlerinizi gönderiniz.';
-  navigator.clipboard.writeText(txt); alert('Mesaj kopyalandı.');
-}
-const GAS_CODE = `create table if not exists public.teacher_preferences (
+const SQL_CODE = `create table if not exists public.teacher_preferences (
   id bigint generated by default as identity primary key,
   created_at timestamptz default now(),
   teacher_id text,
@@ -1197,7 +381,7 @@ const GAS_CODE = `create table if not exists public.teacher_preferences (
 create table if not exists public.teacher_accounts (
   id bigint generated by default as identity primary key,
   created_at timestamptz default now(),
-  teacher_id text unique,
+  teacher_id text,
   name text,
   pass text,
   is_active boolean default true
@@ -1234,12 +418,212 @@ for all to anon using (true) with check (true);
 drop policy if exists "public_all_course_pool" on public.course_pool;
 create policy "public_all_course_pool" on public.course_pool
 for all to anon using (true) with check (true);`;
-function renderGas(){gasCode.textContent=GAS_CODE}
-function copyGasCode(){navigator.clipboard.writeText(GAS_CODE); alert('SQL kodu kopyalandı.')}
-loadData();
-lockAdminView();
-render();
-setTimeout(()=>{ if(settings.supabaseUrl && settings.supabaseKey) loadSupabaseBaseData().catch?.(()=>{}); }, 300);
+
+function uid(){return Math.random().toString(36).slice(2,9)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function norm(s){return String(s??'').trim().toLocaleLowerCase('tr-TR').replaceAll('ı','i').replaceAll('ğ','g').replaceAll('ü','u').replaceAll('ş','s').replaceAll('ö','o').replaceAll('ç','c')}
+function genPass(){return String(Math.floor(1000+Math.random()*9000))}
+function inferType(name){const n=String(name||'').toLocaleUpperCase('tr-TR'); if(n.includes('MESEM'))return'MESEM'; if(n.includes('DIŞ')||n.includes('DIS')||n.includes('GÜMRÜK')||n.includes('GUMRUK')||n.includes('İHRACAT')||n.includes('IHRACAT')||n.includes('İTHALAT')||n.includes('ITHALAT'))return'Dış Ticaret'; return'Muhasebe'}
+function courseKey(c){return String(c.name||'')+'|'+String(c.type||'')+'|'+String(c.grade||'')+'|'+String(c.hour||'')}
+function prefLabel(v){v=Number(v); if(v===5)return'Çok isterim'; if(v===4)return'İsterim'; if(v===3)return'Olabilir'; if(v===2)return'Mecbur kalırsam'; return'İstemem'}
+function prepareCourses(){const seen=new Set(); courses=courses.map(c=>({name:String(c.name||'').trim(),type:c.type||inferType(c.name),grade:String(c.grade||''),hour:Number(c.hour||0)})).filter(c=>c.name).filter(c=>{const k=courseKey(c); if(seen.has(k))return false; seen.add(k); return true;})}
+
+function saveData(){settings.supabaseUrl=(supabaseUrl?.value||settings.supabaseUrl||DEFAULT_SETTINGS.supabaseUrl).trim().replace(/\/$/,'');settings.supabaseKey=(supabaseKey?.value||settings.supabaseKey||DEFAULT_SETTINGS.supabaseKey).trim();settings.prefTable=(prefTable?.value||settings.prefTable||DEFAULT_SETTINGS.prefTable).trim();settings.teacherTable=(teacherTableName?.value||settings.teacherTable||DEFAULT_SETTINGS.teacherTable).trim();settings.courseTable=(courseTableName?.value||settings.courseTable||DEFAULT_SETTINGS.courseTable).trim();localStorage.setItem('mf_pref_v33_admin',JSON.stringify({teachers,courses,settings}))}
+function loadData(){const raw=localStorage.getItem('mf_pref_v33_admin'); if(raw){try{const d=JSON.parse(raw); teachers=d.teachers||teachers; courses=d.courses||courses; settings={...DEFAULT_SETTINGS,...(d.settings||{})}}catch(e){}} prepareCourses()}
+function showScreen(name){loginScreen.classList.toggle('hidden',name!=='login');formScreen.classList.add('hidden');adminScreen?.classList.toggle('hidden',name!=='admin');setupScreen?.classList.toggle('hidden',name!=='setup');document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); if(name==='login')document.querySelector('#mainTabs .tab')?.classList.add('active'); if(name==='admin')adminTab?.classList.add('active'); if(name==='setup')setupTab?.classList.add('active'); render()}
+function lockAdminView(){adminUnlocked=false;adminTab?.classList.add('hidden');setupTab?.classList.add('hidden');adminArea?.classList.add('hidden');adminScreen?.classList.add('hidden');setupScreen?.classList.add('hidden');formScreen.classList.add('hidden');loginScreen.classList.remove('hidden')}
+function logoutAdmin(){lockAdminView();render()}
+
+function cloudHeaders(extra={}){return Object.assign({'apikey':settings.supabaseKey,'Authorization':'Bearer '+settings.supabaseKey},extra)}
+async function cloudFetch(table, query='select=*'){const res=await fetch(settings.supabaseUrl+'/rest/v1/'+encodeURIComponent(table)+'?'+query,{headers:cloudHeaders()}); if(!res.ok)throw new Error(await res.text()); return await res.json()}
+async function cloudInsert(table, rows){if(!rows.length)return; const res=await fetch(settings.supabaseUrl+'/rest/v1/'+encodeURIComponent(table),{method:'POST',headers:cloudHeaders({'Content-Type':'application/json','Prefer':'return=minimal'}),body:JSON.stringify(rows)}); if(!res.ok)throw new Error(await res.text())}
+async function cloudPatch(table, query, data){const res=await fetch(settings.supabaseUrl+'/rest/v1/'+encodeURIComponent(table)+'?'+query,{method:'PATCH',headers:cloudHeaders({'Content-Type':'application/json','Prefer':'return=minimal'}),body:JSON.stringify(data)}); if(!res.ok)throw new Error(await res.text())}
+async function cloudDelete(table, query){const res=await fetch(settings.supabaseUrl+'/rest/v1/'+encodeURIComponent(table)+'?'+query,{method:'DELETE',headers:cloudHeaders({'Prefer':'return=minimal'})}); if(!res.ok)throw new Error(await res.text())}
+
+async function testSupabase(){saveData(); try{await cloudFetch(settings.prefTable,'select=id&limit=1'); alert('Supabase bağlantısı başarılı.')}catch(e){alert('Supabase bağlantı hatası: '+e.message)}}
+function resetSupabaseSettings(){settings={...DEFAULT_SETTINGS}; render(); saveData(); alert('Varsayılan Supabase ayarları yüklendi.')}
+async function saveBaseToCloud(){saveData(); if(!teachers.length||!courses.length)return alert('Öğretmen ve ders havuzu boş olmamalıdır.'); if(!confirm('Öğretmen ve ders havuzu buluta yeniden yazılsın mı? Tercihler silinmez.'))return; try{await cloudDelete(settings.teacherTable,'id=not.is.null'); await cloudDelete(settings.courseTable,'id=not.is.null'); await cloudInsert(settings.teacherTable,teachers.map(t=>({teacher_id:t.id,name:t.name,pass:t.pass,is_active:true}))); await cloudInsert(settings.courseTable,courses.map(c=>({course_key:courseKey(c),name:c.name,type:c.type,grade:c.grade,hour:c.hour,is_active:true}))); alert('Öğretmen ve ders havuzu buluta kaydedildi.')}catch(e){alert('Buluta kaydetme hatası: '+e.message)}}
+async function loadBaseFromCloud(showAlert=false){saveData(); try{const ts=await cloudFetch(settings.teacherTable,'select=*&is_active=eq.true&order=name.asc'); const cs=await cloudFetch(settings.courseTable,'select=*&is_active=eq.true&order=type.asc,name.asc,grade.asc'); if(ts.length)teachers=ts.map(r=>({id:r.teacher_id||String(r.id),name:r.name,pass:r.pass})); if(cs.length){courses=cs.map(r=>({name:r.name,type:r.type,grade:String(r.grade||''),hour:Number(r.hour||0)})); prepareCourses()} render(); if(showAlert)alert('Buluttan alma tamamlandı. Öğretmen: '+ts.length+' Ders: '+cs.length)}catch(e){if(showAlert)alert('Buluttan alma hatası: '+e.message)}}
+async function showCloudCounts(){try{const ts=await cloudFetch(settings.teacherTable,'select=id&is_active=eq.true'); const cs=await cloudFetch(settings.courseTable,'select=id&is_active=eq.true'); const ps=await cloudFetch(settings.prefTable,'select=id&is_active=eq.true'); alert('Bulut kayıtları:\\nÖğretmen: '+ts.length+'\\nDers: '+cs.length+'\\nAktif tercih: '+ps.length)}catch(e){alert('Sayılar alınamadı: '+e.message)}}
+
+async function teacherLogin(){const tid=loginTeacher.value; const pass=loginPass.value.trim(); if(!tid)return alert('Lütfen adınızı seçiniz.'); const t=teachers.find(x=>x.id===tid && x.pass===pass); if(!t)return alert('Ad veya şifre hatalı.'); currentTeacherId=t.id; loginPass.value=''; formTitle.textContent=t.name+' - Ders Tercihleri'; try{const sub=await getTeacherCloudPrefs(t.id); submissions=sub?[sub]:[]}catch(e){console.warn(e)} loginScreen.classList.add('hidden'); formScreen.classList.remove('hidden'); renderPrefForm()}
+function backLogin(){currentTeacherId='';formScreen.classList.add('hidden');loginScreen.classList.remove('hidden')}
+async function getTeacherCloudPrefs(tid){const rows=await cloudFetch(settings.prefTable,'select=*&teacher_id=eq.'+encodeURIComponent(tid)+'&is_active=eq.true&order=created_at.desc'); if(!rows.length)return null; const prefs={}; rows.forEach(r=>{const k=r.course_key||[r.course_name,r.course_type,r.grade,r.hour].join('|'); if(prefs[k]===undefined)prefs[k]=Number(r.preference_value||0)}); return {teacherId:tid,teacherName:rows[0].teacher_name,preferences:prefs,details:rows}}
+async function deactivateOldPrefs(tid){await cloudPatch(settings.prefTable,'teacher_id=eq.'+encodeURIComponent(tid)+'&is_active=eq.true',{is_active:false})}
+
+function renderPrefForm(){const sub=submissions.find(s=>s.teacherId===currentTeacherId); const prefs=sub?sub.preferences:{}; const groups=[{title:'Alan Dersleri',types:['Muhasebe','Dış Ticaret']},{title:'MESEM Dersleri',types:['MESEM']}]; prefForm.innerHTML=groups.map(g=>{const list=courses.filter(c=>g.types.includes(c.type)); if(!list.length)return ''; return `<div class="pref-section"><h3><span>${g.title}</span><span class="badge">${list.length} ders</span></h3>${list.map(c=>{const key=courseKey(c); const v=prefs[key]??0; return `<div class="pref-row"><div><b>${esc(c.name)}</b><br><span class="small">${esc(c.type)} ${c.grade?('| '+c.grade+'. sınıf'):''} ${c.hour?('| '+c.hour+' saat'):''}</span></div><select data-course-key="${esc(key)}" data-course="${esc(c.name)}" data-type="${esc(c.type)}" data-grade="${esc(c.grade)}" data-hour="${esc(c.hour)}" onchange="updateLiveStats()"><option value="0" ${v==0?'selected':''}>İstemem</option><option value="2" ${v==2?'selected':''}>Mecbur kalırsam</option><option value="3" ${v==3?'selected':''}>Olabilir</option><option value="4" ${v==4?'selected':''}>İsterim</option><option value="5" ${v==5?'selected':''}>Çok isterim</option></select></div>`}).join('')}</div>`}).join(''); updateLiveStats()}
+function preferenceCounts(){const sels=[...document.querySelectorAll('#prefForm select[data-course-key]')]; const alan=sels.filter(s=>s.dataset.type==='Muhasebe'||s.dataset.type==='Dış Ticaret'); const mesem=sels.filter(s=>s.dataset.type==='MESEM'); const count=(arr,v)=>arr.filter(s=>Number(s.value)===v).length; return {a5:count(alan,5),a4:count(alan,4),a3:count(alan,3),a2:count(alan,2),m5:count(mesem,5)}}
+function ruleStatus(){const c=preferenceCounts(); return c.a5===1&&c.a4===2&&c.a3===2&&c.a2===1&&c.m5===1}
+function updateLiveStats(){const c=preferenceCounts(); kA5.textContent=c.a5+'/1';kA4.textContent=c.a4+'/2';kA3.textContent=c.a3+'/2';kA2.textContent=c.a2+'/1';kM5.textContent=c.m5+'/1';kRule.textContent=ruleStatus()?'Tamam':'Eksik';kRule.style.color=ruleStatus()?'#15803d':'#dc2626'}
+async function submitPreferences(){const t=teachers.find(x=>x.id===currentTeacherId); if(!t)return alert('Giriş bulunamadı.'); if(!ruleStatus()){const c=preferenceCounts(); return alert(`Tercih sayıları tamamlanmadı.\nAlan Çok isterim: ${c.a5}/1\nAlan İsterim: ${c.a4}/2\nAlan Olabilir: ${c.a3}/2\nAlan Mecbur: ${c.a2}/1\nMESEM Çok isterim: ${c.m5}/1`)} const details=[]; document.querySelectorAll('#prefForm select[data-course-key]').forEach(sel=>{const val=Number(sel.value); if(val>0)details.push({key:sel.dataset.courseKey,course:sel.dataset.course,type:sel.dataset.type,grade:sel.dataset.grade,hour:sel.dataset.hour,value:val,label:prefLabel(val)})}); try{await deactivateOldPrefs(t.id); const sid=t.id+'_'+Date.now(); await cloudInsert(settings.prefTable,details.map((d,i)=>({teacher_id:t.id,teacher_name:t.name,course_key:d.key,course_name:d.course,course_type:d.type,grade:d.grade,hour:Number(d.hour||0),preference_value:d.value,preference_label:d.label,submission_time:new Date().toISOString(),row_no:i+1,submission_id:sid,is_active:true}))); alert('Tercihleriniz kaydedildi: '+details.length); backLogin()}catch(e){alert('Supabase kayıt hatası: '+e.message)}}
+
+async function addTeacher(){const name=newTeacherName.value.trim(); if(!name)return alert('Öğretmen adı giriniz.'); if(teachers.some(t=>norm(t.name)===norm(name)))return alert('Bu öğretmen zaten var.'); teachers.push({id:uid(),name,pass:genPass()}); newTeacherName.value=''; saveData(); render()}
+function deleteTeacher(id){if(!confirm('Öğretmen silinsin mi?'))return; teachers=teachers.filter(t=>t.id!==id); saveData(); render()}
+function renewPass(id){const t=teachers.find(x=>x.id===id); if(t){t.pass=genPass(); saveData(); render()}}
+function addCourse(){const name=prompt('Ders adı:'); if(!name)return; const type=prompt('Tür: Muhasebe / Dış Ticaret / MESEM','Muhasebe')||'Muhasebe'; courses.push({name:name.trim(),type:['Muhasebe','Dış Ticaret','MESEM'].includes(type)?type:'Muhasebe',grade:'',hour:0}); prepareCourses(); saveData(); render()}
+function deleteCourse(name,type,grade,hour){if(!confirm('Ders silinsin mi?'))return; courses=courses.filter(c=>!(c.name===name&&c.type===type&&String(c.grade)===String(grade)&&String(c.hour)===String(hour))); saveData(); render()}
+
+function render(){loginTeacher.innerHTML='<option value="">Öğretmen seçiniz...</option>'+teachers.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join(''); if(supabaseUrl)supabaseUrl.value=settings.supabaseUrl; if(supabaseKey)supabaseKey.value=settings.supabaseKey; if(prefTable)prefTable.value=settings.prefTable; if(teacherTableName)teacherTableName.value=settings.teacherTable; if(courseTableName)courseTableName.value=settings.courseTable; renderTeachers(); renderCourses(); renderResults(); if(sqlCode)sqlCode.textContent=SQL_CODE}
+function renderTeachers(){if(!teacherTable)return; teacherTable.innerHTML='<tr><th>Öğretmen</th><th>Şifre</th><th>İşlem</th></tr>'+(teachers.map(t=>`<tr><td><b>${esc(t.name)}</b></td><td><span class="badge">${t.pass}</span></td><td><button onclick="renewPass('${t.id}')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('${t.id}')">Sil</button></td></tr>`).join('')||'<tr><td colspan="3">Öğretmen yok.</td></tr>')}
+function renderCourses(){if(!courseTable)return; courseTable.innerHTML='<tr><th>Ders</th><th>Tür</th><th>Sınıf</th><th>Saat</th><th></th></tr>'+courses.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.type)}</td><td>${esc(c.grade)}</td><td>${esc(c.hour)}</td><td><button class="danger" onclick="deleteCourse('${esc(c.name)}','${esc(c.type)}','${esc(c.grade)}','${esc(c.hour)}')">Sil</button></td></tr>`).join('')}
+function renderResults(){if(!resultTable)return; resultTable.innerHTML='<tr><th>Tarih</th><th>Öğretmen</th><th>Tür</th><th>Sınıf</th><th>Saat</th><th>Ders</th><th>Tercih</th><th>Puan</th></tr>'+(submissions.flatMap(s=>s.details||[]).map(r=>`<tr><td>${esc(r.created_at||'')}</td><td>${esc(r.teacher_name||'')}</td><td>${esc(r.course_type||'')}</td><td>${esc(r.grade||'')}</td><td>${esc(r.hour||'')}</td><td>${esc(r.course_name||'')}</td><td>${esc(r.preference_label||'')}</td><td>${esc(r.preference_value||'')}</td></tr>`).join('')||'<tr><td colspan="8">Kayıt yok.</td></tr>')}
+async function loadPreferencesFromCloud(){try{const rows=await cloudFetch(settings.prefTable,'select=*&is_active=eq.true&order=created_at.desc'); submissions=[{details:rows}]; renderResults(); alert('Tercihler alındı: '+rows.length)}catch(e){alert('Tercihler alınamadı: '+e.message)}}
+async function exportCloudPreferencesExcel(){if(typeof XLSX==='undefined')return alert('Excel için internet gerekir.'); const rows=await cloudFetch(settings.prefTable,'select=*&is_active=eq.true&order=created_at.asc'); const data=rows.map(r=>({'Tarih':r.created_at,'Öğretmen Ad Soyad':r.teacher_name,'Ders Adı':r.course_name,'Tür':r.course_type,'Sınıf':r.grade,'Saat':r.hour,'Tercih Puanı / Seçim':r.preference_value,'Tercih':r.preference_label})); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(data),'Supabase_Tercihler'); XLSX.writeFile(wb,'supabase_ogretmen_ders_tercihleri.xlsx')}
+async function clearCloudPreferences(){if(!confirm('Supabase tercih kayıtları silinsin mi?'))return; try{await cloudDelete(settings.prefTable,'id=not.is.null'); submissions=[]; renderResults(); alert('Tercihler silindi.')}catch(e){alert('Silme hatası: '+e.message)}}
+function exportTeacherPasswords(){if(typeof XLSX==='undefined')return alert('Excel için internet gerekir.'); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(teachers.map(t=>({'Öğretmen':t.name,'Şifre':t.pass}))),'Ogretmen_Sifreleri'); XLSX.writeFile(wb,'ogretmen_sifreleri.xlsx')}
+function copyShareText(){navigator.clipboard.writeText('Değerli öğretmenimiz, ders tercih formuna girerek adınızı seçiniz ve size verilen şifreyle tercihlerinizi gönderiniz.'); alert('Mesaj kopyalandı.')}
+function copySqlCode(){navigator.clipboard.writeText(SQL_CODE); alert('SQL kodu kopyalandı.')}
+function resetLocal(){if(confirm('Yerel admin verisi sıfırlansın mı? Bulut verisi silinmez.')){localStorage.removeItem('mf_pref_v33_admin'); teachers=[]; courses=[]; settings={...DEFAULT_SETTINGS}; render()}}
+
+function pickValue(row, keys){for(const k of keys){if(row[k]!==undefined&&String(row[k]).trim()!=='')return row[k]} const all=Object.keys(row); for(const key of all){const nk=norm(key); if(keys.some(k=>nk.includes(norm(k))))return row[key]} return ''}
+function importTeachersExcel(e){const f=e.target.files[0]; if(!f||typeof XLSX==='undefined')return; const r=new FileReader(); r.onload=ev=>{const wb=XLSX.read(ev.target.result,{type:'array'}); const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''}); rows.forEach(row=>{const name=String(pickValue(row,['Öğretmen','Ad Soyad','Adı Soyadı'])||Object.values(row)[0]||'').trim(); if(name&&!teachers.some(t=>norm(t.name)===norm(name)))teachers.push({id:uid(),name,pass:genPass()})}); saveData(); render(); alert('Öğretmenler alındı. Buluta kaydetmeyi unutmayın.')}; r.readAsArrayBuffer(f); e.target.value=''}
+function importCoursesExcel(e){
+  const f=e.target.files[0]; 
+  if(!f || typeof XLSX==='undefined') return alert('Excel için internet bağlantısı gerekir.');
+
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const wb=XLSX.read(ev.target.result,{type:'array'});
+      const sh=wb.Sheets[wb.SheetNames[0]];
+      const imported=[];
+
+      // Yardımcı: türü ad veya tür alanından tahmin et
+      const detectType=(name,typeText='')=>{
+        const raw=String((typeText||'')+' '+(name||'')).toLocaleUpperCase('tr-TR');
+        if(raw.includes('MESEM')) return 'MESEM';
+        if(raw.includes('DIŞ') || raw.includes('DIS') || raw.includes('GÜMRÜK') || raw.includes('GUMRUK') || raw.includes('İHRACAT') || raw.includes('IHRACAT') || raw.includes('İTHALAT') || raw.includes('ITHALAT') || raw.includes('DIŞ TİCARET') || raw.includes('DIS TICARET')) return 'Dış Ticaret';
+        return 'Muhasebe';
+      };
+      const toHour=v=>{
+        if(v===undefined || v===null || String(v).trim()==='') return 0;
+        const n=Number(String(v).replace(',','.').replace(/[^\d.]/g,''));
+        return isNaN(n)?0:n;
+      };
+      const toGrade=v=>{
+        const s=String(v||'').trim();
+        const m=s.match(/9|10|11|12/);
+        return m?m[0]:'';
+      };
+
+      // 1) Başlıklı tablo yöntemi
+      const rows=XLSX.utils.sheet_to_json(sh,{defval:''});
+      rows.forEach(row=>{
+        const name=String(pickValue(row,['Ders','Ders Adı','Ders Adi','Dersin Adı','Dersin Adi','Dersler','DERS ADI','DERS'])||'').trim();
+        if(!name || norm(name).includes('toplam')) return;
+
+        const explicitType=pickValue(row,['Tür','Tur','Alan','Program','Şube Türü','Sube Turu','type']);
+        const type=detectType(name, explicitType);
+
+        const gradeVal=pickValue(row,['Sınıf','Sinif','Sınıf Seviyesi','Sinif Seviyesi','grade']);
+        const hourVal=pickValue(row,['Saat','Haftalık Saat','Haftalik Saat','Ders Saati','Haftalık Ders Saati','hour']);
+
+        // Format: Ders | Sınıf | Saat
+        if(gradeVal && hourVal){
+          const grade=toGrade(gradeVal) || String(gradeVal).trim();
+          const hour=toHour(hourVal);
+          if(grade && hour>0) imported.push({name,type,grade,hour});
+        }
+
+        // Format: Ders | 9 | 10 | 11 | 12
+        ['9','10','11','12'].forEach(g=>{
+          const hv = row[g] ?? row[g+'. Sınıf'] ?? row[g+'. Sinif'] ?? row[g+' Sınıf'] ?? row[g+' Sinif'] ?? row[g+'.SINIF'] ?? row[g+' SINIF'];
+          const hour=toHour(hv);
+          if(hour>0) imported.push({name,type,grade:g,hour});
+        });
+      });
+
+      // 2) Ham satır yöntemi: başlık satırı farklıysa veya boş satır varsa
+      if(!imported.length){
+        const aoa=XLSX.utils.sheet_to_json(sh,{header:1,defval:''});
+
+        // İçinde ders/ders adı veya 9-10-11-12 geçen başlık satırını bul
+        let headerIndex=aoa.findIndex(row=>{
+          const joined=row.map(x=>String(x).toLocaleLowerCase('tr-TR')).join(' ');
+          const hasCourse=joined.includes('ders');
+          const hasGrades=row.some(x=>['9','10','11','12'].includes(String(x).trim()) || /^9\.|^10\.|^11\.|^12\./.test(String(x).trim()));
+          return hasCourse || hasGrades;
+        });
+        if(headerIndex<0) headerIndex=0;
+
+        const header=aoa[headerIndex]||[];
+        let courseCol=header.findIndex(h=>norm(h).includes('ders'));
+        if(courseCol<0) courseCol=0;
+
+        let typeCol=header.findIndex(h=>{
+          const n=norm(h);
+          return n.includes('tur') || n.includes('tür') || n.includes('alan') || n.includes('program');
+        });
+
+        let gradeCol=header.findIndex(h=>norm(h).includes('sinif') || norm(h).includes('sınıf'));
+        let hourCol=header.findIndex(h=>norm(h).includes('saat'));
+
+        const gradeCols={};
+        header.forEach((h,i)=>{
+          const g=toGrade(h);
+          if(g) gradeCols[g]=i;
+        });
+        if(!Object.keys(gradeCols).length){
+          // Yaygın DERSHAVUZU.xlsx formatı: A ders adı, B-E sınıf saatleri
+          gradeCols['9']=1;
+          gradeCols['10']=2;
+          gradeCols['11']=3;
+          gradeCols['12']=4;
+        }
+
+        for(let r=headerIndex+1;r<aoa.length;r++){
+          const row=aoa[r]||[];
+          const name=String(row[courseCol]||'').trim();
+          if(!name || norm(name).includes('toplam')) continue;
+
+          const type=detectType(name, typeCol>=0?row[typeCol]:'');
+
+          // Satır formatı
+          if(gradeCol>=0 && hourCol>=0){
+            const grade=toGrade(row[gradeCol]);
+            const hour=toHour(row[hourCol]);
+            if(grade && hour>0) imported.push({name,type,grade,hour});
+          }
+
+          // Matris formatı
+          Object.entries(gradeCols).forEach(([g,col])=>{
+            const hour=toHour(row[col]);
+            if(hour>0) imported.push({name,type,grade:g,hour});
+          });
+        }
+      }
+
+      if(!imported.length){
+        return alert('Ders bulunamadı. Excel şu biçimlerden biri olmalı:\n\n1) Ders Adı | Tür | Sınıf | Saat\n2) Ders Adı | 9 | 10 | 11 | 12\n\nİlk sütunda ders adları, sınıf sütunlarında haftalık saatler olmalıdır.');
+      }
+
+      // Tekilleştir
+      const seen=new Set();
+      courses=[];
+      imported.forEach(c=>{
+        const key=String(c.name)+'|'+String(c.type)+'|'+String(c.grade)+'|'+String(c.hour);
+        if(seen.has(key)) return;
+        seen.add(key);
+        courses.push(c);
+      });
+
+      prepareCourses();
+      saveData();
+      render();
+      alert('Ders havuzu alındı: '+courses.length+' ders/sınıf satırı.\n\nNot: Paylaşmadan önce “Öğretmen/Dersleri Buluta Kaydet” düğmesine basın.');
+    }catch(err){
+      alert('Ders havuzu Excel dosyası okunamadı: '+err.message);
+    }finally{
+      e.target.value='';
+    }
+  };
+  reader.readAsArrayBuffer(f);
+}
+
+
+function downloadSharedTeacherForm(){saveData(); if(!teachers.length)return alert('Öğretmen yok.'); if(!courses.length)return alert('Ders havuzu yok.'); let source=document.documentElement.outerHTML; source=source.replace(/const DEFAULT_TEACHERS = [\s\S]*?;\nconst DEFAULT_COURSES =/,'const DEFAULT_TEACHERS = '+JSON.stringify(teachers,null,2)+';\nconst DEFAULT_COURSES ='); source=source.replace(/const DEFAULT_COURSES = [\s\S]*?;\nconst DEFAULT_SETTINGS =/,'const DEFAULT_COURSES = '+JSON.stringify(courses,null,2)+';\nconst DEFAULT_SETTINGS ='); source=source.replace(/const DEFAULT_SETTINGS = \{[\s\S]*?\};/,'const DEFAULT_SETTINGS = '+JSON.stringify(settings,null,2)+';'); source=source.replace(/<button class="tab hidden" id="adminTab"[\s\S]*?<\/button>/,''); source=source.replace(/<button class="tab hidden" id="setupTab"[\s\S]*?<\/button>/,''); source=source.replace(/<section id="adminScreen"[\s\S]*?<\/section>\s*<section id="setupScreen"/,'<section id="setupScreen"'); source=source.replace(/<section id="setupScreen"[\s\S]*?<\/section>/,''); source=source.replace(/\+\(document\.getElementById\('adminTab'\)\?'<option value="admin">admin<\/option>':''\)/,''); source=source.replace(/if\(tid==='admin'\)\{[\s\S]*?\} const t=teachers\.find/,'const t=teachers.find'); source=source.replace(/Muhasebe Finansman Öğretmen Ders Tercih Formu/g,'Muhasebe Finansman Öğretmen Ders Tercih Formu'); const blob=new Blob(['<!DOCTYPE html>\n'+source],{type:'text/html;charset=utf-8'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='ogretmen_ders_tercih_paylasilacak.html'; a.click()}
+
+loadData(); lockAdminView(); render(); setTimeout(()=>{if(settings.supabaseUrl&&settings.supabaseKey)loadBaseFromCloud(false)},300);
 </script>
 
 </body></html>
