@@ -24,7 +24,7 @@
   <section id="loginScreen" class="card hidden">
     <h2>Giriş</h2>
     <div class="grid">
-      <div class="col-5"><label>Ad Soyad</label><select id="loginTeacher"><option value="">Öğretmen seçiniz...</option><option value="vvd6rus">ABDURAHMAN NAFİZ GÜMÜŞ</option><option value="1gvmak0">ARZU DEMİREZEN</option><option value="whgmegz">DERYA BOZKURT</option><option value="qakovxz">FATİH ALTIPARMAK</option><option value="ixuusah">FIRAT EKİNCİ</option><option value="onp5p3k">HÜLYA CAN</option><option value="cvnomqi">LEYLA GÜNAY ÖLMEZ</option><option value="wfzznm6">MUSTAFA YURDAKUL</option><option value="7466kif">NURCAN KÖMMECİ</option><option value="kpa8qiy">ŞERİFE TOPALOĞLU</option><option value="azz0n6x">YASİN KELEBEK</option><option value="79op5x1">YÜKSEL KAHRAMAN</option><option value="admin">admin</option></select></div>
+      <div class="col-5"><label>Ad Soyad</label><select id="loginTeacher"><option value="">Öğretmen seçiniz...</option><option value="5bb9opv">ABDURAHMAN NAFİZ GÜMÜŞ</option><option value="1olbqg5">ARZU DEMİREZEN</option><option value="fjpniot">DERYA BOZKURT</option><option value="0wl6ivo">FATİH ALTIPARMAK</option><option value="rr7jo2z">FIRAT EKİNCİ</option><option value="die9juz">HÜLYA CAN</option><option value="9383rjc">LEYLA GÜNAY ÖLMEZ</option><option value="bdkn302">MUSTAFA YURDAKUL</option><option value="728ss57">NURCAN KÖMMECİ</option><option value="90jet4p">ŞERİFE TOPALOĞLU</option><option value="1h08xn4">YASİN KELEBEK</option><option value="admin">admin</option></select></div>
       <div class="col-4"><label>Şifre</label><input id="loginPass" maxlength="8" inputmode="numeric" placeholder="Şifre"></div>
       <div class="col-3" style="align-self:end"><button class="primary" onclick="teacherLogin()">Giriş</button></div>
     </div>
@@ -54,81 +54,154 @@
 <script>
 const DEFAULT_TEACHERS = [
   {
-    "id": "vvd6rus",
+    "id": "5bb9opv",
     "name": "ABDURAHMAN NAFİZ GÜMÜŞ",
-    "pass": "9348"
+    "pass": "1244"
   },
   {
-    "id": "1gvmak0",
+    "id": "1olbqg5",
     "name": "ARZU DEMİREZEN",
-    "pass": "5962"
+    "pass": "6525"
   },
   {
-    "id": "whgmegz",
+    "id": "fjpniot",
     "name": "DERYA BOZKURT",
-    "pass": "1398"
+    "pass": "2229"
   },
   {
-    "id": "qakovxz",
+    "id": "0wl6ivo",
     "name": "FATİH ALTIPARMAK",
-    "pass": "7725"
+    "pass": "8261"
   },
   {
-    "id": "ixuusah",
+    "id": "rr7jo2z",
     "name": "FIRAT EKİNCİ",
-    "pass": "1876"
+    "pass": "9954"
   },
   {
-    "id": "onp5p3k",
+    "id": "die9juz",
     "name": "HÜLYA CAN",
-    "pass": "6209"
+    "pass": "2084"
   },
   {
-    "id": "cvnomqi",
+    "id": "9383rjc",
     "name": "LEYLA GÜNAY ÖLMEZ",
-    "pass": "7329"
+    "pass": "6047"
   },
   {
-    "id": "wfzznm6",
+    "id": "bdkn302",
     "name": "MUSTAFA YURDAKUL",
-    "pass": "5714"
+    "pass": "3558"
   },
   {
-    "id": "7466kif",
+    "id": "728ss57",
     "name": "NURCAN KÖMMECİ",
-    "pass": "6429"
+    "pass": "4066"
   },
   {
-    "id": "kpa8qiy",
+    "id": "90jet4p",
     "name": "ŞERİFE TOPALOĞLU",
-    "pass": "7052"
+    "pass": "5058"
   },
   {
-    "id": "azz0n6x",
+    "id": "1h08xn4",
     "name": "YASİN KELEBEK",
-    "pass": "3334"
-  },
-  {
-    "id": "79op5x1",
-    "name": "YÜKSEL KAHRAMAN",
-    "pass": "5413"
+    "pass": "2502"
   }
 ];
 const DEFAULT_COURSES = [
   {
-    "name": "DIŞ TİCARETE GİRİŞ (*) DIŞ TİCARET",
+    "name": "TEMEL MUHASEBE (*)",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 5
+  },
+  {
+    "name": "TEMEL MUHASEBE MESEM 10",
+    "type": "MESEM",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "MESLEKİ MATEMATİK",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 2
+  },
+  {
+    "name": "MESLEKİ MATEMATİK MESEM 10",
+    "type": "MESEM",
+    "grade": "10",
+    "hour": 1
+  },
+  {
+    "name": "OFİS UYGULAMALARI 1",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 2
+  },
+  {
+    "name": "OFİS UYGULAMALARI 2",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 2
+  },
+  {
+    "name": "OFİS UYGULAMALARI MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "GENEL MUHASEBE (*)",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 7
+  },
+  {
+    "name": "GENEL MUHASEBE MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "EKONOMİ",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "EKONOMİ DIŞ TİCARET",
     "type": "Dış Ticaret",
     "grade": "10",
     "hour": 2
   },
   {
-    "name": "E-TİCARET UYGULAMALARI DIŞ TİCARET",
-    "type": "Dış Ticaret",
+    "name": "EKONOMİ MESEM 10",
+    "type": "MESEM",
     "grade": "10",
-    "hour": 3
+    "hour": 1
   },
   {
-    "name": "EKONOMİ DIŞ TİCARET",
+    "name": "TEMEL HUKUK",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "TEMEL HUKUK DIŞ TİCARET",
+    "type": "Dış Ticaret",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "TEMEL HUKUK MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "DIŞ TİCARETE GİRİŞ (*) DIŞ TİCARET",
     "type": "Dış Ticaret",
     "grade": "10",
     "hour": 2
@@ -140,118 +213,10 @@ const DEFAULT_COURSES = [
     "hour": 4
   },
   {
-    "name": "TEMEL HUKUK DIŞ TİCARET",
+    "name": "E-TİCARET UYGULAMALARI DIŞ TİCARET",
     "type": "Dış Ticaret",
     "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "BİLGİSAYARLI MUHASEBE MESEM 12",
-    "type": "MESEM",
-    "grade": "12",
-    "hour": 4
-  },
-  {
-    "name": "EKONOMİ MESEM 10",
-    "type": "MESEM",
-    "grade": "10",
-    "hour": 1
-  },
-  {
-    "name": "GENEL MUHASEBE MESEM 11",
-    "type": "MESEM",
-    "grade": "11",
-    "hour": 2
-  },
-  {
-    "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ MESEM 12",
-    "type": "MESEM",
-    "grade": "12",
-    "hour": 1
-  },
-  {
-    "name": "KLAVYE TEKNİKLERİ MESEM 11",
-    "type": "MESEM",
-    "grade": "11",
-    "hour": 2
-  },
-  {
-    "name": "MALİYET MUHASEBESİ MESEM 12",
-    "type": "MESEM",
-    "grade": "12",
-    "hour": 1
-  },
-  {
-    "name": "MESLEKİ MATEMATİK MESEM 10",
-    "type": "MESEM",
-    "grade": "10",
-    "hour": 1
-  },
-  {
-    "name": "OFİS UYGULAMALARI MESEM 11",
-    "type": "MESEM",
-    "grade": "11",
-    "hour": 1
-  },
-  {
-    "name": "ŞİRKETLER MUHASEBESİ MESEM 12",
-    "type": "MESEM",
-    "grade": "12",
-    "hour": 1
-  },
-  {
-    "name": "TEMEL HUKUK MESEM 11",
-    "type": "MESEM",
-    "grade": "11",
-    "hour": 1
-  },
-  {
-    "name": "TEMEL MUHASEBE MESEM 10",
-    "type": "MESEM",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "VERGİ VE BEYANNAMELER MESEM 11",
-    "type": "MESEM",
-    "grade": "11",
-    "hour": 1
-  },
-  {
-    "name": "BİLGİSAYARLI MUHASEBE (*) 1",
-    "type": "Muhasebe",
-    "grade": "11",
-    "hour": 7
-  },
-  {
-    "name": "BİLGİSAYARLI MUHASEBE (*) 2",
-    "type": "Muhasebe",
-    "grade": "11",
-    "hour": 7
-  },
-  {
-    "name": "EKONOMİ",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "GENEL MUHASEBE (*)",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 7
-  },
-  {
-    "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ",
-    "type": "Muhasebe",
-    "grade": "11",
-    "hour": 2
-  },
-  {
-    "name": "İŞ VE SOSYAL GÜVENLİK HUKUKU",
-    "type": "Muhasebe",
-    "grade": "11",
-    "hour": 2
+    "hour": 3
   },
   {
     "name": "KLAVYE TEKNİKLERİ 1",
@@ -266,27 +231,87 @@ const DEFAULT_COURSES = [
     "hour": 2
   },
   {
+    "name": "KLAVYE TEKNİKLERİ MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "BİLGİSAYARLI MUHASEBE (*) 1",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 7
+  },
+  {
+    "name": "BİLGİSAYARLI MUHASEBE (*) 2",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 7
+  },
+  {
+    "name": "BİLGİSAYARLI MUHASEBE MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 4
+  },
+  {
+    "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 1
+  },
+  {
+    "name": "VERGİ VE BEYANNAMELER",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "VERGİ VE BEYANNAMELER MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "ŞİRKETLER MUHASEBESİ",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "ŞİRKETLER MUHASEBESİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 1
+  },
+  {
     "name": "MALİYET MUHASEBESİ",
     "type": "Muhasebe",
     "grade": "11",
     "hour": 2
   },
   {
-    "name": "MESLEKİ MATEMATİK",
+    "name": "MALİYET MUHASEBESİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 1
+  },
+  {
+    "name": "İŞ VE SOSYAL GÜVENLİK HUKUKU",
     "type": "Muhasebe",
-    "grade": "9",
+    "grade": "11",
     "hour": 2
   },
   {
-    "name": "OFİS UYGULAMALARI 1",
+    "name": "SEÇMELİ KOPERATİFÇİLİK",
     "type": "Muhasebe",
-    "grade": "9",
-    "hour": 2
-  },
-  {
-    "name": "OFİS UYGULAMALARI 2",
-    "type": "Muhasebe",
-    "grade": "9",
+    "grade": "11",
     "hour": 2
   },
   {
@@ -302,46 +327,16 @@ const DEFAULT_COURSES = [
     "hour": 2
   },
   {
-    "name": "SEÇMELİ DTCRT İŞLEMLERİ",
-    "type": "Muhasebe",
-    "grade": "12",
-    "hour": 3
-  },
-  {
     "name": "SEÇMELİ FİNANSAL OKURYAZARLIK",
     "type": "Muhasebe",
     "grade": "12",
     "hour": 4
   },
   {
-    "name": "SEÇMELİ KOPERATİFÇİLİK",
+    "name": "SEÇMELİ DTCRT İŞLEMLERİ",
     "type": "Muhasebe",
-    "grade": "11",
-    "hour": 2
-  },
-  {
-    "name": "ŞİRKETLER MUHASEBESİ",
-    "type": "Muhasebe",
-    "grade": "11",
-    "hour": 2
-  },
-  {
-    "name": "TEMEL HUKUK",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "TEMEL MUHASEBE (*)",
-    "type": "Muhasebe",
-    "grade": "9",
-    "hour": 5
-  },
-  {
-    "name": "VERGİ VE BEYANNAMELER",
-    "type": "Muhasebe",
-    "grade": "11",
-    "hour": 2
+    "grade": "12",
+    "hour": 3
   }
 ];
 const DEFAULT_SETTINGS = {
