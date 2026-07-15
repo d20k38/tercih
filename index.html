@@ -2,17 +2,18 @@
 <html lang="tr"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muhasebe Finansman Öğretmen Ders Tercih Formu</title>
+<title>Muhasebe Finansman Öğretmen Ders Tercih Formu Kolay ve Adil</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 :root{--bg:#f3f6fb;--card:#fff;--ink:#111827;--muted:#667085;--line:#d7deea;--brand:#1d4ed8;--ok:#15803d;--warn:#b45309;--danger:#dc2626;--shadow:0 10px 28px rgba(15,23,42,.08)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Segoe UI,Arial,sans-serif;color:var(--ink)}header{background:linear-gradient(135deg,#172554,#1d4ed8,#0f766e);color:white;padding:22px 26px}header h1{margin:0;font-size:24px}header p{margin:6px 0 0;opacity:.92}.wrap{max-width:1250px;margin:auto;padding:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px;margin-bottom:14px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.col-3{grid-column:span 3}.col-4{grid-column:span 4}.col-5{grid-column:span 5}.col-6{grid-column:span 6}.col-7{grid-column:span 7}.col-12{grid-column:span 12}label{display:block;font-size:13px;font-weight:800;color:var(--muted);margin:8px 0 4px}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;background:white}button,.btn{border:1px solid var(--line);background:white;color:var(--ink);border-radius:12px;padding:10px 13px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}button.primary{background:var(--brand);border-color:var(--brand);color:white}button.ok{background:var(--ok);border-color:var(--ok);color:white}button.warn{background:var(--warn);border-color:var(--warn);color:white}button.danger{background:var(--danger);border-color:var(--danger);color:white}.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.notice{background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;border-radius:13px;padding:11px;margin:10px 0}.info{background:#eef4ff;border-color:#bfdbfe;color:#1e3a8a}table{width:100%;border-collapse:collapse;background:white}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:middle}th{background:#f8fafc;color:#475569;font-size:12px;text-transform:uppercase}.tablebox{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:13px}.pref-section{border:1px solid var(--line);border-radius:16px;background:#fbfdff;padding:12px;margin:12px 0}.pref-section h3{margin:0 0 10px;display:flex;justify-content:space-between;align-items:center;gap:8px}.pref-row{display:grid;grid-template-columns:1fr 170px;gap:10px;align-items:center;border:1px solid #e5e7eb;border-radius:12px;background:white;padding:10px;margin:7px 0}.small{font-size:12px;color:var(--muted)}.badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:800;background:#e0f2fe;color:#075985}.hidden{display:none!important}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tab.active{background:var(--brand);border-color:var(--brand);color:white}.code{white-space:pre-wrap;background:#0f172a;color:#dbeafe;border-radius:12px;padding:12px;overflow:auto;font-family:Consolas,monospace;font-size:12px;max-height:360px}.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0}.kpis div{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:11px}.kpis b{font-size:22px;display:block}@media(max-width:900px){.col-3,.col-4,.col-5,.col-6,.col-7{grid-column:span 12}.pref-row{grid-template-columns:1fr}}@media print{header,.tabs,.no-print,button,.btn,input,select,textarea{display:none!important}body{background:white}.wrap{max-width:none}.card{box-shadow:none;border:0}.tablebox{max-height:none;overflow:visible;border:0}}
+.guide-box{margin:10px 0;padding:12px;border:1px solid #bfdbfe;background:#eff6ff;border-radius:12px}.guide-box h3{margin:0 0 8px}.guide-box ol{margin:8px 0 0 20px;padding:0}.guide-box li{margin:6px 0}
 </style>
 </head>
 <body>
 <header>
   <h1>Muhasebe Finansman Öğretmen Ders Tercih Formu</h1>
-  <p>Temiz Supabase sürümü: admin yönetimi + paylaşılacak öğretmen formu</p>
+  <p>Her öğretmene eşit tercih hakkı veren sade çevrim içi form</p>
 </header>
 <div class="wrap">
   <div class="tabs no-print" id="mainTabs">
@@ -31,21 +32,53 @@
   </section>
 
   <section id="formScreen" class="card hidden">
-    <h2 id="formTitle">Ders Tercihleri</h2>
-    <div class="notice info">Önceden gönderdiğiniz tercihler varsa Supabase’den getirilir ve değiştirilebilir. Kural: <b>Alan derslerinde</b> 1 Çok isterim, 2 İsterim, 2 Olabilir, 1 Mecbur kalırsam; <b>MESEM</b> derslerinde 1 Çok isterim.</div>
+    <h2 id="formTitle">HÜLYA CAN - Ders Tercihleri</h2>
+    <div class="notice info">
+      Önceki tercihleriniz otomatik getirilir ve güncellenebilir. Her öğretmene aynı sayıda güçlü tercih hakkı verilir:
+      <b>Alan derslerinde</b> 1 Çok isterim, 2 İsterim, 2 Olabilir, 1 Mecbur kalırsam;
+      <b>MESEM derslerinde</b> 1 Çok isterim. Seçilmeyen dersler <b>İstemem</b> kabul edilir.
+      Bu tercihler kesin ders garantisi değildir; ders yükü, azami saat ve genel dengeyle birlikte değerlendirilir.
+    </div>
+    <div class="notice">
+      <b>Önemli:</b> “İstemem” kesin yasak değil, güçlü kaçınma tercihidir. Sağlık veya resmî mazeret gibi kesin kısıtlar yöneticiye ayrıca bildirilmelidir.
+    </div>
     <div class="kpis">
       <div><span class="small">Alan Çok isterim</span><b id="kA5">0/1</b></div>
       <div><span class="small">Alan İsterim</span><b id="kA4">0/2</b></div>
       <div><span class="small">Alan Olabilir</span><b id="kA3">0/2</b></div>
       <div><span class="small">Alan Mecbur</span><b id="kA2">0/1</b></div>
       <div><span class="small">MESEM Çok isterim</span><b id="kM5">0/1</b></div>
-      <div><span class="small">Durum</span><b id="kRule">Eksik</b></div>
+      <div><span class="small">Durum</span><b id="kRule" style="color: rgb(220, 38, 38);">Eksik</b></div>
     </div>
     <div class="btns no-print" style="margin-bottom:10px">
       <button class="ok" onclick="submitPreferences()">Tercihlerimi Gönder / Güncelle</button>
+      <button onclick="toggleGuide()">Kısa Kullanım Kılavuzu</button>
       <button onclick="backLogin()">Çıkış</button>
     </div>
-    <div id="prefForm"></div>
+    <div class="pref-section" id="profileSection">
+      <h3>Dağıtıma Yardımcı Bilgiler</h3>
+      <div class="grid">
+        <div class="col-3"><label>Maaş karşılığı hedef</label><input id="profileTarget" value="20" readonly=""></div>
+        <div class="col-3"><label>Kabul edebileceğiniz azami saat</label><input id="profileMaxHours" type="number" min="20" max="40" value="28"></div>
+        <div class="col-3"><label>Tercih edilen en fazla farklı ders</label><input id="profileMaxCourses" type="number" min="1" max="20" value="3"></div>
+        <div class="col-3"><label>Tercih edilen en fazla şube</label><input id="profileMaxBranches" type="number" min="1" max="30" value="4"></div>
+        <div class="col-6"><label>Dağıtım önceliğiniz</label><select id="profilePriority"><option value="balanced">Dengeli dağıtım</option><option value="courses">Daha az farklı ders</option><option value="branches">Daha az şube</option><option value="preferences">Ders tercihlerime öncelik</option></select></div>
+        <div class="col-6"><label>MESEM derslerine yaklaşımınız</label><select id="profileMesem"><option value="possible">Olabilir</option><option value="prefer">Tercih ederim</option><option value="avoid">Mümkünse istemiyorum</option></select></div>
+        <div class="col-12"><label>Yönetime iletilecek kısa not</label><textarea id="profileNote" rows="2" placeholder="Zorunlu durum veya açıklama"></textarea></div>
+      </div>
+    </div>
+    <div id="guideBox" class="guide-box hidden">
+      <h3>Kısa Kullanım Kılavuzu</h3>
+      <ol>
+        <li>Her ders için size en uygun seçeneği işaretleyin.</li>
+        <li>Üstteki sayaçlarda istenen tercih sayılarını tamamlayın.</li>
+        <li>Azami saat, farklı ders ve şube tercihlerinizi belirtin.</li>
+        <li><b>İstemem</b> seçiminiz de kaydedilir; ancak kesin muafiyet değildir.</li>
+        <li>Zorunlu sağlık, idari görev veya benzeri durumları not alanına yazıp ayrıca yönetime bildirin.</li>
+        <li>Son olarak <b>Tercihlerimi Gönder / Güncelle</b> düğmesine basın.</li>
+      </ol>
+    </div>
+    <div id="prefForm"><div class="pref-section"><h3><span>Alan Dersleri</span><span class="badge">18 ders</span></h3><div class="pref-row"><div><b>BİLGİSAYARLI MUHASEBE (*) 1</b><br><span class="small">Muhasebe | 11. sınıf | 7 saat</span></div><select data-course-key="BİLGİSAYARLI MUHASEBE (*) 1|Muhasebe|11|7" data-course="BİLGİSAYARLI MUHASEBE (*) 1" data-type="Muhasebe" data-grade="11" data-hour="7" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>EKONOMİ</b><br><span class="small">Muhasebe | 10. sınıf | 2 saat</span></div><select data-course-key="EKONOMİ|Muhasebe|10|2" data-course="EKONOMİ" data-type="Muhasebe" data-grade="10" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>GENEL MUHASEBE (*)</b><br><span class="small">Muhasebe | 10. sınıf | 7 saat</span></div><select data-course-key="GENEL MUHASEBE (*)|Muhasebe|10|7" data-course="GENEL MUHASEBE (*)" data-type="Muhasebe" data-grade="10" data-hour="7" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ</b><br><span class="small">Muhasebe | 11. sınıf | 2 saat</span></div><select data-course-key="GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ|Muhasebe|11|2" data-course="GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ" data-type="Muhasebe" data-grade="11" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>İŞ VE SOSYAL GÜVENLİK HUKUKU</b><br><span class="small">Muhasebe | 11. sınıf | 2 saat</span></div><select data-course-key="İŞ VE SOSYAL GÜVENLİK HUKUKU|Muhasebe|11|2" data-course="İŞ VE SOSYAL GÜVENLİK HUKUKU" data-type="Muhasebe" data-grade="11" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>KLAVYE TEKNİKLERİ 1</b><br><span class="small">Muhasebe | 10. sınıf | 2 saat</span></div><select data-course-key="KLAVYE TEKNİKLERİ 1|Muhasebe|10|2" data-course="KLAVYE TEKNİKLERİ 1" data-type="Muhasebe" data-grade="10" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>MALİYET MUHASEBESİ</b><br><span class="small">Muhasebe | 11. sınıf | 2 saat</span></div><select data-course-key="MALİYET MUHASEBESİ|Muhasebe|11|2" data-course="MALİYET MUHASEBESİ" data-type="Muhasebe" data-grade="11" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>MESLEKİ MATEMATİK</b><br><span class="small">Muhasebe | 9. sınıf | 2 saat</span></div><select data-course-key="MESLEKİ MATEMATİK|Muhasebe|9|2" data-course="MESLEKİ MATEMATİK" data-type="Muhasebe" data-grade="9" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>OFİS UYGULAMALARI 1</b><br><span class="small">Muhasebe | 9. sınıf | 2 saat</span></div><select data-course-key="OFİS UYGULAMALARI 1|Muhasebe|9|2" data-course="OFİS UYGULAMALARI 1" data-type="Muhasebe" data-grade="9" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>SEÇMELİ DİJİTAL OFİS UYGULAMALARI 1</b><br><span class="small">Muhasebe | 11. sınıf | 2 saat</span></div><select data-course-key="SEÇMELİ DİJİTAL OFİS UYGULAMALARI 1|Muhasebe|11|2" data-course="SEÇMELİ DİJİTAL OFİS UYGULAMALARI 1" data-type="Muhasebe" data-grade="11" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>SEÇMELİ DİJİTAL OFİS UYGULAMALARI 2</b><br><span class="small">Muhasebe | 11. sınıf | 2 saat</span></div><select data-course-key="SEÇMELİ DİJİTAL OFİS UYGULAMALARI 2|Muhasebe|11|2" data-course="SEÇMELİ DİJİTAL OFİS UYGULAMALARI 2" data-type="Muhasebe" data-grade="11" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>SEÇMELİ DTCRT İŞLEMLERİ</b><br><span class="small">Muhasebe | 12. sınıf | 3 saat</span></div><select data-course-key="SEÇMELİ DTCRT İŞLEMLERİ|Muhasebe|12|3" data-course="SEÇMELİ DTCRT İŞLEMLERİ" data-type="Muhasebe" data-grade="12" data-hour="3" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>SEÇMELİ FİNANSAL OKURYAZARLIK</b><br><span class="small">Muhasebe | 12. sınıf | 4 saat</span></div><select data-course-key="SEÇMELİ FİNANSAL OKURYAZARLIK|Muhasebe|12|4" data-course="SEÇMELİ FİNANSAL OKURYAZARLIK" data-type="Muhasebe" data-grade="12" data-hour="4" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>SEÇMELİ KOPERATİFÇİLİK</b><br><span class="small">Muhasebe | 11. sınıf | 2 saat</span></div><select data-course-key="SEÇMELİ KOPERATİFÇİLİK|Muhasebe|11|2" data-course="SEÇMELİ KOPERATİFÇİLİK" data-type="Muhasebe" data-grade="11" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>ŞİRKETLER MUHASEBESİ</b><br><span class="small">Muhasebe | 11. sınıf | 2 saat</span></div><select data-course-key="ŞİRKETLER MUHASEBESİ|Muhasebe|11|2" data-course="ŞİRKETLER MUHASEBESİ" data-type="Muhasebe" data-grade="11" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>TEMEL HUKUK</b><br><span class="small">Muhasebe | 10. sınıf | 2 saat</span></div><select data-course-key="TEMEL HUKUK|Muhasebe|10|2" data-course="TEMEL HUKUK" data-type="Muhasebe" data-grade="10" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>TEMEL MUHASEBE (*)</b><br><span class="small">Muhasebe | 9. sınıf | 5 saat</span></div><select data-course-key="TEMEL MUHASEBE (*)|Muhasebe|9|5" data-course="TEMEL MUHASEBE (*)" data-type="Muhasebe" data-grade="9" data-hour="5" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>VERGİ VE BEYANNAMELER</b><br><span class="small">Muhasebe | 11. sınıf | 2 saat</span></div><select data-course-key="VERGİ VE BEYANNAMELER|Muhasebe|11|2" data-course="VERGİ VE BEYANNAMELER" data-type="Muhasebe" data-grade="11" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div></div><div class="pref-section"><h3><span>MESEM Dersleri</span><span class="badge">12 ders</span></h3><div class="pref-row"><div><b>BİLGİSAYARLI MUHASEBE MESEM 12</b><br><span class="small">MESEM | 12. sınıf | 4 saat</span></div><select data-course-key="BİLGİSAYARLI MUHASEBE MESEM 12|MESEM|12|4" data-course="BİLGİSAYARLI MUHASEBE MESEM 12" data-type="MESEM" data-grade="12" data-hour="4" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>EKONOMİ MESEM 10</b><br><span class="small">MESEM | 10. sınıf | 1 saat</span></div><select data-course-key="EKONOMİ MESEM 10|MESEM|10|1" data-course="EKONOMİ MESEM 10" data-type="MESEM" data-grade="10" data-hour="1" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>GENEL MUHASEBE MESEM 11</b><br><span class="small">MESEM | 11. sınıf | 2 saat</span></div><select data-course-key="GENEL MUHASEBE MESEM 11|MESEM|11|2" data-course="GENEL MUHASEBE MESEM 11" data-type="MESEM" data-grade="11" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ MESEM 12</b><br><span class="small">MESEM | 12. sınıf | 1 saat</span></div><select data-course-key="GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ MESEM 12|MESEM|12|1" data-course="GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ MESEM 12" data-type="MESEM" data-grade="12" data-hour="1" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>KLAVYE TEKNİKLERİ MESEM 11</b><br><span class="small">MESEM | 11. sınıf | 2 saat</span></div><select data-course-key="KLAVYE TEKNİKLERİ MESEM 11|MESEM|11|2" data-course="KLAVYE TEKNİKLERİ MESEM 11" data-type="MESEM" data-grade="11" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>MALİYET MUHASEBESİ MESEM 12</b><br><span class="small">MESEM | 12. sınıf | 1 saat</span></div><select data-course-key="MALİYET MUHASEBESİ MESEM 12|MESEM|12|1" data-course="MALİYET MUHASEBESİ MESEM 12" data-type="MESEM" data-grade="12" data-hour="1" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>MESLEKİ MATEMATİK MESEM 10</b><br><span class="small">MESEM | 10. sınıf | 1 saat</span></div><select data-course-key="MESLEKİ MATEMATİK MESEM 10|MESEM|10|1" data-course="MESLEKİ MATEMATİK MESEM 10" data-type="MESEM" data-grade="10" data-hour="1" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>OFİS UYGULAMALARI MESEM 11</b><br><span class="small">MESEM | 11. sınıf | 1 saat</span></div><select data-course-key="OFİS UYGULAMALARI MESEM 11|MESEM|11|1" data-course="OFİS UYGULAMALARI MESEM 11" data-type="MESEM" data-grade="11" data-hour="1" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>ŞİRKETLER MUHASEBESİ MESEM 12</b><br><span class="small">MESEM | 12. sınıf | 1 saat</span></div><select data-course-key="ŞİRKETLER MUHASEBESİ MESEM 12|MESEM|12|1" data-course="ŞİRKETLER MUHASEBESİ MESEM 12" data-type="MESEM" data-grade="12" data-hour="1" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>TEMEL HUKUK MESEM 11</b><br><span class="small">MESEM | 11. sınıf | 1 saat</span></div><select data-course-key="TEMEL HUKUK MESEM 11|MESEM|11|1" data-course="TEMEL HUKUK MESEM 11" data-type="MESEM" data-grade="11" data-hour="1" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>TEMEL MUHASEBE MESEM 10</b><br><span class="small">MESEM | 10. sınıf | 2 saat</span></div><select data-course-key="TEMEL MUHASEBE MESEM 10|MESEM|10|2" data-course="TEMEL MUHASEBE MESEM 10" data-type="MESEM" data-grade="10" data-hour="2" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div><div class="pref-row"><div><b>VERGİ VE BEYANNAMELER MESEM 11</b><br><span class="small">MESEM | 11. sınıf | 1 saat</span></div><select data-course-key="VERGİ VE BEYANNAMELER MESEM 11|MESEM|11|1" data-course="VERGİ VE BEYANNAMELER MESEM 11" data-type="MESEM" data-grade="11" data-hour="1" onchange="updateLiveStats()"><option value="0" selected="">İstemem</option><option value="2">Mecbur kalırsam</option><option value="3">Olabilir</option><option value="4">İsterim</option><option value="5">Çok isterim</option></select></div></div></div>
   </section>
 
   
@@ -56,42 +89,42 @@ const DEFAULT_TEACHERS = [
   {
     "id": "5bb9opv",
     "name": "ABDURAHMAN NAFİZ GÜMÜŞ",
-    "pass": "1244"
+    "pass": "4896"
   },
   {
     "id": "1olbqg5",
     "name": "ARZU DEMİREZEN",
-    "pass": "6525"
+    "pass": "4034"
   },
   {
     "id": "fjpniot",
     "name": "DERYA BOZKURT",
-    "pass": "2229"
+    "pass": "5778"
   },
   {
     "id": "0wl6ivo",
     "name": "FATİH ALTIPARMAK",
-    "pass": "8261"
+    "pass": "7512"
   },
   {
     "id": "rr7jo2z",
     "name": "FIRAT EKİNCİ",
-    "pass": "9954"
+    "pass": "3112"
   },
   {
     "id": "die9juz",
     "name": "HÜLYA CAN",
-    "pass": "2084"
+    "pass": "0170"
   },
   {
     "id": "9383rjc",
     "name": "LEYLA GÜNAY ÖLMEZ",
-    "pass": "6047"
+    "pass": "6590"
   },
   {
     "id": "bdkn302",
     "name": "MUSTAFA YURDAKUL",
-    "pass": "3558"
+    "pass": "2710"
   },
   {
     "id": "728ss57",
@@ -111,70 +144,10 @@ const DEFAULT_TEACHERS = [
 ];
 const DEFAULT_COURSES = [
   {
-    "name": "TEMEL MUHASEBE (*)",
-    "type": "Muhasebe",
-    "grade": "9",
-    "hour": 5
-  },
-  {
-    "name": "TEMEL MUHASEBE MESEM 10",
+    "name": "BİLGİSAYARLI MUHASEBE MESEM 12",
     "type": "MESEM",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "MESLEKİ MATEMATİK",
-    "type": "Muhasebe",
-    "grade": "9",
-    "hour": 2
-  },
-  {
-    "name": "MESLEKİ MATEMATİK MESEM 10",
-    "type": "MESEM",
-    "grade": "10",
-    "hour": 1
-  },
-  {
-    "name": "OFİS UYGULAMALARI 1",
-    "type": "Muhasebe",
-    "grade": "9",
-    "hour": 2
-  },
-  {
-    "name": "OFİS UYGULAMALARI 2",
-    "type": "Muhasebe",
-    "grade": "9",
-    "hour": 2
-  },
-  {
-    "name": "OFİS UYGULAMALARI MESEM 11",
-    "type": "MESEM",
-    "grade": "11",
-    "hour": 1
-  },
-  {
-    "name": "GENEL MUHASEBE (*)",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 7
-  },
-  {
-    "name": "GENEL MUHASEBE MESEM 11",
-    "type": "MESEM",
-    "grade": "11",
-    "hour": 2
-  },
-  {
-    "name": "EKONOMİ",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "EKONOMİ DIŞ TİCARET",
-    "type": "Dış Ticaret",
-    "grade": "10",
-    "hour": 2
+    "grade": "12",
+    "hour": 4
   },
   {
     "name": "EKONOMİ MESEM 10",
@@ -183,80 +156,8 @@ const DEFAULT_COURSES = [
     "hour": 1
   },
   {
-    "name": "TEMEL HUKUK",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "TEMEL HUKUK DIŞ TİCARET",
-    "type": "Dış Ticaret",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "TEMEL HUKUK MESEM 11",
+    "name": "GENEL MUHASEBE MESEM 11",
     "type": "MESEM",
-    "grade": "11",
-    "hour": 1
-  },
-  {
-    "name": "DIŞ TİCARETE GİRİŞ (*) DIŞ TİCARET",
-    "type": "Dış Ticaret",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "TEK DÜZEN MUHASEBE SİSTEMİ DIŞ TİCARET",
-    "type": "Dış Ticaret",
-    "grade": "10",
-    "hour": 4
-  },
-  {
-    "name": "E-TİCARET UYGULAMALARI DIŞ TİCARET",
-    "type": "Dış Ticaret",
-    "grade": "10",
-    "hour": 3
-  },
-  {
-    "name": "KLAVYE TEKNİKLERİ 1",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "KLAVYE TEKNİKLERİ 2",
-    "type": "Muhasebe",
-    "grade": "10",
-    "hour": 2
-  },
-  {
-    "name": "KLAVYE TEKNİKLERİ MESEM 11",
-    "type": "MESEM",
-    "grade": "11",
-    "hour": 2
-  },
-  {
-    "name": "BİLGİSAYARLI MUHASEBE (*) 1",
-    "type": "Muhasebe",
-    "grade": "11",
-    "hour": 7
-  },
-  {
-    "name": "BİLGİSAYARLI MUHASEBE (*) 2",
-    "type": "Muhasebe",
-    "grade": "11",
-    "hour": 7
-  },
-  {
-    "name": "BİLGİSAYARLI MUHASEBE MESEM 12",
-    "type": "MESEM",
-    "grade": "12",
-    "hour": 4
-  },
-  {
-    "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ",
-    "type": "Muhasebe",
     "grade": "11",
     "hour": 2
   },
@@ -267,32 +168,8 @@ const DEFAULT_COURSES = [
     "hour": 1
   },
   {
-    "name": "VERGİ VE BEYANNAMELER",
-    "type": "Muhasebe",
-    "grade": "11",
-    "hour": 2
-  },
-  {
-    "name": "VERGİ VE BEYANNAMELER MESEM 11",
+    "name": "KLAVYE TEKNİKLERİ MESEM 11",
     "type": "MESEM",
-    "grade": "11",
-    "hour": 1
-  },
-  {
-    "name": "ŞİRKETLER MUHASEBESİ",
-    "type": "Muhasebe",
-    "grade": "11",
-    "hour": 2
-  },
-  {
-    "name": "ŞİRKETLER MUHASEBESİ MESEM 12",
-    "type": "MESEM",
-    "grade": "12",
-    "hour": 1
-  },
-  {
-    "name": "MALİYET MUHASEBESİ",
-    "type": "Muhasebe",
     "grade": "11",
     "hour": 2
   },
@@ -303,15 +180,93 @@ const DEFAULT_COURSES = [
     "hour": 1
   },
   {
+    "name": "MESLEKİ MATEMATİK MESEM 10",
+    "type": "MESEM",
+    "grade": "10",
+    "hour": 1
+  },
+  {
+    "name": "OFİS UYGULAMALARI MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "ŞİRKETLER MUHASEBESİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 1
+  },
+  {
+    "name": "TEMEL HUKUK MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "TEMEL MUHASEBE MESEM 10",
+    "type": "MESEM",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "VERGİ VE BEYANNAMELER MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "BİLGİSAYARLI MUHASEBE (*) 1",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 7
+  },
+  {
+    "name": "EKONOMİ",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "GENEL MUHASEBE (*)",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 7
+  },
+  {
+    "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
     "name": "İŞ VE SOSYAL GÜVENLİK HUKUKU",
     "type": "Muhasebe",
     "grade": "11",
     "hour": 2
   },
   {
-    "name": "SEÇMELİ KOPERATİFÇİLİK",
+    "name": "KLAVYE TEKNİKLERİ 1",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "MALİYET MUHASEBESİ",
     "type": "Muhasebe",
     "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "MESLEKİ MATEMATİK",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 2
+  },
+  {
+    "name": "OFİS UYGULAMALARI 1",
+    "type": "Muhasebe",
+    "grade": "9",
     "hour": 2
   },
   {
@@ -327,16 +282,46 @@ const DEFAULT_COURSES = [
     "hour": 2
   },
   {
+    "name": "SEÇMELİ DTCRT İŞLEMLERİ",
+    "type": "Muhasebe",
+    "grade": "12",
+    "hour": 3
+  },
+  {
     "name": "SEÇMELİ FİNANSAL OKURYAZARLIK",
     "type": "Muhasebe",
     "grade": "12",
     "hour": 4
   },
   {
-    "name": "SEÇMELİ DTCRT İŞLEMLERİ",
+    "name": "SEÇMELİ KOPERATİFÇİLİK",
     "type": "Muhasebe",
-    "grade": "12",
-    "hour": 3
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "ŞİRKETLER MUHASEBESİ",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "TEMEL HUKUK",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "TEMEL MUHASEBE (*)",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 5
+  },
+  {
+    "name": "VERGİ VE BEYANNAMELER",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
   }
 ];
 const DEFAULT_SETTINGS = {
@@ -395,6 +380,13 @@ create table if not exists public.course_pool (
 
 alter table public.teacher_preferences add column if not exists submission_id text;
 alter table public.teacher_preferences add column if not exists is_active boolean default true;
+alter table public.teacher_preferences add column if not exists target_hours numeric default 20;
+alter table public.teacher_preferences add column if not exists max_hours numeric default 28;
+alter table public.teacher_preferences add column if not exists preferred_max_courses integer default 3;
+alter table public.teacher_preferences add column if not exists preferred_max_branches integer default 4;
+alter table public.teacher_preferences add column if not exists distribution_priority text default 'balanced';
+alter table public.teacher_preferences add column if not exists mesem_willingness text default 'possible';
+alter table public.teacher_preferences add column if not exists teacher_note text;
 alter table public.teacher_accounts add column if not exists is_active boolean default true;
 alter table public.course_pool add column if not exists is_active boolean default true;
 
@@ -441,29 +433,112 @@ async function saveBaseToCloud(){saveData(); if(!teachers.length||!courses.lengt
 async function loadBaseFromCloud(showAlert=false){saveData(); try{const ts=await cloudFetch(settings.teacherTable,'select=*&is_active=eq.true&order=name.asc'); const cs=await cloudFetch(settings.courseTable,'select=*&is_active=eq.true&order=type.asc,name.asc,grade.asc'); if(ts.length)teachers=ts.map(r=>({id:r.teacher_id||String(r.id),name:r.name,pass:r.pass})); if(cs.length){courses=cs.map(r=>({name:r.name,type:r.type,grade:String(r.grade||''),hour:Number(r.hour||0)})); prepareCourses()} render(); if(showAlert)alert('Buluttan alma tamamlandı. Öğretmen: '+ts.length+' Ders: '+cs.length)}catch(e){if(showAlert)alert('Buluttan alma hatası: '+e.message)}}
 async function showCloudCounts(){try{const ts=await cloudFetch(settings.teacherTable,'select=id&is_active=eq.true'); const cs=await cloudFetch(settings.courseTable,'select=id&is_active=eq.true'); const ps=await cloudFetch(settings.prefTable,'select=id&is_active=eq.true'); alert('Bulut kayıtları:\\nÖğretmen: '+ts.length+'\\nDers: '+cs.length+'\\nAktif tercih: '+ps.length)}catch(e){alert('Sayılar alınamadı: '+e.message)}}
 
-async function teacherLogin(){const tid=loginTeacher.value; const pass=loginPass.value.trim(); if(!tid)return alert('Lütfen adınızı seçiniz.'); const t=teachers.find(x=>x.id===tid && x.pass===pass); if(!t)return alert('Ad veya şifre hatalı.'); currentTeacherId=t.id; loginPass.value=''; formTitle.textContent=t.name+' - Ders Tercihleri'; try{const sub=await getTeacherCloudPrefs(t.id); submissions=sub?[sub]:[]}catch(e){console.warn(e)} loginScreen.classList.add('hidden'); formScreen.classList.remove('hidden'); renderPrefForm()}
+async function teacherLogin(){
+  const tid=loginTeacher.value;
+  const pass=loginPass.value.trim();
+  if(!tid)return alert('Lütfen adınızı seçiniz.');
+  if(tid==='admin'){
+    if(pass===settings.adminPassword){
+      adminUnlocked=true;adminTab?.classList.remove('hidden');setupTab?.classList.remove('hidden');adminArea?.classList.remove('hidden');loginPass.value='';showScreen('admin');return;
+    }
+    return alert('Şifre hatalı.');
+  }
+  const t=teachers.find(x=>x.id===tid && x.pass===pass);
+  if(!t)return alert('Ad veya şifre hatalı.');
+  currentTeacherId=t.id;
+  loginPass.value='';
+  formTitle.textContent=t.name+' - Ders Tercihleri';
+  loginScreen.classList.add('hidden');
+  formScreen.classList.remove('hidden');
+  prefForm.innerHTML='<div class="notice info">Ders listesi yükleniyor...</div>';
+  try{
+    // Her girişte güncel öğretmen ve ders havuzunu buluttan yeniden oku.
+    const cs=await cloudFetch(settings.courseTable,'select=*&is_active=eq.true&order=type.asc,name.asc,grade.asc');
+    if(cs.length){
+      courses=cs.map(r=>({name:r.name,type:r.type,grade:String(r.grade||''),hour:Number(r.hour||0)}));
+      prepareCourses();
+    }
+    const sub=await getTeacherCloudPrefs(t.id);
+    submissions=sub?[sub]:[];
+  }catch(e){
+    console.warn('Giriş verileri alınamadı:',e);
+  }
+  renderPrefForm();
+}
 function backLogin(){currentTeacherId='';formScreen.classList.add('hidden');loginScreen.classList.remove('hidden')}
-async function getTeacherCloudPrefs(tid){const rows=await cloudFetch(settings.prefTable,'select=*&teacher_id=eq.'+encodeURIComponent(tid)+'&is_active=eq.true&order=created_at.desc'); if(!rows.length)return null; const prefs={}; rows.forEach(r=>{const k=r.course_key||[r.course_name,r.course_type,r.grade,r.hour].join('|'); if(prefs[k]===undefined)prefs[k]=Number(r.preference_value||0)}); return {teacherId:tid,teacherName:rows[0].teacher_name,preferences:prefs,details:rows}}
+async function getTeacherCloudPrefs(tid){const rows=await cloudFetch(settings.prefTable,'select=*&teacher_id=eq.'+encodeURIComponent(tid)+'&is_active=eq.true&order=created_at.desc'); if(!rows.length)return null; const prefs={}; rows.forEach(r=>{const k=r.course_key||[r.course_name,r.course_type,r.grade,r.hour].join('|'); if(prefs[k]===undefined)prefs[k]=Number(r.preference_value||0)}); return {teacherId:tid,teacherName:rows[0].teacher_name,preferences:prefs,details:rows,profile:{targetHours:Number(rows[0].target_hours||20),maxHours:Number(rows[0].max_hours||28),maxCourses:Number(rows[0].preferred_max_courses||3),maxBranches:Number(rows[0].preferred_max_branches||4),priority:rows[0].distribution_priority||'balanced',mesem:rows[0].mesem_willingness||'possible',note:rows[0].teacher_note||''}}}
 async function deactivateOldPrefs(tid){await cloudPatch(settings.prefTable,'teacher_id=eq.'+encodeURIComponent(tid)+'&is_active=eq.true',{is_active:false})}
 
-function renderPrefForm(){const sub=submissions.find(s=>s.teacherId===currentTeacherId); const prefs=sub?sub.preferences:{}; const groups=[{title:'Alan Dersleri',types:['Muhasebe','Dış Ticaret']},{title:'MESEM Dersleri',types:['MESEM']}]; prefForm.innerHTML=groups.map(g=>{const list=courses.filter(c=>g.types.includes(c.type)); if(!list.length)return ''; return `<div class="pref-section"><h3><span>${g.title}</span><span class="badge">${list.length} ders</span></h3>${list.map(c=>{const key=courseKey(c); const v=prefs[key]??0; return `<div class="pref-row"><div><b>${esc(c.name)}</b><br><span class="small">${esc(c.type)} ${c.grade?('| '+c.grade+'. sınıf'):''} ${c.hour?('| '+c.hour+' saat'):''}</span></div><select data-course-key="${esc(key)}" data-course="${esc(c.name)}" data-type="${esc(c.type)}" data-grade="${esc(c.grade)}" data-hour="${esc(c.hour)}" onchange="updateLiveStats()"><option value="0" ${v==0?'selected':''}>İstemem</option><option value="2" ${v==2?'selected':''}>Mecbur kalırsam</option><option value="3" ${v==3?'selected':''}>Olabilir</option><option value="4" ${v==4?'selected':''}>İsterim</option><option value="5" ${v==5?'selected':''}>Çok isterim</option></select></div>`}).join('')}</div>`}).join(''); updateLiveStats()}
+function toggleGuide(){guideBox?.classList.toggle('hidden')}
+
+function renderPrefForm(){if(!courses.length){prefForm.innerHTML=`<div class="notice"><b>Ders listesi bulunamadı.</b><br>Yönetici panelinde ders havuzunu Excel'den alın ve ardından <b>Öğretmen/Dersleri Buluta Kaydet</b> düğmesine basın.<div class="btns" style="margin-top:10px"><button onclick="refreshTeacherCourses()">Ders Listesini Yenile</button></div></div>`; updateLiveStats(); return;} const sub=submissions.find(s=>s.teacherId===currentTeacherId); const prefs=sub?sub.preferences:{}; const p=sub?.profile||{}; if(profileTarget)profileTarget.value=20; if(profileMaxHours)profileMaxHours.value=String(p.maxHours||28); if(profileMaxCourses)profileMaxCourses.value=String(p.maxCourses||3); if(profileMaxBranches)profileMaxBranches.value=String(p.maxBranches||4); if(profilePriority)profilePriority.value=p.priority||'balanced'; if(profileMesem)profileMesem.value=p.mesem||'possible'; if(profileNote)profileNote.value=p.note||''; const groups=[{title:'Alan Dersleri',types:['Muhasebe','Dış Ticaret']},{title:'MESEM Dersleri',types:['MESEM']}]; prefForm.innerHTML=groups.map(g=>{const list=courses.filter(c=>g.types.includes(c.type)); if(!list.length)return ''; return `<div class="pref-section"><h3><span>${g.title}</span><span class="badge">${list.length} ders</span></h3>${list.map(c=>{const key=courseKey(c); const v=prefs[key]??0; return `<div class="pref-row"><div><b>${esc(c.name)}</b><br><span class="small">${esc(c.type)} ${c.grade?('| '+c.grade+'. sınıf'):''} ${c.hour?('| '+c.hour+' saat'):''}</span></div><select data-course-key="${esc(key)}" data-course="${esc(c.name)}" data-type="${esc(c.type)}" data-grade="${esc(c.grade)}" data-hour="${esc(c.hour)}" onchange="updateLiveStats()"><option value="0" ${v==0?'selected':''}>İstemem</option><option value="2" ${v==2?'selected':''}>Mecbur kalırsam</option><option value="3" ${v==3?'selected':''}>Olabilir</option><option value="4" ${v==4?'selected':''}>İsterim</option><option value="5" ${v==5?'selected':''}>Çok isterim</option></select></div>`}).join('')}</div>`}).join(''); updateLiveStats()}
+async function refreshTeacherCourses(){
+  prefForm.innerHTML='<div class="notice info">Ders listesi yeniden yükleniyor...</div>';
+  try{
+    const cs=await cloudFetch(settings.courseTable,'select=*&is_active=eq.true&order=type.asc,name.asc,grade.asc');
+    courses=cs.map(r=>({name:r.name,type:r.type,grade:String(r.grade||''),hour:Number(r.hour||0)}));
+    prepareCourses();
+    renderPrefForm();
+    if(!courses.length)alert('Bulutta aktif ders kaydı bulunamadı. Yönetici ders havuzunu buluta kaydetmelidir.');
+  }catch(e){
+    prefForm.innerHTML='<div class="notice">Ders listesi alınamadı: '+esc(e.message)+'</div>';
+  }
+}
+
 function preferenceCounts(){const sels=[...document.querySelectorAll('#prefForm select[data-course-key]')]; const alan=sels.filter(s=>s.dataset.type==='Muhasebe'||s.dataset.type==='Dış Ticaret'); const mesem=sels.filter(s=>s.dataset.type==='MESEM'); const count=(arr,v)=>arr.filter(s=>Number(s.value)===v).length; return {a5:count(alan,5),a4:count(alan,4),a3:count(alan,3),a2:count(alan,2),m5:count(mesem,5)}}
 function ruleStatus(){const c=preferenceCounts(); return c.a5===1&&c.a4===2&&c.a3===2&&c.a2===1&&c.m5===1}
 function updateLiveStats(){const c=preferenceCounts(); kA5.textContent=c.a5+'/1';kA4.textContent=c.a4+'/2';kA3.textContent=c.a3+'/2';kA2.textContent=c.a2+'/1';kM5.textContent=c.m5+'/1';kRule.textContent=ruleStatus()?'Tamam':'Eksik';kRule.style.color=ruleStatus()?'#15803d':'#dc2626'}
-async function submitPreferences(){const t=teachers.find(x=>x.id===currentTeacherId); if(!t)return alert('Giriş bulunamadı.'); if(!ruleStatus()){const c=preferenceCounts(); return alert(`Tercih sayıları tamamlanmadı.\nAlan Çok isterim: ${c.a5}/1\nAlan İsterim: ${c.a4}/2\nAlan Olabilir: ${c.a3}/2\nAlan Mecbur: ${c.a2}/1\nMESEM Çok isterim: ${c.m5}/1`)} const details=[]; document.querySelectorAll('#prefForm select[data-course-key]').forEach(sel=>{const val=Number(sel.value); if(val>0)details.push({key:sel.dataset.courseKey,course:sel.dataset.course,type:sel.dataset.type,grade:sel.dataset.grade,hour:sel.dataset.hour,value:val,label:prefLabel(val)})}); try{await deactivateOldPrefs(t.id); const sid=t.id+'_'+Date.now(); await cloudInsert(settings.prefTable,details.map((d,i)=>({teacher_id:t.id,teacher_name:t.name,course_key:d.key,course_name:d.course,course_type:d.type,grade:d.grade,hour:Number(d.hour||0),preference_value:d.value,preference_label:d.label,submission_time:new Date().toISOString(),row_no:i+1,submission_id:sid,is_active:true}))); alert('Tercihleriniz kaydedildi: '+details.length); backLogin()}catch(e){alert('Supabase kayıt hatası: '+e.message)}}
+async function submitPreferences(){const t=teachers.find(x=>x.id===currentTeacherId); if(!t)return alert('Giriş bulunamadı.'); const profile={targetHours:20,maxHours:Number(profileMaxHours?.value||28),maxCourses:Number(profileMaxCourses?.value||3),maxBranches:Number(profileMaxBranches?.value||4),priority:profilePriority?.value||'balanced',mesem:profileMesem?.value||'possible',note:(profileNote?.value||'').trim()}; if(!ruleStatus()){const c=preferenceCounts(); return alert(`Tercih sayıları tamamlanmadı.\nAlan Çok isterim: ${c.a5}/1\nAlan İsterim: ${c.a4}/2\nAlan Olabilir: ${c.a3}/2\nAlan Mecbur: ${c.a2}/1\nMESEM Çok isterim: ${c.m5}/1\n\nSayaçların tamamı hedef değere ulaşmalıdır.`)} const details=[]; document.querySelectorAll('#prefForm select[data-course-key]').forEach(sel=>{const val=Number(sel.value); details.push({key:sel.dataset.courseKey,course:sel.dataset.course,type:sel.dataset.type,grade:sel.dataset.grade,hour:sel.dataset.hour,value:val,label:prefLabel(val)})}); try{await deactivateOldPrefs(t.id); const sid=t.id+'_'+Date.now(); await cloudInsert(settings.prefTable,details.map((d,i)=>({teacher_id:t.id,teacher_name:t.name,course_key:d.key,course_name:d.course,course_type:d.type,grade:d.grade,hour:Number(d.hour||0),preference_value:d.value,preference_label:d.label,submission_time:new Date().toISOString(),row_no:i+1,submission_id:sid,is_active:true,target_hours:profile.targetHours,max_hours:profile.maxHours,preferred_max_courses:profile.maxCourses,preferred_max_branches:profile.maxBranches,distribution_priority:profile.priority,mesem_willingness:profile.mesem,teacher_note:profile.note}))); alert('Tercihleriniz ve dağıtıma yardımcı bilgileriniz kaydedildi. Sistem önce 20 saat hedefini, ardından ders tercihi, şube ve farklı ders çeşidi dengesini birlikte değerlendirecektir.'); backLogin()}catch(e){alert('Supabase kayıt hatası: '+e.message)}}
 
-async function addTeacher(){const name=newTeacherName.value.trim(); if(!name)return alert('Öğretmen adı giriniz.'); if(teachers.some(t=>norm(t.name)===norm(name)))return alert('Bu öğretmen zaten var.'); teachers.push({id:uid(),name,pass:genPass()}); newTeacherName.value=''; saveData(); render()}
+async function addTeacher(){const name=newTeacherName.value.trim(); const enteredPass=(newTeacherPass?.value||'').trim(); if(!name)return alert('Öğretmen adı giriniz.'); if(teachers.some(t=>norm(t.name)===norm(name)))return alert('Bu öğretmen zaten var.'); if(enteredPass&&!/^\d{4,8}$/.test(enteredPass))return alert('Şifre 4-8 haneli ve yalnızca rakamlardan oluşmalıdır.'); teachers.push({id:uid(),name,pass:enteredPass||genPass()}); newTeacherName.value=''; if(newTeacherPass)newTeacherPass.value=''; saveData(); render()}
 function deleteTeacher(id){if(!confirm('Öğretmen silinsin mi?'))return; teachers=teachers.filter(t=>t.id!==id); saveData(); render()}
+function setTeacherPass(id,val){const t=teachers.find(x=>x.id===id); if(!t)return; val=String(val||'').trim(); if(!/^\d{4,8}$/.test(val)){alert('Şifre 4-8 haneli ve yalnızca rakamlardan oluşmalıdır.'); render(); return;} t.pass=val; saveData(); render();}
 function renewPass(id){const t=teachers.find(x=>x.id===id); if(t){t.pass=genPass(); saveData(); render()}}
 function addCourse(){const name=prompt('Ders adı:'); if(!name)return; const type=prompt('Tür: Muhasebe / Dış Ticaret / MESEM','Muhasebe')||'Muhasebe'; courses.push({name:name.trim(),type:['Muhasebe','Dış Ticaret','MESEM'].includes(type)?type:'Muhasebe',grade:'',hour:0}); prepareCourses(); saveData(); render()}
-function deleteCourse(name,type,grade,hour){if(!confirm('Ders silinsin mi?'))return; courses=courses.filter(c=>!(c.name===name&&c.type===type&&String(c.grade)===String(grade)&&String(c.hour)===String(hour))); saveData(); render()}
+function updateCourseField(index,field,value){
+  const c=courses[index];
+  if(!c)return;
+  if(field==='type'){
+    c.type=['Muhasebe','Dış Ticaret','MESEM'].includes(value)?value:'Muhasebe';
+  }else if(field==='grade'){
+    c.grade=['','9','10','11','12'].includes(String(value))?String(value):'';
+  }else if(field==='hour'){
+    const n=Number(String(value).replace(',','.'));
+    c.hour=Number.isFinite(n)&&n>=0?n:0;
+  }
+  saveData();
+  renderCourses();
+}
+function deleteCourseByIndex(index){
+  const c=courses[index];
+  if(!c)return;
+  if(!confirm('“'+c.name+'” dersi silinsin mi?'))return;
+  courses.splice(index,1);
+  saveData(); render();
+}
+function deleteCourse(name,type,grade,hour){
+  const index=courses.findIndex(c=>c.name===name&&c.type===type&&String(c.grade)===String(grade)&&String(c.hour)===String(hour));
+  if(index>=0)deleteCourseByIndex(index);
+}
 
 function render(){loginTeacher.innerHTML='<option value="">Öğretmen seçiniz...</option>'+teachers.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join(''); if(supabaseUrl)supabaseUrl.value=settings.supabaseUrl; if(supabaseKey)supabaseKey.value=settings.supabaseKey; if(prefTable)prefTable.value=settings.prefTable; if(teacherTableName)teacherTableName.value=settings.teacherTable; if(courseTableName)courseTableName.value=settings.courseTable; renderTeachers(); renderCourses(); renderResults(); if(sqlCode)sqlCode.textContent=SQL_CODE}
-function renderTeachers(){if(!teacherTable)return; teacherTable.innerHTML='<tr><th>Öğretmen</th><th>Şifre</th><th>İşlem</th></tr>'+(teachers.map(t=>`<tr><td><b>${esc(t.name)}</b></td><td><span class="badge">${t.pass}</span></td><td><button onclick="renewPass('${t.id}')">Yeni Şifre</button> <button class="danger" onclick="deleteTeacher('${t.id}')">Sil</button></td></tr>`).join('')||'<tr><td colspan="3">Öğretmen yok.</td></tr>')}
-function renderCourses(){if(!courseTable)return; courseTable.innerHTML='<tr><th>Ders</th><th>Tür</th><th>Sınıf</th><th>Saat</th><th></th></tr>'+courses.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.type)}</td><td>${esc(c.grade)}</td><td>${esc(c.hour)}</td><td><button class="danger" onclick="deleteCourse('${esc(c.name)}','${esc(c.type)}','${esc(c.grade)}','${esc(c.hour)}')">Sil</button></td></tr>`).join('')}
-function renderResults(){if(!resultTable)return; resultTable.innerHTML='<tr><th>Tarih</th><th>Öğretmen</th><th>Tür</th><th>Sınıf</th><th>Saat</th><th>Ders</th><th>Tercih</th><th>Puan</th></tr>'+(submissions.flatMap(s=>s.details||[]).map(r=>`<tr><td>${esc(r.created_at||'')}</td><td>${esc(r.teacher_name||'')}</td><td>${esc(r.course_type||'')}</td><td>${esc(r.grade||'')}</td><td>${esc(r.hour||'')}</td><td>${esc(r.course_name||'')}</td><td>${esc(r.preference_label||'')}</td><td>${esc(r.preference_value||'')}</td></tr>`).join('')||'<tr><td colspan="8">Kayıt yok.</td></tr>')}
+function renderTeachers(){if(!teacherTable)return; teacherTable.innerHTML='<tr><th>Öğretmen</th><th>Şifre</th><th>İşlem</th></tr>'+(teachers.map(t=>`<tr><td><b>${esc(t.name)}</b></td><td><input value="${esc(t.pass)}" maxlength="8" inputmode="numeric" style="max-width:130px" onchange="setTeacherPass('${t.id}',this.value)"></td><td><button onclick="renewPass('${t.id}')">Rastgele Şifre</button> <button class="danger" onclick="deleteTeacher('${t.id}')">Sil</button></td></tr>`).join('')||'<tr><td colspan="3">Öğretmen yok.</td></tr>')}
+function renderCourses(){
+  if(!courseTable)return;
+  const typeOptions=['Muhasebe','Dış Ticaret','MESEM'];
+  const gradeOptions=['','9','10','11','12'];
+  courseTable.innerHTML='<tr><th>Ders</th><th>Tür</th><th>Sınıf</th><th>Saat</th><th></th></tr>'+
+    (courses.map((c,i)=>`<tr>
+      <td><b>${esc(c.name)}</b></td>
+      <td><select aria-label="${esc(c.name)} türü" onchange="updateCourseField(${i},'type',this.value)">${typeOptions.map(v=>`<option value="${esc(v)}" ${c.type===v?'selected':''}>${esc(v)}</option>`).join('')}</select></td>
+      <td><select aria-label="${esc(c.name)} sınıfı" onchange="updateCourseField(${i},'grade',this.value)">${gradeOptions.map(v=>`<option value="${v}" ${String(c.grade)===v?'selected':''}>${v?v+'. sınıf':'Seçiniz'}</option>`).join('')}</select></td>
+      <td><input type="number" min="0" step="1" value="${esc(c.hour)}" aria-label="${esc(c.name)} haftalık saati" onchange="updateCourseField(${i},'hour',this.value)"></td>
+      <td><button class="danger" onclick="deleteCourseByIndex(${i})">Sil</button></td>
+    </tr>`).join('')||'<tr><td colspan="5">Ders yok.</td></tr>');
+}
+function renderResults(){if(!resultTable)return; resultTable.innerHTML='<tr><th>Tarih</th><th>Öğretmen</th><th>Tür</th><th>Sınıf</th><th>Saat</th><th>Ders</th><th>Tercih</th><th>Puan</th><th>Azami</th><th>Farklı Ders</th><th>Şube</th></tr>'+(submissions.flatMap(s=>s.details||[]).map(r=>`<tr><td>${esc(r.created_at||'')}</td><td>${esc(r.teacher_name||'')}</td><td>${esc(r.course_type||'')}</td><td>${esc(r.grade||'')}</td><td>${esc(r.hour||'')}</td><td>${esc(r.course_name||'')}</td><td>${esc(r.preference_label||'')}</td><td>${esc(r.preference_value||'')}</td><td>${esc(r.max_hours||'')}</td><td>${esc(r.preferred_max_courses||'')}</td><td>${esc(r.preferred_max_branches||'')}</td></tr>`).join('')||'<tr><td colspan="11">Kayıt yok.</td></tr>')}
 async function loadPreferencesFromCloud(){try{const rows=await cloudFetch(settings.prefTable,'select=*&is_active=eq.true&order=created_at.desc'); submissions=[{details:rows}]; renderResults(); alert('Tercihler alındı: '+rows.length)}catch(e){alert('Tercihler alınamadı: '+e.message)}}
-async function exportCloudPreferencesExcel(){if(typeof XLSX==='undefined')return alert('Excel için internet gerekir.'); const rows=await cloudFetch(settings.prefTable,'select=*&is_active=eq.true&order=created_at.asc'); const data=rows.map(r=>({'Tarih':r.created_at,'Öğretmen Ad Soyad':r.teacher_name,'Ders Adı':r.course_name,'Tür':r.course_type,'Sınıf':r.grade,'Saat':r.hour,'Tercih Puanı / Seçim':r.preference_value,'Tercih':r.preference_label})); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(data),'Supabase_Tercihler'); XLSX.writeFile(wb,'supabase_ogretmen_ders_tercihleri.xlsx')}
+async function exportCloudPreferencesExcel(){if(typeof XLSX==='undefined')return alert('Excel için internet gerekir.'); const rows=await cloudFetch(settings.prefTable,'select=*&is_active=eq.true&order=created_at.asc'); const data=rows.map(r=>({'Tarih':r.created_at,'Öğretmen Ad Soyad':r.teacher_name,'Ders Adı':r.course_name,'Tür':r.course_type,'Sınıf':r.grade,'Saat':r.hour,'Tercih Puanı / Seçim':r.preference_value,'Tercih':r.preference_label,'Maaş Karşılığı Hedef':r.target_hours||20,'Azami Saat':r.max_hours||28,'Tercih Edilen En Fazla Farklı Ders':r.preferred_max_courses||3,'Tercih Edilen En Fazla Şube':r.preferred_max_branches||4,'Dağıtım Önceliği':r.distribution_priority||'balanced','MESEM Eğilimi':r.mesem_willingness||'possible','Öğretmen Notu':r.teacher_note||''})); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(data),'Supabase_Tercihler'); XLSX.writeFile(wb,'supabase_ogretmen_ders_tercihleri.xlsx')}
 async function clearCloudPreferences(){if(!confirm('Supabase tercih kayıtları silinsin mi?'))return; try{await cloudDelete(settings.prefTable,'id=not.is.null'); submissions=[]; renderResults(); alert('Tercihler silindi.')}catch(e){alert('Silme hatası: '+e.message)}}
 function exportTeacherPasswords(){if(typeof XLSX==='undefined')return alert('Excel için internet gerekir.'); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(teachers.map(t=>({'Öğretmen':t.name,'Şifre':t.pass}))),'Ogretmen_Sifreleri'); XLSX.writeFile(wb,'ogretmen_sifreleri.xlsx')}
 function copyShareText(){navigator.clipboard.writeText('Değerli öğretmenimiz, ders tercih formuna girerek adınızı seçiniz ve size verilen şifreyle tercihlerinizi gönderiniz.'); alert('Mesaj kopyalandı.')}
@@ -485,9 +560,16 @@ function importCoursesExcel(e){
 
       // Yardımcı: türü ad veya tür alanından tahmin et
       const detectType=(name,typeText='')=>{
-        const raw=String((typeText||'')+' '+(name||'')).toLocaleUpperCase('tr-TR');
+        // Excel'de açık bir Tür değeri varsa ders adından tahmin etmek yerine onu koru.
+        const explicit=norm(typeText);
+        if(explicit){
+          if(explicit.includes('mesem')) return 'MESEM';
+          if(explicit.includes('dis ticaret') || explicit.includes('gumruk') || explicit.includes('ihracat') || explicit.includes('ithalat')) return 'Dış Ticaret';
+          if(explicit.includes('muhasebe') || explicit.includes('alan')) return 'Muhasebe';
+        }
+        const raw=String(name||'').toLocaleUpperCase('tr-TR');
         if(raw.includes('MESEM')) return 'MESEM';
-        if(raw.includes('DIŞ') || raw.includes('DIS') || raw.includes('GÜMRÜK') || raw.includes('GUMRUK') || raw.includes('İHRACAT') || raw.includes('IHRACAT') || raw.includes('İTHALAT') || raw.includes('ITHALAT') || raw.includes('DIŞ TİCARET') || raw.includes('DIS TICARET')) return 'Dış Ticaret';
+        if(raw.includes('DIŞ') || raw.includes('DIS') || raw.includes('GÜMRÜK') || raw.includes('GUMRUK') || raw.includes('İHRACAT') || raw.includes('IHRACAT') || raw.includes('İTHALAT') || raw.includes('ITHALAT')) return 'Dış Ticaret';
         return 'Muhasebe';
       };
       const toHour=v=>{
@@ -620,5 +702,6 @@ function downloadSharedTeacherForm(){saveData(); if(!teachers.length)return aler
 
 loadData(); lockAdminView(); render(); setTimeout(()=>{if(settings.supabaseUrl&&settings.supabaseKey)loadBaseFromCloud(false)},300);
 </script>
+
 
 </body></html>
