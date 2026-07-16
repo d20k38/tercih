@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="tr">
-<head>
+<html lang="tr"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muhasebe Finansman Öğretmen Ders Tercih ve Sonuç Formu</title>
+<title>Muhasebe Finansman Öğretmen Tercih, Dağıtım Sonucu ve Program Talebi v38.3</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 :root{--bg:#f3f6fb;--card:#fff;--ink:#111827;--muted:#667085;--line:#d7deea;--brand:#1d4ed8;--ok:#15803d;--warn:#b45309;--danger:#dc2626;--shadow:0 10px 28px rgba(15,23,42,.08)}
@@ -13,20 +12,20 @@
 </head>
 <body>
 <header>
-  <h1>MMuhasebe Finansman Öğretmen Ders Tercih ve Sonuç Formu </h1>
-  <p>Her öğretmenimizin verimli olacağı derslere girmesini hedefleyen formumuz</p>
+  <h1>Muhasebe Finansman Öğretmen Tercih ve Sonuç Formu v38.3</h1>
+  <p>Her öğretmene eşit tercih hakkı veren sade çevrim içi form</p>
 </header>
 <div class="wrap">
   <div class="tabs no-print" id="mainTabs">
-    <button class="tab active" onclick="showScreen('login')">Giriş</button>
-    <button class="tab hidden" id="adminTab" onclick="showScreen('admin')">Yönetici</button>
-    <button class="tab hidden" id="setupTab" onclick="showScreen('setup')">Online Kurulum</button>
+    <button class="tab" onclick="showScreen('login')">Giriş</button>
+    
+    
   </div>
 
   <section id="loginScreen" class="card">
     <h2>Giriş</h2>
     <div class="grid">
-      <div class="col-5"><label>Ad Soyad</label><select id="loginTeacher"></select></div>
+      <div class="col-5"><label>Ad Soyad</label><select id="loginTeacher"><option value="">Öğretmen seçiniz...</option><option value="5bb9opv">ABDURAHMAN NAFİZ GÜMÜŞ</option><option value="1olbqg5">ARZU DEMİREZEN</option><option value="fjpniot">DERYA BOZKURT</option><option value="0wl6ivo">FATİH ALTIPARMAK</option><option value="rr7jo2z">FIRAT EKİNCİ</option><option value="die9juz">HÜLYA CAN</option><option value="9383rjc">LEYLA GÜNAY ÖLMEZ</option><option value="bdkn302">MUSTAFA YURDAKUL</option><option value="728ss57">NURCAN KÖMMECİ</option><option value="90jet4p">ŞERİFE TOPALOĞLU</option><option value="1h08xn4">YASİN KELEBEK</option><option value="admin">admin</option></select></div>
       <div class="col-4"><label>Şifre</label><input id="loginPass" maxlength="8" inputmode="numeric" placeholder="Şifre"></div>
       <div class="col-3" style="align-self:end"><button class="primary" onclick="teacherLogin()">Giriş</button></div>
     </div>
@@ -71,7 +70,7 @@
     <div class="pref-section" id="profileSection">
       <h3>Dağıtıma Yardımcı Bilgiler</h3>
       <div class="grid">
-        <div class="col-3"><label>Maaş karşılığı hedef</label><input id="profileTarget" value="20" readonly></div>
+        <div class="col-3"><label>Maaş karşılığı hedef</label><input id="profileTarget" value="20" readonly=""></div>
         <div class="col-3"><label>Kabul edebileceğiniz azami saat</label><input id="profileMaxHours" type="number" min="20" max="40" value="28"></div>
         <div class="col-3"><label>Tercih edilen en fazla farklı ders</label><input id="profileMaxCourses" type="number" min="1" max="20" value="3"></div>
         <div class="col-3"><label>Tercih edilen en fazla şube</label><input id="profileMaxBranches" type="number" min="1" max="30" value="4"></div>
@@ -101,79 +100,255 @@
     <div id="prefForm"></div>
   </section>
 
-  <section id="adminScreen" class="hidden">
-    <div class="grid">
-      <div class="card col-5">
-        <h2>Yönetici Paneli</h2>
-        <div id="adminArea" class="hidden">
-          <div class="notice info">Öğretmen/dersleri burada hazırlayın. Sonra <b>Paylaşılacak HTML Dosyası Oluştur</b> ile öğretmenlere gönderilecek dosyayı üretin.</div>
-          <div class="btns"><button class="danger" onclick="logoutAdmin()">Yönetici Çıkış</button></div>
-          <hr>
-          <h3>Supabase Ayarları</h3>
-          <label>Supabase Project URL</label><input id="supabaseUrl" onchange="saveData()">
-          <label>Supabase anon/public key</label><input id="supabaseKey" onchange="saveData()">
-          <label>Tercih Tablosu</label><input id="prefTable" onchange="saveData()">
-          <label>Öğretmen Tablosu</label><input id="teacherTableName" onchange="saveData()">
-          <label>Ders Havuzu Tablosu</label><input id="courseTableName" onchange="saveData()">
-          <label>Dağıtım Sonuçları Tablosu</label><input id="assignmentTableName" onchange="saveData()">
-          <label>Program Talepleri Tablosu</label><input id="requestTableName" onchange="saveData()">
-          <div class="btns" style="margin-top:8px">
-            <button onclick="testSupabase()">Supabase Bağlantısını Test Et</button>
-            <button onclick="resetSupabaseSettings()">Varsayılana Al</button>
-            <button onclick="saveBaseToCloud()">Öğretmen/Dersleri Buluta Kaydet</button>
-            <button onclick="loadBaseFromCloud(true)">Öğretmen/Dersleri Buluttan Al</button>
-            <button onclick="showCloudCounts()">Bulut Sayıları</button>
-            <button onclick="loadAssignmentRequests()">Program Taleplerini Al</button>
-            <button onclick="exportAssignmentRequestsExcel()">Program Talepleri Excel</button>
-          </div>
-          <hr>
-          <h3>Öğretmen Ekle</h3>
-          <label>Yeni Öğretmen Adı</label><input id="newTeacherName" placeholder="Ad Soyad">
-          <label>Öğretmen Şifresi</label><input id="newTeacherPass" maxlength="8" inputmode="numeric" placeholder="4-8 haneli şifre">
-          <div class="small">Şifreyi boş bırakırsanız sistem otomatik 4 haneli şifre üretir.</div>
-          <button class="ok" onclick="addTeacher()">Öğretmen Ekle</button>
-          <hr>
-          <div class="btns">
-            <label class="btn">Öğretmenleri Excel'den Al<input type="file" accept=".xlsx,.xls" onchange="importTeachersExcel(event)" hidden></label>
-            <label class="btn">Ders Havuzunu Excel'den Al<input type="file" accept=".xlsx,.xls" onchange="importCoursesExcel(event)" hidden></label>
-            <button onclick="exportTeacherPasswords()">Şifre Listesi Excel</button>
-            <button onclick="loadPreferencesFromCloud()">Supabase Tercihleri Al</button>
-            <button onclick="exportCloudPreferencesExcel()">Supabase Excel</button>
-            <button class="danger" onclick="clearCloudPreferences()">Supabase Tercihlerini Temizle</button>
-            <button class="ok" onclick="downloadSharedTeacherForm()">Paylaşılacak HTML Dosyası Oluştur</button>
-            <button class="warn" onclick="copyShareText()">Öğretmenlere Mesajı Kopyala</button>
-            <button class="danger" onclick="resetLocal()">Yerel Admin Verisini Sıfırla</button>
-          </div>
-        </div>
-      </div>
-      <div class="card col-7"><h2>Öğretmen Şifreleri</h2><div class="tablebox"><table id="teacherTable"></table></div></div>
-      <div class="card col-12"><h2>Gelen Tercihler</h2><div class="tablebox"><table id="resultTable"></table></div></div>
-      <div class="card col-12"><h2>Programla İlgili Öğretmen Talepleri</h2><div class="notice info">Öğretmenlerin dağıtım sonucu ekranından gönderdiği talepler burada görünür.</div><div class="tablebox"><table id="requestResultTable"></table></div></div>
-      <div class="card col-12"><h2>Ders Havuzu</h2><div class="notice info">Excel aktarımından sonra <b>Tür, sınıf ve haftalık saat</b> alanlarını bu tabloda doğrudan düzeltebilirsiniz. Değişiklikler yerel olarak kaydedilir; çevrim içi forma yansıtmak için ardından <b>Öğretmen/Dersleri Buluta Kaydet</b> düğmesine basın.</div><div class="btns no-print" style="margin-bottom:8px"><button onclick="addCourse()">Ders Ekle</button></div><div class="tablebox"><table id="courseTable"></table></div></div>
-    </div>
-  </section>
+  
 
-  <section id="setupScreen" class="card hidden">
-    <h2>Supabase Kurulumu</h2>
-    <div class="notice info">Supabase → SQL Editor → New Query bölümünde aşağıdaki SQL kodunu çalıştırın.</div>
-    <div class="code" id="sqlCode"></div>
-    <div class="btns no-print" style="margin-top:10px"><button onclick="copySqlCode()">SQL Kodunu Kopyala</button></div>
-  </section>
+  
 </div>
 
 <script>
-const SHARE_MODE = false;
-const DEFAULT_TEACHERS = [];
-const DEFAULT_COURSES = [];
+const SHARE_MODE = true;
+const DEFAULT_TEACHERS = [
+  {
+    "id": "5bb9opv",
+    "name": "ABDURAHMAN NAFİZ GÜMÜŞ",
+    "pass": "4896"
+  },
+  {
+    "id": "1olbqg5",
+    "name": "ARZU DEMİREZEN",
+    "pass": "4034"
+  },
+  {
+    "id": "fjpniot",
+    "name": "DERYA BOZKURT",
+    "pass": "5778"
+  },
+  {
+    "id": "0wl6ivo",
+    "name": "FATİH ALTIPARMAK",
+    "pass": "7512"
+  },
+  {
+    "id": "rr7jo2z",
+    "name": "FIRAT EKİNCİ",
+    "pass": "3112"
+  },
+  {
+    "id": "die9juz",
+    "name": "HÜLYA CAN",
+    "pass": "0170"
+  },
+  {
+    "id": "9383rjc",
+    "name": "LEYLA GÜNAY ÖLMEZ",
+    "pass": "6590"
+  },
+  {
+    "id": "bdkn302",
+    "name": "MUSTAFA YURDAKUL",
+    "pass": "2710"
+  },
+  {
+    "id": "728ss57",
+    "name": "NURCAN KÖMMECİ",
+    "pass": "0720"
+  },
+  {
+    "id": "90jet4p",
+    "name": "ŞERİFE TOPALOĞLU",
+    "pass": "5058"
+  },
+  {
+    "id": "1h08xn4",
+    "name": "YASİN KELEBEK",
+    "pass": "2502"
+  }
+];
+const DEFAULT_COURSES = [
+  {
+    "name": "BİLGİSAYARLI MUHASEBE MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 4
+  },
+  {
+    "name": "EKONOMİ MESEM 10",
+    "type": "MESEM",
+    "grade": "10",
+    "hour": 1
+  },
+  {
+    "name": "GENEL MUHASEBE MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 1
+  },
+  {
+    "name": "KLAVYE TEKNİKLERİ MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "MALİYET MUHASEBESİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 1
+  },
+  {
+    "name": "MESLEKİ MATEMATİK MESEM 10",
+    "type": "MESEM",
+    "grade": "10",
+    "hour": 1
+  },
+  {
+    "name": "OFİS UYGULAMALARI MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "ŞİRKETLER MUHASEBESİ MESEM 12",
+    "type": "MESEM",
+    "grade": "12",
+    "hour": 1
+  },
+  {
+    "name": "TEMEL HUKUK MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "TEMEL MUHASEBE MESEM 10",
+    "type": "MESEM",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "VERGİ VE BEYANNAMELER MESEM 11",
+    "type": "MESEM",
+    "grade": "11",
+    "hour": 1
+  },
+  {
+    "name": "BİLGİSAYARLI MUHASEBE (*) 1",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 7
+  },
+  {
+    "name": "EKONOMİ",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "GENEL MUHASEBE (*)",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 7
+  },
+  {
+    "name": "GİRİŞİMCİLİK VE İŞLETME YÖNETİMİ",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "İŞ VE SOSYAL GÜVENLİK HUKUKU",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "KLAVYE TEKNİKLERİ 1",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "MALİYET MUHASEBESİ",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "MESLEKİ MATEMATİK",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 2
+  },
+  {
+    "name": "OFİS UYGULAMALARI 1",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 2
+  },
+  {
+    "name": "SEÇMELİ DİJİTAL OFİS UYGULAMALARI 1",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "SEÇMELİ DTCRT İŞLEMLERİ",
+    "type": "Muhasebe",
+    "grade": "12",
+    "hour": 3
+  },
+  {
+    "name": "SEÇMELİ FİNANSAL OKURYAZARLIK",
+    "type": "Muhasebe",
+    "grade": "12",
+    "hour": 4
+  },
+  {
+    "name": "SEÇMELİ KOPERATİFÇİLİK",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "ŞİRKETLER MUHASEBESİ",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  },
+  {
+    "name": "TEMEL HUKUK",
+    "type": "Muhasebe",
+    "grade": "10",
+    "hour": 2
+  },
+  {
+    "name": "TEMEL MUHASEBE (*)",
+    "type": "Muhasebe",
+    "grade": "9",
+    "hour": 5
+  },
+  {
+    "name": "VERGİ VE BEYANNAMELER",
+    "type": "Muhasebe",
+    "grade": "11",
+    "hour": 2
+  }
+];
 const DEFAULT_SETTINGS = {
-  adminPassword:'18309',
-  supabaseUrl:'https://bzhbbjjtwotahoovnxua.supabase.co',
-  supabaseKey:'sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l',
-  prefTable:'teacher_preferences',
-  teacherTable:'teacher_accounts',
-  courseTable:'course_pool',
-  assignmentTable:'teacher_assignments',
-  requestTable:'teacher_program_requests'
+  "adminPassword": "18309",
+  "supabaseUrl": "https://bzhbbjjtwotahoovnxua.supabase.co",
+  "supabaseKey": "sb_publishable_Yzj6K-sdkEqvWwyItubnHg_Rb8uFH3l",
+  "prefTable": "teacher_preferences",
+  "teacherTable": "teacher_accounts",
+  "courseTable": "course_pool",
+  "assignmentTable": "teacher_assignments",
+  "requestTable": "teacher_program_requests"
 };
 
 let teachers = [...DEFAULT_TEACHERS];
@@ -729,5 +904,6 @@ function downloadSharedTeacherForm(){
 
 loadData(); lockAdminView(); render(); setTimeout(()=>{if(settings.supabaseUrl&&settings.supabaseKey)loadBaseFromCloud(false)},300);
 </script>
-</body>
-</html>
+
+
+</body></html>
