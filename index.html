@@ -2,7 +2,7 @@
 <html lang="tr"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muhasebe Finansman Öğretmen Tercih, Dağıtım Sonucu ve Program Talebi v38.3</title>
+<title>Muhasebe Finansman Öğretmen Tercih, Dağıtım Sonucu ve Program Talebi v38.4</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 :root{--bg:#f3f6fb;--card:#fff;--ink:#111827;--muted:#667085;--line:#d7deea;--brand:#1d4ed8;--ok:#15803d;--warn:#b45309;--danger:#dc2626;--shadow:0 10px 28px rgba(15,23,42,.08)}
@@ -12,7 +12,7 @@
 </head>
 <body>
 <header>
-  <h1>Muhasebe Finansman Öğretmen Tercih ve Sonuç Formu v38.3</h1>
+  <h1>Muhasebe Finansman Öğretmen Tercih ve Sonuç Formu v38.4</h1>
   <p>Her öğretmene eşit tercih hakkı veren sade çevrim içi form</p>
 </header>
 <div class="wrap">
@@ -886,20 +886,20 @@ function downloadSharedTeacherForm(){
     'const DEFAULT_SETTINGS = '+JSON.stringify(settings,null,2)+';');
 
   source=source.replace(/<title>[\s\S]*?<\/title>/,
-    '<title>Muhasebe Finansman Öğretmen Tercih, Dağıtım Sonucu ve Program Talebi v38.3</title>');
+    '<title>Muhasebe Finansman Öğretmen Tercih, Dağıtım Sonucu ve Program Talebi v38.4</title>');
   source=source.replace(/<h1>[\s\S]*?<\/h1>/,
-    '<h1>Muhasebe Finansman Öğretmen Tercih ve Sonuç Formu v38.3</h1>');
+    '<h1>Muhasebe Finansman Öğretmen Tercih ve Sonuç Formu v38.4</h1>');
 
   const blob=new Blob([source],{type:'text/html;charset=utf-8'});
   const a=document.createElement('a');
   const url=URL.createObjectURL(blob);
   a.href=url;
-  a.download='index.html';
+  a.download='index_v38_4_ogretmen.html';
   document.body.appendChild(a);
   a.click();
   a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1500);
-  alert('Güncel öğretmen paylaşım dosyası oluşturuldu: index.html\n\nBu dosya tercih, Dağıtım Sonucum ve program talebi bölümlerini içerir.');
+  alert('Güncel öğretmen paylaşım dosyası oluşturuldu: index_v38_4_ogretmen.html\n\nBu dosya tercih, Dağıtım Sonucum ve program talebi bölümlerini içerir.');
 }
 
 loadData(); lockAdminView(); render(); setTimeout(()=>{if(settings.supabaseUrl&&settings.supabaseKey)loadBaseFromCloud(false)},300);
