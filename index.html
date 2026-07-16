@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muhasebe Finansman Öğretmen Tercih, Dağıtım Sonucu ve Program Talebi v38.4</title>
+<title>Muhasebe Finansman Öğretmen Tercih, Dağıtım Sonucu ve Program Talebi v38.5</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 :root{--bg:#f3f6fb;--card:#fff;--ink:#111827;--muted:#667085;--line:#d7deea;--brand:#1d4ed8;--ok:#15803d;--warn:#b45309;--danger:#dc2626;--shadow:0 10px 28px rgba(15,23,42,.08)}
@@ -13,9 +13,9 @@
 </head>
 <body>
 <header>
-  <h1>Muhasebe Finansman Öğretmen Tercih ve Sonuç Formu v38.4</h1>
+  <h1>Muhasebe Finansman Öğretmen Tercih ve Sonuç Formu v38.5</h1>
   <p>Her öğretmene eşit tercih hakkı veren sade çevrim içi form</p>
-  <div style="font-size:12px;opacity:.9;margin-top:6px">Yayın sürümü: v38.4 • Tercih + Dağıtım Sonucu + Program Talebi</div>
+  <div style="font-size:12px;opacity:.9;margin-top:6px">Yayın sürümü: v38.5 • Tercih + Dağıtım Sonucu + Program Talebi</div>
 </header>
 <div class="wrap">
   <div class="tabs no-print" id="mainTabs">
@@ -99,6 +99,15 @@
     </div>
     <div id="prefForm"></div>
   </section>
+</div>
+
+<div id="shareCompatibility" class="hidden" aria-hidden="true">
+  <button id="adminTab"></button><button id="setupTab"></button>
+  <section id="adminScreen"></section><section id="setupScreen"></section><div id="adminArea"></div>
+  <input id="supabaseUrl"><input id="supabaseKey"><input id="prefTable">
+  <input id="teacherTableName"><input id="courseTableName"><input id="assignmentTableName"><input id="requestTableName">
+  <table id="teacherTable"></table><table id="courseTable"></table><table id="resultTable"></table><table id="requestResultTable"></table>
+  <pre id="sqlCode"></pre>
 </div>
 
 <script>
@@ -450,7 +459,7 @@ async function exportAssignmentRequestsExcel(){
   try{const rows=await cloudFetch(settings.requestTable||'teacher_program_requests','select=*&is_active=eq.true&order=updated_at.desc');const data=rows.map(r=>({'Öğretmen':r.teacher_name,'Talep':r.request_text,'Gönderim Tarihi':r.updated_at||r.created_at,'Durum':r.request_status==='resolved'?'Sonuçlandırıldı':r.request_status==='reviewed'?'İncelendi':'Yeni','İdare Notu':r.admin_note||''}));const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(data),'Program_Talepleri');XLSX.writeFile(wb,'ogretmen_program_talepleri.xlsx')}catch(e){alert('Excel alınamadı: '+e.message)}
 }
 
-function render(){loginTeacher.innerHTML='<option value="">Öğretmen seçiniz...</option>'+teachers.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join('')+(document.getElementById('adminTab')?'<option value="admin">admin</option>':''); if(supabaseUrl)supabaseUrl.value=settings.supabaseUrl; if(supabaseKey)supabaseKey.value=settings.supabaseKey; if(prefTable)prefTable.value=settings.prefTable; if(teacherTableName)teacherTableName.value=settings.teacherTable; if(courseTableName)courseTableName.value=settings.courseTable; if(assignmentTableName)assignmentTableName.value=settings.assignmentTable||'teacher_assignments'; if(typeof requestTableName!=='undefined'&&requestTableName)requestTableName.value=settings.requestTable||'teacher_program_requests'; renderTeachers(); renderCourses(); renderResults(); renderAssignmentRequests(); if(sqlCode)sqlCode.textContent=SQL_CODE}
+function render(){loginTeacher.innerHTML='<option value="">Öğretmen seçiniz...</option>'+teachers.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join(''); if(supabaseUrl)supabaseUrl.value=settings.supabaseUrl; if(supabaseKey)supabaseKey.value=settings.supabaseKey; if(prefTable)prefTable.value=settings.prefTable; if(teacherTableName)teacherTableName.value=settings.teacherTable; if(courseTableName)courseTableName.value=settings.courseTable; if(assignmentTableName)assignmentTableName.value=settings.assignmentTable||'teacher_assignments'; if(typeof requestTableName!=='undefined'&&requestTableName)requestTableName.value=settings.requestTable||'teacher_program_requests'; renderTeachers(); renderCourses(); renderResults(); renderAssignmentRequests(); if(sqlCode)sqlCode.textContent=SQL_CODE}
 function renderTeachers(){if(!teacherTable)return; teacherTable.innerHTML='<tr><th>Öğretmen</th><th>Şifre</th><th>İşlem</th></tr>'+(teachers.map(t=>`<tr><td><b>${esc(t.name)}</b></td><td><input value="${esc(t.pass)}" maxlength="8" inputmode="numeric" style="max-width:130px" onchange="setTeacherPass('${t.id}',this.value)"></td><td><button onclick="renewPass('${t.id}')">Rastgele Şifre</button> <button class="danger" onclick="deleteTeacher('${t.id}')">Sil</button></td></tr>`).join('')||'<tr><td colspan="3">Öğretmen yok.</td></tr>')}
 function renderCourses(){
   if(!courseTable)return;
@@ -627,7 +636,7 @@ function importCoursesExcel(e){
 }
 
 
-loadData(); lockAdminView(); render(); setTimeout(()=>{if(settings.supabaseUrl&&settings.supabaseKey)loadBaseFromCloud(false)},300);
+loadData(); render(); setTimeout(async()=>{if(settings.supabaseUrl&&settings.supabaseKey){try{await loadBaseFromCloud(false);render();}catch(e){console.error(e);}}},150);
 </script>
 </body>
 </html>
